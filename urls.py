@@ -34,6 +34,7 @@ urlpatterns = patterns('',
     # Applications
     (r'^software/',      include('applications.urls')),
 
+    (r'^blog/',      include('blog.urls')),
 
     # Ajax
     (r'^ajax/',      include('ajax.urls')),

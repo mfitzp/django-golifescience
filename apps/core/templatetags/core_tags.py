@@ -97,3 +97,30 @@ def truncatesentences(text,number=None):
         return u''
 truncatesentences.is_safe = False
         
+
+@register.filter
+@stringfilter
+def splitnewlines(value):
+    """
+    Returns the value turned to a list split on newlines
+    """
+    value=value.strip(' \n') # Strip trailing values
+    return value.split('\n') # Split on (internal) \newlines to string
+
+splitnewlines.is_safe = False
+
+@register.filter
+def brieftimesince(value, arg=None):
+    """Formats a date as the time since that date (i.e. "4 days, 6 hours")."""
+    if not value:
+        return u''
+    try:
+        if arg:
+            t = timesince(value, arg)
+            return t.partition(',')[0]
+        t = timesince(value)
+        return t.partition(',')[0]
+    except (ValueError, TypeError):
+        return u''
+timesince.is_safe = False
+

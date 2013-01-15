@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 
 {% block title %}Contact Us{% endblock %}
-
-{% block content_title %}Contact Us{% endblock %}
+{% block subtitle %}Drop us a line{% endblock %}
 
 {% block content %}
 <div class="boxout"><div>
-<p>We value feedback and look forward to hearing your questions and comments. But first...
-<ul>
-<li>Have you checked our <a href="{% url faq %}">FAQ</a>?</li>
+
+
+<h5>Have you tried?</h5>
+<ul style="margin-left:2em;">
+<li>Our <a href="{% url faq %}">FAQ</a>?</li>
 <li>If you are reporting a bug in one of software packages, please report it via <a href="http://github.com/installables">github</a>.
 <li>If you are a <em>registered partner</em> looking for help with our software, <a href="">submit a ticket</a>.
 <li>If you are not registered but still need help, try the <a href="http://github.com/installables">forum</a>.
 </ul>
-...if none of the above apply, then get in touch!</p>
+<p>If none of the above have helped get in touch! We look forward to hearing your questions and comments.</p>
 
 </p>
 </div></div>

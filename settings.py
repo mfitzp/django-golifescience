@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'ajax',
     'testimonials',
     'applications',
+    'blog',
 )
    
 CACHES = {
