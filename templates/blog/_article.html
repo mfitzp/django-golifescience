@@ -1,0 +1,18 @@
+{% load thumbnail %}
+{% load core_tags %}
+{% load markup %}
+
+<div class="article">
+
+        <div class="article-title"><h3><a href="{% url article-detail article_id=article.id article_slug=article.slug %}">{{ article }}</a></h3></div>
+        <div class="article-content">
+            <p>{{ article.content|markdown:"safe,tables"  }}</p>
+        </div>
+		{% if site.id != 1 %}
+		    <div class="article-tags tags-horizontal">{% with article.tags.all as tags %}{% include "_tags.html" %}{% endwith %}</div>
+        {% endif %}
+        <div class="article-timestamp">        
+        Posted by <a href="{ % url user-profile username=article.author % }">{{ article.author.get_full_name }}</a> {{ article.created_at|brieftimesince }} ago
+        </div>
+</div>
+

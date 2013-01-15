@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load pagination_tags %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block title %}Latest News{% endblock %}
+{% block subtitle %}Releases, updates and other bits{% endblock %}
+
+{% block content %}
+
+    {% if object_list %}
+
+        {% autopaginate object_list %}
+
+            <div style="margin-top:1em;">
+               {% for article in object_list %}
+                
+                    {% include "blog/_article.html"%}
+
+                {% endfor %}
+            </div>            
+        <br class="clear" />
+
+        {% paginate %}
+
+    {% endif %}
+
+{% endblock %}
+
+{% block sidebar %}
+   
+    <h5>Actions</h5>
+    <ul class="navlist navlist-icon">
+        <li class="icon_article"><a href={% url article-create %}>{% trans "Submit a News article" %}</a></li>
+        <li class="icon_rss"><a href={ % url article-rss-latest % }>{% trans "RSS feed of latest articles" %}</a></li>
+    </ul>
+
+    <h5>Related tags</h5>
+    {% with related_tags as tags %}
+        <div class="tags-vertical">{% include "_tags.html" %}</div>
+    {% endwith %}   
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% load thumbnail %}
+
+{% if tags %}
+{% for tag in tags %}
+    <div class="tagwrap">
+        <span class="tag" itemprop="keywords">
+            <a href="{ % url method-tagged slug=tag.slug % }" alt="{{tag}}" title="{{tag}}">
+                {{tag}} 
+            </a>
+        </span>{% if show_tag_counts %}<small>x{{ tag.taggit_taggeditem_items.count }}</small>{% endif %} &nbsp;
+    </div>
+{% endfor %}
+{% endif%}

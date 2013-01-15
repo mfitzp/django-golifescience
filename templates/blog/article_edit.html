@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load core_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script>
+    
+    $(function() {
+    })
+
+    </script>
+{% endblock %}
+
+
+{% block content_title %}{% if article %}{{ article }}{% else %}{% trans "Submit a News article" %}{% endif %}{% endblock %}
+
+{% block content %}
+
+        <form action="{% if article %}{% url article-edit article_id=article.id %}{% else %}{% url article-create %}{% endif %}" method="POST">
+        {% csrf_token %}
+        <table class="form">
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Save">
+        </form>
+
+{% endblock %}
+
+

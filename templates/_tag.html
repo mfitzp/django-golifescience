@@ -1,0 +1,15 @@
+{% load thumbnail %}
+{% load core_tags %}
+
+  <div class="stack-item stack-tag">
+        <div class="stack-item-detail">
+            <span class="tag" itemprop="keywords">
+            <a href="{ % url method-tagged slug=tag.slug % }" alt="{{tag}}" title="{{tag}}">{{tag}} </a></span>
+            <small>x{{ tag.taggit_taggeditem_items.count }}</small>
+            <br />
+            <!-- tag.meta.description -->
+        </div>
+        <div class="stack-item-meta">
+        </div>
+    </div>
+
