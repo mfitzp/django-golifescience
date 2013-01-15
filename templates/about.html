@@ -1,0 +1,30 @@
+{% extends "base_with_sidebar_right.html" %}
+{% load i18n %}
+{% load thumbnail %}
+{% load core_tags %}
+
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<p><strong>Installables</strong> develops clear, elegant software to solve current scientific challenges. We feel strongly that scientific progress is dependent on the availability of adequate computing tools. 
+In keeping with this philosphy our software is available for unlimited use, without expensive or complicated licensing. 
+However, you can support development and receive a number of benefits, by registering for our <a href="{% url partner %}">partner program</a>.
+</p>
+
+<!-- <h4>Who are we?</h4>
+( Photos of you ) -->
+
+
+<h5>Acknowledgements</h5>
+<p>
+
+</p>
+
+<h5>More Questions?</h5>
+<p>We've answered many of our <a href="{% url faq %}">frequently asked questions</a> or you can <a href="{% url contact %}">contact us directly</a>.</p>
+
+
+
+{% endblock %}
+

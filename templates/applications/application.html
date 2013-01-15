@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load pagination_tags %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block title %}{{ application.name }}{% endblock %}
+{% block subtitle %}{{ application.tagline }}{% endblock %}
+
+{% block extrajs %}{% endblock %}
+
+{% block forkme %}
+{% if application.github %}
+    <a href="https://github.com/installables/{{ application.github }}"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:255;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+{% endif %}
+{% endblock %}
+
+{% block header_classes %}header-overlay{% endblock %}
+
+{% block imageheader %}
+<div class="imageheader" {% if application.image %}style="background-image:url('{{ application.image.url }}')"{% endif %}></div>
+{% endblock %}
+
+{% block content %}
+
+<div class="header-block">
+
+<div class="row">
+<div class="twelve columns">
+    <p>{{ application.description|markdown }}</p>
+</div>
+</div>
+
+</div>
+
+<dl class="tabs contained">
+  <dt>Key Features</dt>
+    {% for feature in application.features.all %}
+      <dd {% if forloop.counter == 1 %}class="active"{% endif %}><a href="#feature{{ forloop.counter }}">{{ forloop.counter }}</a></dd>
+    {% endfor %}
+</dl>
+
+<ul class="tabs-content contained">
+{% for feature in application.features.all %}
+  <li {% if forloop.counter == 1 %}class="active"{% endif %} id="feature{{ forloop.counter }}Tab">
+        <div class="row">
+            {% if not forloop.counter|divisibleby:2 %}
+                <div class="four columns"><img src="{% thumbnail feature.image 500x200 %}"></div>
+            {% endif %}
+            <div class="eight columns"><h5>{{ feature.title }}</h5><p>{{ feature.description|markdown }}</p></div>
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="four columns"><img src="{% thumbnail feature.image 500x200 %}"></div>
+            {% endif %}
+
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+
+
+<h3>Publications</h3>
+
+    {% for publication in application.publications.all %}
+        Publication
+    {% empty %}
+        <p>No publications yet. Don't forget to <a href="{% url contact %}">let us know</a> if you use <strong>{{ application.name }}</strong> in your published work. We'll feature you here!</p>
+    {% endfor %}
+
+
+<h3>Downloads</h3>
+
+<p>Latest versions of {{ application.name }} are available below packaged for Windows, Mac and Linux where appropriate. Cross-platform packages may also be available for some software. Note that new releases are made available to <a href="">Installable partners</a> for 4 weeks prior to general release.</p>
+
+
+<h5>Packages</h5>
+
+
+
+<h5>Source Code</h5>
+<p>If you prefer to install manually or want to contribute to development you can download the source code from our git repository on <a href="http://github.com/installables/{{ application.github }}">github</a>.
+
+
+<h3>Licensing</h3>
+<p><strong>{{ application.name }}</strong> is provided free to use for education, research and commercial purposes. 
+
+{% endblock %}
+

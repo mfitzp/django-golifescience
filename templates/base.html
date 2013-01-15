@@ -1,0 +1,130 @@
+{% load i18n %}
+{% load core_tags %}
+{% load adminmedia %}
+{% load thumbnail %}
+{% load macros %}
+
+{% macro title %}
+    {% block title %}Installables{% endblock %}
+{% endmacro %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+	<head>
+		<title>{% if title %}{{ title }}{% else %}{% usemacro title %}{% endif %} | Installables&reg; Research and educational software for scientists</title>
+		<link rel="icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
+
+		<meta name="google-site-verification" content="6DVvgdOMFUgd9LVuQWMZNGwCZzqrH0PR2Xb6FsvhXPo" />
+        <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+        <meta name="keywords" content="software,download,open source,scientific,research,education,metabolomics,metabolic,metapath">
+        <meta name="description" content="Open Source scientific, research and educational software.">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,300italic,300,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}foundation/stylesheets/foundation.min.css" />
+        <link rel="stylesheet" href="stylesheets/foundation.min.css">
+
+        <script src="{{ MEDIA_URL }}javascripts/modernizr.foundation.js"></script>
+
+		<!-- Base CSS --><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
+
+		{% block %rss %}{% endblock %}
+		{% block extrastyle %}{% endblock %}
+		<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% load adminmedia %}{% admin_media_prefix %}css/ie.css{% endblock %}" /><![endif]-->
+		{% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% admin_media_prefix %}css/rtl.css{% endblock %}" />{% endif %}
+
+        {% block extrahead %}
+        <script type="text/javascript">
+            var csrf_token = '{{ csrf_token }}';
+        </script>
+	    {% endblock %}
+
+        {% if not user.is_staff %}
+            <script type="text/javascript">
+
+              var _gaq = _gaq || [];
+              _gaq.push(['_setAccount', 'UA-341253-6']);
+              _gaq.push(['_trackPageview']);
+
+              (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+              })();
+
+            </script>
+        {% endif %}
+
+</head>
+	
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
+{% block forkme %}{% endblock %}
+
+<div class="notfixed contain-to-grid">
+    <!-- Basic Needs -->
+    <nav class="top-bar">
+      <ul>
+        <li class="name"><h1><a href="/">Installables</a></h1></li>
+        <li class="toggle-topbar"><a href="#"></a></li>
+      </ul>
+    <section>
+      <ul class="right">
+        <li><a href="{% url about %}">About</a></li>
+        <li><a href="{% url about %}">Blog</a></li>
+
+        <li class="has-dropdown">
+          <a href="#">Software</a>
+
+          <ul class="dropdown">
+            {% for application in all_applications %}
+                <li><a href="{% url application application_slug=application.slug %}">{{ application.name }}</a></li>
+            {% endfor %}
+          </ul>
+
+        </li>
+        <li><a href="#">Register</a></li>
+        <li><a href="{% url contact %}">Contact</a></li>
+      </ul>
+
+    </section>
+
+    </nav>
+
+</div>
+
+{% block imageheader %}{% endblock %}
+
+  <div class="header {% block header_classes %}{% endblock %}">
+      <div class="row">
+        <div class="twelve columns">
+            <h1>{% usemacro title %}</h1>
+            <h4>{% block subtitle %}Open Source research and educational software for scientists{% endblock %}</h4>
+        </div>
+        </div>
+  </div>
+
+
+ 
+<div class="body">
+{% block layout %}
+  <div class="row">
+    <div class="twelve columns">
+        {% block content %}
+        {% endblock %}
+    </div>
+  </div>
+{% endblock %}
+</div>
+
+  <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
+  <!-- Included JS Files (Minified) -->
+  <script src="{{ MEDIA_URL }}foundation/javascripts/foundation.min.js"></script>
+  <!-- Initialize JS Plugins -->
+  <script src="{{ MEDIA_URL }}foundation/javascripts/app.js"></script>
+   
+{% block extrajs %}{% endblock %}
+<script>
+    
+</script>
+</body>
+</html>

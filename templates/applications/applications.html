@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load pagination_tags %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block title %}HappyCustomers{% endblock %}
+{% block content_title %}HappyCustomers{% endblock %}
+
+{% block content %}
+
+<div class="boxout"><div>
+<p>Here are a few things that our customers are saying about us. Do you have a HappyFeet success story? <a href="{% url contact %}">Share it with us!</a></p>
+</div></div>
+
+   {% for testimonial in testimonials %}
+    <div class="testimonial">
+        <div class="testimonial_lq">&ldquo;</div>
+        <div class="testimonial_quote">{{ testimonial.testimonial }}</div>
+        <div class="testimonial_customer">- {{ testimonial.customer_name }}{% if testimonial.customer_location %}, {{ testimonial.customer_location }}{% endif %}</div>
+    </div>
+   {% endfor %}
+
+{% endblock %}
+

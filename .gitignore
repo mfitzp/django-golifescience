@@ -1,0 +1,4 @@
+!.gitignore
+static/*
+local_settings.py
+*.pyc

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block layout %}
+  <div class="row">
+    <div class="nine columns">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div class="three columns">
+        {% block sidebar_right %}
+        {% endblock %}
+    </div>
+  </div>
+{% endblock %}
