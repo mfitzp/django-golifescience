@@ -7,36 +7,9 @@
 
 {% block content %}
 <div class="boxout"><div>
-<p>Here are answers to some of the common questions we get asked at shows. If you have another question you'd like answered, get in touch.
+<p>Here are answers to some of the common questions we get asked at shows. If you have another question you'd like answered, <a href="{% url contact %}">get in touch</a>.
 </p>
 </div></div>
-
-<h4>How do the insoles work?</h4>
-<p>Our insoles are clinically proven to significantly increase the circulation to the feet and lower legs.
-Because they contain a fluid, rather than foam or gel, they don't flatten or wear out.
-Instead the fluid is pushed up under the arch of the foot, providing gentle but firm support for flat feet and dropped arches and
-significantly reduce pain.</p>
-
-<h4>What size should I buy?</h4>
-<p>To maximise the benefits from the insoles and ensure that we supply the best fit for your foot, we ask that you measure the length and width of your foot in centimetres and order accordingly.</p>
-<table>
-<tr class="none"><td rowspan="12"><img src="{{ MEDIA_URL }}/img/measure-foot-outline.png"></td>
-<tr class="none"><th>SIZE</th><th colspan="2">Length (cm)</th><th>Width (cm)</th></tr>
-
-
-<tr class="meta"><th></th><th class="slen cr">Min</th><th class="slen cl">Max</th><th class=""></th><th></th></tr>
-<tr class="odd" onclick="update_size('XS');"><th>XS</th><td class="slen cr">22.5</td><td class="slen">23.5</td><td class="swid cc">8</td></tr>
-<tr class="even" onclick="update_size('S');"><th>S</th><td class="slen cr">23.5</td><td class="slen">24.5</td><td class="swid cc">8</td></tr>
-<tr class="even" onclick="update_size('M');"><th>M</th><td class="slen cr">24.5</td><td class="slen">26</td><td class="swid cc">8.5</td></tr>
-<tr class="odd" onclick="update_size('M2');"><th>M2</th><td class="slen cr">26</td><td class="slen">27</td><td class="swid cc">8.5</td></tr>
-<tr class="even" onclick="update_size('L');"><th>L</th><td class="slen cr">26.5</td><td class="slen">27</td><td class="swid cc">10</td></tr>
-<tr class="odd" onclick="update_size('L2');"><th>L2</th><td class="slen cr">27</td><td class="slen">28</td><td class="swid cc">9.5</td></tr>
-<tr class="even" onclick="update_size('XL');"><th>XL</td><td class="slen cr">28.5</td><td class="slen">29.5</td><td class="swid cc">9.5</td></tr> 
-<tr class="odd" onclick="update_size('XX');"><th>XX</th><td class="slen cr">30</td><td class="slen">31.5</td><td class="swid cc">10.5</td></tr>
-</table>
-
-<h4>What if the insoles aren't right for me?</h4>
-<p>All our insoles come with a thirty day money back guarantee and a twelve month warranty.</p>
 
 {% endblock %}
 
