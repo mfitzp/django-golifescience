@@ -72,6 +72,12 @@ TEMPLATE_DIRS = (
 
 ROOT_URLCONF = 'urls'
 
+SUBDOMAIN_URLCONFS = {
+    None: 'urls',  # no subdomain, e.g. ``example.com``
+    'install': 'urls.install',
+    'api': 'urls.api',
+}
+
 DEFAULT_HOST = 'install.abl.es'
 
 # Make this unique, and don't share it with anybody.
@@ -116,6 +122,7 @@ INSTALLED_APPS = (
 #    'django.contrib.comments',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
+#    'django.contrib.signals',
 # Externals
     'pagination',       #http://code.google.com/p/django-pagination
     'easy_thumbnails',  #http://github.com/SmileyChris/easy-thumbnails
@@ -123,12 +130,19 @@ INSTALLED_APPS = (
 #    'memcache_status',
     'taggit',
     'markdown',
+    'haystack',
+    'picklefield',
+    'mptt',
+    'hitcount',
 # installables
     'core',
     'ajax',
     'testimonials',
     'applications',
     'blog',
+    'methods',
+    'tagmeta', 
+    'reference',
 )
    
 CACHES = {
@@ -151,9 +165,23 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
     # Custom data
-	#'context_processors.languages',
+	'context_processors.languages',
 	'context_processors.modelglobals',
 )
+
+
+# Haystack configuration
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.xapian_backend.XapianEngine',
+        'PATH': os.path.join(SITE_ROOT, 'search_index'),
+#        'TIMEOUT': 60 * 5,
+        'INCLUDE_SPELLING': True,
+        'BATCH_SIZE': 100,
+        'DEFAULT_OPERATOR': 'OR',
+#        'EXCLUDED_INDEXES': ['thirdpartyapp.search_indexes.BarIndex'],
+    },
+}
 
 
 REDIRECT_FIELD_NAME = 'next'

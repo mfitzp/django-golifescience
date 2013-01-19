@@ -1,6 +1,5 @@
 from django.conf.urls.defaults import *
 from django.contrib import admin
-from django.contrib.sites.models import Site
 from django.utils.translation import ugettext as _
 admin.autodiscover()
 # Sitemaps
@@ -22,7 +21,7 @@ urlpatterns = patterns('',
     (r'^admin/jsi18n', i18n_javascript),
     (r'^admin/',    include(admin.site.urls)),
 
-    # Happyfeet
+    # Installables
     url(r'^$', 'core.views.home', name='home'),
 
     url(r'^about/$', 'django.views.generic.simple.direct_to_template', {'template': 'about.html'}, name='about'),
@@ -35,6 +34,18 @@ urlpatterns = patterns('',
     (r'^software/',      include('applications.urls')),
 
     (r'^blog/',      include('blog.urls')),
+
+    (r'^methods/',      include('methods.urls')),
+
+
+    # Search
+#    url(r'^tags/$', 'core.views.tag_search', {
+#                'template':'search/tag_search.html',
+#                'searchqueryset':SearchQuerySet().models(Tag).load_all(),
+#                'form_class':SearchForm,
+#            }, 
+#            name='tags'
+#        ),
 
     # Ajax
     (r'^ajax/',      include('ajax.urls')),

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load pagination_tags %}
+{% load bootstrap_toolkit %}
+
+{% block content %}
+    <h2>Search</h2>
+
+    <form method="get" action="." class="well form-inline">
+        {{ form|as_bootstrap:"inline" }}
+        <button type="submit" class="btn">Search</button>
+    </form>
+
+        {% if query %}
+            <h3>Results</h3>
+
+            {% for result in page.object_list %}
+                <p>
+                    <a href="{{ result.object.get_absolute_url }}">
+                        {% if result.object.name %}
+                            {{ result.object.name }}
+                        {% else %}
+                            {{ result.object.content }}
+                        {% endif %}
+                    </a>
+                </p>
+            {% empty %}
+                <p>No results found.</p>
+            {% endfor %}
+        {% else %}
+            {# Show some example queries to run, maybe query syntax, something else? #}
+        {% endif %}
+    </form>
+
+
+{% with page as page_obj %}
+    {% paginate %}
+{% endwith %}
+
+
+{% endblock %}

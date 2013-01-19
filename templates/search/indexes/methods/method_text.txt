@@ -1,0 +1,14 @@
+{{ object.name }}
+{{ object.description }}
+
+{{ object.materials }}
+
+{% for step in object.steps.all %}
+    {{ step.content }}
+    {{ step.tip }}
+{% endfor %}
+
+{% for tag in object.tags.all %}
+    {{ tag }}
+{% endfor %}
+

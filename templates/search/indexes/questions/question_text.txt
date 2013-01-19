@@ -1,0 +1,13 @@
+{{ object.title }}
+{{ object.description }}
+
+{{ object.materials }}
+
+{% for answer in object.answers.all %}
+    {{ answer.content }}
+{% endfor %}
+
+{% for tag in object.tags.all %}
+    {{ tag }}
+{% endfor %}
+

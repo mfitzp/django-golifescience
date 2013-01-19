@@ -1,0 +1,48 @@
+{% load core_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+
+    <div id="{% if is_template %}form-template{% else %}step-{{ forloop.counter0 }}{% endif %}" class="step step-edit step-thread-{{ form.instance.thread }}" {% if is_template %}style="display:none;"{% endif %}>
+
+
+        <div class="step-number">{{ forloop.counter }}</div>
+        <div class="step-thread-switcher"><img src="{{ MEDIA_URL }}/img/icons/thread.png"></div>
+
+        {% if form.errors %}
+            <ul class="errorlist">
+                {% for field in form %}
+                {% if field.errors %}<li class="error">{{ field.name }} - {{ field.errors|striptags }}</li>{% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+
+        {% if form.instance.pk %}
+            {{ form.DELETE }}
+        {% endif %}
+
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+
+
+        <div class="step-content">{{form.content}}</div>
+
+        <div class="step-advanced">
+           <div class="step-advanced-trigger">More (+)</div>
+           <div class="step-advanced-toggle">
+            <table>
+                <tr><th>{{ form.image.label }}</th><td>{{ form.image }}</td></tr>
+                <tr><th>{{ form.tip.label }}</th><td>{{ form.tip }}</td></tr>
+            </table>
+            </div>
+        </div>
+
+        <div class="step-duration step-duration-{% if form.duration.value %}on{% else %}off{% endif %}"><span class="step-duration-wrapper">{{ form.duration }}</span> <span class="step-duration-toggle">&nbsp;</span></span><span class="step-duration-controls">{{ form.is_wait }}</span></div>
+
+
+
+
+    </div>

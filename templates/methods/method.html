@@ -1,0 +1,184 @@
+{% extends "base_with_sidebar_right.html" %}
+{% load i18n %}
+{% load core_tags %}
+{% load thumbnail %}
+{% load hitcount_tags %}
+{% load markup %}
+
+{% block extrahead %}
+    {{ block.super }}
+     <script> 
+      $(document).ready(function() {
+      {% get_hit_count_javascript for method %}
+      });
+     </script>
+     <!-- Facebook Opengraph support -->
+     <meta property="og:title" content="{{ method }}"/>
+     {% if method.image %}<meta property="og:image" content="{% thumbnail method.image 128x128 upscale crop %}"/>{% endif %}
+     <meta property="og:description" content="{{ method.description }}"/>
+{% endblock %}
+
+
+
+{% block title %}{{ method }}{% endblock %}
+{% block subtitle %}{{ method.shortdesc }}{% endblock %}
+
+{% block header_classes %}header-overlay{% endblock %}
+
+{% block imageheader %}
+<div class="imageheader" {% if method.image %}style="background-image:url('{{ method.image.url }}')"{% endif %}></div>
+{% endblock %}
+
+{% block content_header %}
+<div class="row">
+    <div class="twelve columns"  itemprop="description">
+        {{ method.description|markdown }}
+    </div>
+</div>
+<div class="row">
+    <div class="twelve columns">
+        <dl id="magellanTopNav" data-magellan-expedition="fixed" class="sub-nav">
+          <dt>Prepare</dt>
+          <dd data-magellan-arrival="background"><a href="#background">Background</a></dd>
+          <dd data-magellan-arrival="requirements"><a href="#requirements">Requirements</a></dd>
+          <dd data-magellan-arrival="warnings"><a href="#warnings">Warnings</a></dd>
+          <dt>Do</dt>
+          <dd data-magellan-arrival="method"><a href="#method">Method</a></dd>
+          <dt>Explore</dt>
+          <dd data-magellan-arrival="warnings"><a href="#publications">Publications</a></dd>
+        </dl>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% if method.notes %}
+<h3 data-magellan-destination="background">{% trans "Background" %}</h3>
+    <p>{{ method.notes|markdown:"safe,tables" }}</p>
+{% endif %}
+
+    {% if method.materials %}
+<h3 data-magellan-destination="requirements">Requirements</h3>
+    <ul class="disc">
+    {% for ingredient in method.materials|splitnewlines %}
+        <li itemprop="ingredients">{{ ingredient }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+<a name="method"></a>
+<h3 data-magellan-destination="method">{% trans "Method" %}</h3>
+
+    <div id="method-container" itemprop="recipeInstructions">
+
+        {% for timestamp, step in schedule.items %}
+        <div class="step step-thread-{{ step.thread }}" data-magellan-destination="step{{ forloop.counter }}">
+
+        {% if step.wait %}
+            <div class="step-wait" data-magellan-destination="step{{ forloop.counter }}">Wait for 
+                <span class="thread-dot step-thread-{{ step.thread }}">&bull;</span>
+                {% duration step.wait %}
+            </div>
+
+        {% else %}
+        <div class="step-content">
+        <div class="row">
+            <div class="one columns step-number">{{ step.order }}</div>
+            <div class="eleven columns">
+                {{ step.content|markdown:"safe,tables,codehilite" }}
+            </div>
+        </div></div>
+         {% endif %}
+
+
+        {% if step.image %}
+        <div class="row">
+        <div class="eleven columns offset-by-one">
+          <a href="{{ MEDIA_URL }}{{ step.image }}" class="imagezoom step-image"><img src="{% thumbnail step.image 660x250 upscale crop %}"></a>
+        </div></div>
+        {% endif %}
+
+        {% if step.tip %}
+        <div class="row">
+        <div class="eleven columns offset-by-one"><div class="step-tip">
+            <i class="general foundicon-idea"></i>
+            {{ step.tip|markdown:"safe,tables,codehilite" }}   
+        </div></div></div>
+        {% endif %}
+    
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+{% with method as object %}{ % include "comments/_discussion.html" % }{% endwith %}
+
+{% endblock %}
+
+{% block sidebar_right %}
+
+<h6>{% trans "About" %}</h6>
+<ul class="navlist">
+<li><i class="general foundicon-clock"></i> {% duration total_duration %}</li>
+<li><i class="general foundicon-checkmark"></i> {{ schedule.items|length }} steps</li>
+
+</ul>
+
+
+
+    <h6>{% trans "Tags" %}</h6>
+    {% with method.tags.all as tags %}{% with 1 as show_tag_counts %}
+        <div class="row"><div class="twelve columns tags-vertical">
+            {% include "_tags.html" %}
+        </div></div>        
+    {% endwith %}{% endwith %}
+
+    {% if method.referenceR %}{% with method.reference as reference %}
+    <h6>Published</h6>
+    <div class="published hilite hilite-2">
+    <table>
+
+    {% if reference.title %}<tr><th>Title</th><td><a href="{{ method.reference.url }}">{{ reference.title }}</a></td></tr>{% endif %}
+    {% if reference.description %}<tr><th>Description</th><td>{{ reference.description }}</td></tr>{% endif %}
+    {% if reference.author %}<tr><th>Author</th><td>{{ reference.author }}</td></tr>{% endif %}
+    {% if reference.publisher or reference.published %}<tr><th>Published</th><td>
+       {% if reference.publisher %}<em>{{ reference.publisher }}</em>{% endif %}
+       {% if reference.published %}{{ reference.published }}{% endif %}
+    </td></tr>{% endif %}
+
+    </table>
+    </div>
+
+    {% endwith %}
+    
+    {% endif %}
+
+    <h6>Related {{ site.meta.method_name_plural }}</h6>
+<ul class="navlist">
+    {% for result in morelikethis %}
+    {% with result.object as mlt_method %}
+    {% if mlt_method %}
+        <li><a href="{% url method-detail method_id=mlt_method.id %}">{{ mlt_method }}</a></li>
+    {% endif %}
+    {% endwith %}
+    {% empty %}
+    <li>None.</li>
+    {% endfor %}
+    </ul>
+
+
+<h6>{% trans "Meta" %}</h6>
+<ul class="navlist">
+<li><i class="social foundicon-torso"></i> Added by <a href="{ % url user-profile username=method.author % }">{{ method.author.get_full_name }}</a></li>
+{% if method.latest_editor %}
+<li><i class="social foundicon-torso"></i> Latest edit by <a href="{ % url user-profile username=method.latest_editor % }">{{ method.latest_editor.get_full_name }}</a></li>
+{% endif %}<li><i class="general foundicon-clock"></i> Updated {{ method.updated_at|brieftimesince }} ago.</li>
+</ul>
+
+{% endblock %}
+
+
+
+

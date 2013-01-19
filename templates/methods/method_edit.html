@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load core_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+{% load bootstrap_toolkit %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script>
+    
+    var uid={{ formset.total_form_count }};
+
+    $(function() {
+
+       $('.step').formset({
+            prefix: '{{ formset.prefix }}',
+            addText: 'Add another step',
+            deleteText: '&nbsp;',
+            formTemplate: $('#form-template'),
+
+            removed: function(obj){
+                $( "#sortable" ).trigger('sortupdate'); 
+            },
+
+            added: function(obj){
+                obj.appendTo( $('#sortable') );
+                uid++;
+                obj.attr('id','step-' + uid);
+
+
+                obj.find("input[name$='is_wait']").simpleImageCheck({
+                  image: '{{ MEDIA_URL }}img/icons/continue.png',
+                  imageChecked: '{{ MEDIA_URL }}img/icons/wait.png',
+                });
+
+                obj.find("input[name='timer_toggle']").simpleImageCheck({
+                  image: '{{ MEDIA_URL }}img/icons/continue.png',
+                  imageChecked: '{{ MEDIA_URL }}img/icons/wait.png',
+                });
+
+                $( "#sortable" ).trigger('sortupdate'); 
+
+                // Apply the markdown editor to the new box
+                ta = obj.find("textarea")[0];
+                $(ta).attr('id','ta-' + uid);
+                miu.init('ta-' + uid);
+
+                obj.find("input[name$='duration']").splitTimedelta();
+
+            }
+
+        });
+
+        $('#content-tabs').tabs();
+
+       $('.step-advanced-trigger').click(function() {
+            sa = $(this).parent();
+            toggle = sa.find('.step-advanced-toggle');
+            toggle.fadeToggle('fast');
+        });
+
+        $(".step-duration-toggle").click(function() {
+            step = $(this).parents(".step");
+            sd = $(step).find(".step-duration")
+            $(sd).toggleClass('step-duration-on');
+            if( $(sd).hasClass('step-duration-on') ){
+                // Auto-update the underlying field with the contents of the spinners
+                $(step).find('[id$="days"]').blur()
+            } else {
+                // Wipe the underlying field, so saved result will be None
+                $(step).find('[id$="duration"]').val('')
+            }
+        });
+
+
+        $('#sortable').find("input[name$='is_wait']").simpleImageCheck({
+              image: '{{ MEDIA_URL }}img/icons/continue.png',
+              imageChecked: '{{ MEDIA_URL }}img/icons/wait.png',
+            });
+
+        $('#sortable').find("input[name='timer_toggle']").simpleImageCheck({
+              image: '{{ MEDIA_URL }}img/icons/continue.png',
+              imageChecked: '{{ MEDIA_URL }}img/icons/wait.png',
+            });
+
+        $( "#sortable" ).sortable()
+
+        // Post-initialise bind or the trigger below wont work :/
+        $( "#sortable" ).bind( "sortupdate", function(event, ui) {
+    
+           // On drop of item, update ordering for all elements on the page
+            var items = $(this).sortable('toArray');
+            var count = 1;
+
+            for(var item in items){
+                step = $("#" + items[item]);
+                deleted = $(step).find("input[name$='DELETE']");
+
+                // Only update the order field if item is not deleted
+                if( deleted.val()!='on' ){
+                     $(step).find("input[name$='order']").val(count);
+                     $(step).find(".step-number").html(count);
+                     count++;
+                   }
+            }
+        });
+
+        $(".step-thread-switcher").click(function() {
+            step = $(this).parents(".step");
+            field = $(step).find("input[name$='thread']");
+
+            n = parseInt(field.val())+1;
+            if(n>5){ n=1; }
+            field.val(n)
+
+            $(step).attr("class","step step-edit step-thread-" + n);
+        });
+
+        $("#method-edit").submit(function() {
+            $( "#sortable" ).trigger('sortupdate');
+        });
+
+        // Check size of sortable object; if it's not at least 1; add a step. Avoid empty steps. May want to trigger on delete also?
+        if( $('#sortable').sortable('toArray').length == 0 ){
+            $('.add-row').click();
+        }
+
+        $('#sortable').find("input[name$='duration']").splitTimedelta();
+
+        $("input[id$='days']").jStepper( {'minValue':0, 'allowDecimals':false } );
+        $("input[id$='hours']").jStepper( {'minValue':0, 'maxValue':23, 'allowDecimals':false } );
+        $("input[id$='minutes']").jStepper( {'minValue':0, 'maxValue':59, 'allowDecimals':false } );
+        $("input[id$='seconds']").jStepper( {'minValue':0, 'maxValue':59, 'allowDecimals':false } );
+
+        $(".step-content").find('textarea').change(function() {
+            parsetextfixedduration( $(this) );
+        });
+
+
+
+    })
+
+    </script>
+{% endblock %}
+
+
+{% block content_title %}{{ method }}{% endblock %}
+
+{% block content_tabs %} 
+    <ul>
+    <li><a href="#tab-about">{% trans "About" %}</a></li>
+    <li><a href="#tab-method">{{ site.meta.method_name|capfirst }}</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+    <form action="{% url method-edit method_id=method.id %}" method="post" enctype="multipart/form-data" id="method-edit" class="form-horizontal">
+
+    {% csrf_token %}    
+
+    {{ formset.management_form }}
+
+<div id="tab-about">
+
+       {{ form|as_bootstrap }}
+
+</div>
+
+
+<div id="tab-method">
+
+    <div id="method-container">
+
+
+        <div id="sortable"><!-- JQuery -->
+        {% for form in formset.forms %}
+            {% include "methods/method_step_formset.html" %}
+        {% endfor %}
+        </div>
+
+
+        <!-- template form -->
+        <div>
+            {% with form_template as form %}
+            {% with 1 as is_template %}
+                {% include "methods/method_step_formset.html" %}
+            {% endwith %}
+            {% endwith %}
+        </div>
+
+   </div>
+
+
+</div>
+
+<div class="form-actions">
+    <a class="btn" href="{% url method-detail method_id=method.id %}">Cancel</a>
+    <button class="btn btn-primary" type="submit">Save Changes</button>
+</div>
+
+   </form>
+
+
+
+{% endblock %}
+
+{% block sidebar %}
+    
+
+
+<div class="well hilite hilite-2">
+    <h5>Help</h5>
+
+<p>Welcome to the editor. Here you can <em>add</em>, <em>remove</em> and <em>rearrange</em> steps to build the perfect {{ site.meta.method_name }}.</p>
+
+<ul>
+<li class="delete">Delete this step</li>
+<li class="add">Add a new step (to the end).<br />You can drag and drop steps into place at any time.</li>
+</ul>
+
+<p>Additionally there are some optional settings for more complicated behaviour:</p>
+
+<ul>
+<li class="waiting">Mark this as a waiting step and you can get on with other things.</li>
+<li class="thread">Switch <em>thread</em>. Steps will only start when previous steps are complete. However, by moving steps into different threads
+you can continue working while a previous <em>waiting step</em> finishes.</li>
+</ul>
+</div>
+
+
+{% endblock %}

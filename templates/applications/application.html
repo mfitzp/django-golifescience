@@ -7,7 +7,13 @@
 {% block title %}{{ application.name }}{% endblock %}
 {% block subtitle %}{{ application.tagline }}{% endblock %}
 
-{% block extrajs %}{% endblock %}
+{% block extrajs %}
+<script type='text/javascript'>
+   $(window).load(function() {
+       $('#featuredContent').orbit({ fluid: '16x3' });
+   });
+</script>
+{% endblock %}
 
 {% block forkme %}
 {% if application.github %}
@@ -21,45 +27,68 @@
 <div class="imageheader" {% if application.image %}style="background-image:url('{{ application.image.url }}')"{% endif %}></div>
 {% endblock %}
 
-{% block content %}
-
-<div class="header-block">
-
+{% block content_header %}
 <div class="row">
-<div class="twelve columns">
-    <p>{{ application.description|markdown }}</p>
+    <div class="twelve columns" itemprop="description">
+        {{ application.description|markdown }}
+    </div>
 </div>
+<div class="row">
+    <div class="twelve columns">
+        <dl id="magellanTopNav" data-magellan-expedition="fixed" class="sub-nav">
+
+          <dt>Background</dt>
+          <dd data-magellan-arrival="features"><a href="#features">Key Features</a></dd>
+          <dd data-magellan-arrival="requirements"><a href="#requirements">Requirements</a></dd>
+          <dt>Install</dt>
+          <dd data-magellan-arrival="packages"><a href="#packages">Packages</a></dd>
+          <dd data-magellan-arrival="source"><a href="#source">Source</a></dd>
+          <dt>Meta</dt>
+          <dd data-magellan-arrival="publications"><a href="#publications">Publications</a></dd>
+          <dd data-magellan-arrival="license"><a href="#license">License</a></dd>
+        </dl>
+    </div>
 </div>
+{% endblock %}
 
-</div>
+{% block content %}
+<h3 data-magellan-destination="features">{% trans "Key Features" %}</h3>
 
-<dl class="tabs contained">
-  <dt>Key Features</dt>
-    {% for feature in application.features.all %}
-      <dd {% if forloop.counter == 1 %}class="active"{% endif %}><a href="#feature{{ forloop.counter }}">{{ forloop.counter }}</a></dd>
-    {% endfor %}
-</dl>
 
-<ul class="tabs-content contained">
+<div id="featuredContent">
 {% for feature in application.features.all %}
-  <li {% if forloop.counter == 1 %}class="active"{% endif %} id="feature{{ forloop.counter }}Tab">
-        <div class="row">
-            {% if not forloop.counter|divisibleby:2 %}
-                <div class="four columns"><img src="{% thumbnail feature.image 500x200 %}"></div>
-            {% endif %}
-            <div class="eight columns"><h5>{{ feature.title }}</h5><p>{{ feature.description|markdown }}</p></div>
-            {% if forloop.counter|divisibleby:2 %}
-                <div class="four columns"><img src="{% thumbnail feature.image 500x200 %}"></div>
-            {% endif %}
-
-        </div>
-    </li>
-    {% endfor %}
-</ul>
-
+    <div class="feature">
+      <div class="row">
+        {% if not forloop.counter|divisibleby:2 %}
+            <div class="four columns"><img src="{% thumbnail feature.image 500x200 %}"></div>
+        {% endif %}
+        <div class="eight columns"><h5>{{ feature.title }}</h5><p>{{ feature.description|markdown }}</p></div>
+        {% if forloop.counter|divisibleby:2 %}
+            <div class="four columns"><img src="{% thumbnail feature.image 500x200 %}"></div>
+        {% endif %}
+      </div>
+    </div>
+{% endfor %}
+</div>
 
 
-<h3>Publications</h3>
+<h3 data-magellan-destination="requirements">Requirements</h3>
+
+
+<h3 data-magellan-destination="downloads">Downloads</h3>
+
+<p>Latest versions of {{ application.name }} are available below packaged for Windows, Mac and Linux where appropriate. Cross-platform packages may also be available for some software. Note that new releases are made available to <a href="">Installable partners</a> for 4 weeks prior to general release.</p>
+
+
+<h5 data-magellan-destination="packages">Packages</h5>
+
+
+
+<h5 data-magellan-destination="source">Source Code</h5>
+<p>If you prefer to install manually or want to contribute to development you can download the source code from our git repository on <a href="http://github.com/installables/{{ application.github }}">github</a>.
+
+
+<h3 data-magellan-destination="publications">Publications</h3>
 
     {% for publication in application.publications.all %}
         Publication
@@ -68,20 +97,7 @@
     {% endfor %}
 
 
-<h3>Downloads</h3>
-
-<p>Latest versions of {{ application.name }} are available below packaged for Windows, Mac and Linux where appropriate. Cross-platform packages may also be available for some software. Note that new releases are made available to <a href="">Installable partners</a> for 4 weeks prior to general release.</p>
-
-
-<h5>Packages</h5>
-
-
-
-<h5>Source Code</h5>
-<p>If you prefer to install manually or want to contribute to development you can download the source code from our git repository on <a href="http://github.com/installables/{{ application.github }}">github</a>.
-
-
-<h3>Licensing</h3>
+<h3 data-magellan-destination="licensing">Licensing</h3>
 <p><strong>{{ application.name }}</strong> is provided free to use for education, research and commercial purposes. 
 
 {% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load core_tags %}
+{% load countries_tags %}
+{% load bootstrap_toolkit %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block content_title %}{% if object %}Edit '{{ object }}'}{% else %}Add new {{ site.meta.method_name }}{% endif %}{% endblock %}
+
+{% block content %}
+
+        <form action="{% url method-create %}" method="POST">
+        {% csrf_token %}
+            {{ form|as_bootstrap }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+        </form>
+
+{% endblock %}
+
+
+
+
+

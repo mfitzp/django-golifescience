@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load avatar_tags %}
+{% load core_tags %}
+{% load thumbnail %}
+{% load bootstrap_toolkit %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script>
+    $(function() {
+        $('#id_title').val("{{ request.GET.q }}");
+    });
+
+    </script>
+{% endblock %}
+
+{% cycle 'odd' 'even' as zebra%}
+
+{% block content_title %}
+{% endblock %}
+
+{% block widebar %}{% include "ask/_ask.html" %}{% endblock %}
+
+{% block content %}
+
+{{ all_objects }}
+    <div>
+        {% if query %}
+            {% for result in page.object_list %}
+                {% if result.model_name == 'method' %}
+                    {% with result.object as method %}{% include "methods/_method.html" %}{% endwith %}
+                {% endif %}
+                {% if result.model_name == 'question' %}
+                    {% with result.object as question %}{% include "questions/_question.html" %}{% endwith %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+<h4>Not found what you're looking for? Ask the community!</h4>
+
+<table>{{ question_form.as_table }}</table>
+
+
+
+{% endblock %}
+
+
+
+
+{% block sidebar %}
+   <div class="postit"><div class="clip"></div>
+     <p>Not found what you're looking for?</p>
+     <p><a href="{% url question-create %}?title={{ request.GET.q }}">Ask the experts!</a></p>
+   </div>
+{% endblock %}

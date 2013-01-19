@@ -1,0 +1,14 @@
+{{ object.user.username }}
+
+{{ object.fullname }}
+{{ object.about }}
+
+{{ object.city }}
+{{ object.state }}
+{{ object.postcode }}
+{{ object.country }}
+
+{{ object.telno }}
+{{ object.url }}
+
+

@@ -1,10 +1,14 @@
 {% load thumbnail %}
 {% load core_tags %}
+{% load tagmeta_tags %}
 
   <div class="stack-item stack-tag">
         <div class="stack-item-detail">
             <span class="tag" itemprop="keywords">
-            <a href="{ % url method-tagged slug=tag.slug % }" alt="{{tag}}" title="{{tag}}">{{tag}} </a></span>
+            {% if tag.meta %}{% tagmeta_for_tag tag as tagmeta %}
+                {% if tagmeta.sponsor.icon %}<img src="{% thumbnail tagmeta.sponsor.icon 16x16 crop %}" class="tagicon">{% endif %}
+            {% endif %}
+            <a href="{% url method-tagged slug=tag.slug %}" alt="{{tag}}" title="{{tag}}">{{tag}} </a></span>
             <small>x{{ tag.taggit_taggeditem_items.count }}</small>
             <br />
             <!-- tag.meta.description -->

@@ -7,6 +7,9 @@ from django.utils.translation import ugettext as _
 # Installables
 from applications.models import Application
 
+def languages( context ):
+	return { 'LANGUAGES': settings.LANGUAGES, 'LANGUAGE_CODE': context.LANGUAGE_CODE }
+
 def modelglobals( content ):
     return {
         'all_applications': Application.objects.order_by('-name').all(),
