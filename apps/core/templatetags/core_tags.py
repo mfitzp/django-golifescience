@@ -124,3 +124,15 @@ def brieftimesince(value, arg=None):
         return u''
 timesince.is_safe = False
 
+
+@register.simple_tag
+def colorname( name ):
+    """ 
+    Wrap the prefix of the ables name in a color span for theming on header bar
+    """
+    # Find 'ables' in the string, wrap span around the bit before this
+    
+    pos = name.lower().index('ables')
+    return '<span class="sitecolor">' + name[:pos] + '</span>' + name[pos:]
+
+

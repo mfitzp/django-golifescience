@@ -10,7 +10,12 @@
 {% block content %}
 <p><strong>Installables</strong> develops clear, elegant software to solve current scientific challenges. We feel strongly that scientific progress is dependent on the availability of adequate computing tools. 
 In keeping with this philosphy our software is available for unlimited use, without expensive or complicated licensing. 
-However, you can support development and receive a number of benefits, by registering for our <a href="{% url partner %}">partner program</a>.
+However, you can support development and receive a number of benefits, by registering for our <a href="{% url 'partner' %}">partner program</a>.
+</p>
+
+<p><strong>Doables</strong> offers open access to scientific protocols enhanced with modern multimedia to improve understanding and share expertise.
+We collate protocols from across the web, with the author's permission and provide our modified versions under Creative Commons licensing CC-BY-SA. If you wish 
+to submit your own protocols to the world <a href="{% url 'contact' %}">contact us</a>.
 </p>
 
 <!-- <h4>Who are we?</h4>
@@ -23,7 +28,7 @@ However, you can support development and receive a number of benefits, by regist
 </p>
 
 <h5>More Questions?</h5>
-<p>We've answered many of our <a href="{% url faq %}">frequently asked questions</a> or you can <a href="{% url contact %}">contact us directly</a>.</p>
+<p>We've answered many of our <a href="{% url 'faq' %}">frequently asked questions</a> or you can <a href="{% url 'contact' %}">contact us directly</a>.</p>
 
 
 

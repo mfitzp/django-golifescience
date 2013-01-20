@@ -4,6 +4,7 @@
 {% load thumbnail %}
 {% load hitcount_tags %}
 {% load markup %}
+{% load author_tags %}
 
 {% block extrahead %}
     {{ block.super }}
@@ -21,7 +22,11 @@
 
 
 {% block title %}{{ method }}{% endblock %}
-{% block subtitle %}{{ method.shortdesc }}{% endblock %}
+{% block subtitle %}
+    {% if method.authors %}
+        <p class="author_list">{% author_list method.authors.all %}</p>
+    {% endif %}
+{% endblock %}
 
 {% block header_classes %}header-overlay{% endblock %}
 
@@ -32,7 +37,7 @@
 {% block content_header %}
 <div class="row">
     <div class="twelve columns"  itemprop="description">
-        {{ method.description|markdown }}
+        <p>{{ method.description }}</p>
     </div>
 </div>
 <div class="row">
@@ -113,7 +118,15 @@
 
     </div>
 
-{% with method as object %}{ % include "comments/_discussion.html" % }{% endwith %}
+{% if method.references %}
+<h3 data-magellan-destination="publications">{% trans "References" %}</h3>
+    {% for reference in method.references.all %}
+        {% include "references/_reference.html" %}
+    {% endfor %}
+{% endif %}
+
+<!--
+{% with method as object %}{ % include "comments/_discussion.html" % }{% endwith %} -->
 
 {% endblock %}
 
@@ -125,8 +138,12 @@
 <li><i class="general foundicon-checkmark"></i> {{ schedule.items|length }} steps</li>
 
 </ul>
-
-
+    <h6>Actions</h6>
+<ul class="navlist">
+<li><i class="general foundicon-page"></i> <a href="javascript:window.print()">{% trans "Print this page" %}</a></li>
+<li><i class="social foundicon-thumb-up"></i> 
+<a href="#" data-reveal-id="socialModal">Share this protocol</a></li>
+</ul>
 
     <h6>{% trans "Tags" %}</h6>
     {% with method.tags.all as tags %}{% with 1 as show_tag_counts %}
@@ -155,12 +172,12 @@
     
     {% endif %}
 
-    <h6>Related {{ site.meta.method_name_plural }}</h6>
+    <h6>Related Protocols</h6>
 <ul class="navlist">
     {% for result in morelikethis %}
     {% with result.object as mlt_method %}
     {% if mlt_method %}
-        <li><a href="{% url method-detail method_id=mlt_method.id %}">{{ mlt_method }}</a></li>
+        <li><a href="{% url 'method-detail' method_id=mlt_method.id %}">{{ mlt_method }}</a></li>
     {% endif %}
     {% endwith %}
     {% empty %}
@@ -171,14 +188,20 @@
 
 <h6>{% trans "Meta" %}</h6>
 <ul class="navlist">
-<li><i class="social foundicon-torso"></i> Added by <a href="{ % url user-profile username=method.author % }">{{ method.author.get_full_name }}</a></li>
-{% if method.latest_editor %}
-<li><i class="social foundicon-torso"></i> Latest edit by <a href="{ % url user-profile username=method.latest_editor % }">{{ method.latest_editor.get_full_name }}</a></li>
+<li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=method.created_by subdomain=None %}">{{ method.created_by.get_full_name }}</a></li>
+{% if method.edited_by %}
+<li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=method.edited_by subdomain=None %}">{{ method.edited_by.get_full_name }}</a></li>
 {% endif %}<li><i class="general foundicon-clock"></i> Updated {{ method.updated_at|brieftimesince }} ago.</li>
 </ul>
 
 {% endblock %}
 
+{% block modals %}
+<div id="socialModal" class="reveal-modal [expand, xlarge, large, medium, small]">
+  <h2>Share this protocol.</h2>
+  {% with method as object %}{% include "_social.html" %}{% endwith %}
+</div>
+{% endblock %}
 
 
 

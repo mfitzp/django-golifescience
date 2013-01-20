@@ -31,7 +31,7 @@
 			        <tbody>
 				        {% for action in action_list %}
 					        <tr>
-					            <th scope="row"><a href="{% url method-detail method_id=method.id %}" title="{{ action.revision.date_created|date:_("DATETIME_FORMAT")}}">{{ action.revision.date_created|timesince }}</a></th>
+					            <th scope="row"><a href="{% url 'method-detail' method_id=method.id %}" title="{{ action.revision.date_created|date:_("DATETIME_FORMAT")}}">{{ action.revision.date_created|timesince }}</a></th>
 					            <td>{% avatar action.revision.user 32 %} {{ action.revision.user.get_profile.fullname }}</td>
 					            <td>{{action.revision.comment|default:""}}</td>
 					        </tr>

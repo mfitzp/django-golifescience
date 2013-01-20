@@ -32,8 +32,8 @@
    
     <h5>Actions</h5>
     <ul class="navlist navlist-icon">
-        <li class="icon_article"><a href={% url article-create %}>{% trans "Submit a News article" %}</a></li>
-        <li class="icon_rss"><a href={ % url article-rss-latest % }>{% trans "RSS feed of latest articles" %}</a></li>
+        <li class="icon_article"><a href="{% url 'article-create' %}">{% trans "Submit a News article" %}</a></li>
+        <li class="icon_rss"><a href="{ % url 'article-rss-latest' % }">{% trans "RSS feed of latest articles" %}</a></li>
     </ul>
 
     <h5>Related tags</h5>

@@ -6,7 +6,6 @@ from django.forms.models import inlineformset_factory, BaseModelFormSet
 from django.contrib.sites.models import Site
 # Methodmint                               
 from methods.models import *
-from reference.models import Reference
 # External
 from countries.models import Country
 from haystack.forms import SearchForm
@@ -39,9 +38,7 @@ class MethodForm(forms.ModelForm):
     tags = TagField(required=False, widget = TagWidget(attrs={'class': "tagsinput"}), help_text='A comma-separated list of tags.')
     
     site = forms.ModelChoiceField(queryset=Site.objects.all(), required=True, widget=forms.HiddenInput() )
-    #task = forms.ModelChoiceField(queryset=Task.objects.all(), required=True, widget=forms.HiddenInput() )
-    uri = forms.CharField(label='Published URI', required=False, help_text='Optional alternative publication reference e.g. ISBN, DOI or web address')
-
+ 
     #author = forms.ModelChoiceField(queryset=User.objects.all(), required=True, widget=forms.HiddenInput() )
 
     class Meta:

@@ -10,7 +10,10 @@ from applications.models import Application
 def languages( context ):
 	return { 'LANGUAGES': settings.LANGUAGES, 'LANGUAGE_CODE': context.LANGUAGE_CODE }
 
-def modelglobals( content ):
+def modelglobals( context ):
     return {
         'all_applications': Application.objects.order_by('-name').all(),
     } 
+
+def site( context ):
+    return {'site': settings.SUBDOMAIN_SITES[ context.subdomain ] }

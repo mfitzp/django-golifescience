@@ -3,6 +3,7 @@
 {% load pagination_tags %}
 {% load thumbnail %}
 {% load i18n %}
+{% load author_tags %}
 
 {% block title %}{{ application.name }}{% endblock %}
 {% block subtitle %}{{ application.tagline }}{% endblock %}
@@ -45,6 +46,7 @@
           <dd data-magellan-arrival="source"><a href="#source">Source</a></dd>
           <dt>Meta</dt>
           <dd data-magellan-arrival="publications"><a href="#publications">Publications</a></dd>
+          <dd data-magellan-arrival="contributors"><a href="#contributors">Contributors</a></dd>
           <dd data-magellan-arrival="license"><a href="#license">License</a></dd>
         </dl>
     </div>
@@ -93,9 +95,16 @@
     {% for publication in application.publications.all %}
         Publication
     {% empty %}
-        <p>No publications yet. Don't forget to <a href="{% url contact %}">let us know</a> if you use <strong>{{ application.name }}</strong> in your published work. We'll feature you here!</p>
+        <p>No publications yet. Don't forget to <a href="{% url 'contact' None %}">let us know</a> if you use <strong>{{ application.name }}</strong> in your published work. We'll feature you here!</p>
     {% endfor %}
 
+<h3 data-magellan-destination="contributors">Contributors</h3>
+<p>The following individuals and associated organisations have made significant contributions towards the development of <strong>{{ application.name }}</strong>. Complete listings of all
+contributions of code and other resources can be found <a href="https://github.com/installables/{{ application.github }}">via github</a>.</p>
+
+    {% if application.authors %}
+        <p class="author_list">{% author_list application.authors.all %}</p>
+    {% endif %}
 
 <h3 data-magellan-destination="licensing">Licensing</h3>
 <p><strong>{{ application.name }}</strong> is provided free to use for education, research and commercial purposes. 

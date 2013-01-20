@@ -1,6 +1,7 @@
 import os
 import sys
 import datetime
+from django.template.loader import add_to_builtins
 
 # Django settings for methodmint project.
 
@@ -70,15 +71,32 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'templates'),
 )
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'urls.urls'
 
 SUBDOMAIN_URLCONFS = {
-    None: 'urls',  # no subdomain, e.g. ``example.com``
+    None: ROOT_URLCONF,
     'install': 'urls.install',
-    'api': 'urls.api',
+    'do': 'urls.do',
+#    'install': 'urls.install',
+#    'api': 'urls.api',
 }
 
-DEFAULT_HOST = 'install.abl.es'
+SUBDOMAIN_SITES = {
+    None: {
+            'name': '*ables',
+            'tagline':'Open Source solutions for scientific progress',
+          },
+    'install': {
+            'name': 'Installables',
+            'tagline':'Open access scientific protocols',
+          },
+    'do': {
+            'name': 'Doables',
+            'tagline':'Innovative scientific software for research and education',
+          },
+}
+
+DEFAULT_HOST = 'abl.es'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'u2y=71bj-k%-iubxq+gvtwo7__7#b2gr^^4ug)a4*uzy^c7d#m'
@@ -89,6 +107,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader'
 )
 
+add_to_builtins('subdomains.templatetags.subdomainurls')
 
 MIDDLEWARE_CLASSES = (
 
@@ -108,6 +127,8 @@ MIDDLEWARE_CLASSES = (
     'pagination.middleware.PaginationMiddleware',
     'core.http.Http403Middleware',
 
+    'subdomains.middleware.SubdomainURLRoutingMiddleware',
+
 #    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
@@ -116,6 +137,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sitemaps',
+#    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.markup',
     'django.contrib.messages',
@@ -134,6 +156,8 @@ INSTALLED_APPS = (
     'picklefield',
     'mptt',
     'hitcount',
+    'countries',    
+    'subdomains',
 # installables
     'core',
     'ajax',
@@ -142,7 +166,10 @@ INSTALLED_APPS = (
     'blog',
     'methods',
     'tagmeta', 
-    'reference',
+    'references',
+    'profiles',
+    'authors',
+    
 )
    
 CACHES = {
@@ -167,6 +194,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     # Custom data
 	'context_processors.languages',
 	'context_processors.modelglobals',
+	'context_processors.site',
 )
 
 
@@ -183,6 +211,8 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
+AUTH_PROFILE_MODULE = "profiles.userprofile"
+COMMENTS_APP = 'comments'
 
 REDIRECT_FIELD_NAME = 'next'
 FORCE_LOWERCASE_TAGS = True

@@ -79,14 +79,10 @@
         {% include "_directory.html" %}
     {% endif %}
 
-    <h6>Related tags</h6>
-    {% with related_tags as tags %}
-        <div class="tags-vertical">{% include "_tags.html" %}</div>
-    {% endwith %}   
-
     <h6>Actions</h6>
-    <ul class="navlist navlist-icon">
-        <li class="icon_rss"><a href={% url method-rss-latest %}>{% trans "RSS feed of latest" %} {{ site.meta.method_name_plural }}</a></li>
+    <ul class="navlist">
+        <li><i class="social foundicon-rss"></i> <a href={% url 'method-rss-latest' %}>{% trans "Follow latest protocols" %}</a></li>
+<!--        <li><i class="social foundicon-rss"></i> <a href={% url 'method-rss-latest' %}>{% trans "Updated protocols" %}</a></li> -->
     </ul>
 
 {% endblock %}

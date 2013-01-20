@@ -15,8 +15,10 @@ from taggit.managers import TaggableManager
 from durationfield.db.models.fields.duration import DurationField
 from easy_thumbnails.fields import ThumbnailerImageField
 from autoslug.fields import AutoSlugField
+from django.contrib.contenttypes import generic
 # Methodmint
-from reference.models import Reference
+from references.models import Reference
+from authors.models import Author
 
 
 def method_file_path(instance=None, filename=None):
@@ -33,29 +35,6 @@ class Method(models.Model):
     def get_absolute_url(self):
         return reverse('method-detail',kwargs={'method_id':str(self.id)})#, 'slug':str(self.slug)})
 
-
-    # On save, check if reference created/changed & update accordingly
-    def save(self, force_insert=False, force_update=False):
-
-        if self.uri:
-            # Assign to a temporary reference model
-            ref = Reference(uri=self.uri)    
-            ref.getnamespace()
-
-            try:
-                ref.save()
-
-            except: #already exists in database
-                self.reference = Reference.objects.get( namespace=ref.namespace, uri=ref.uri )
-
-            else:
-                self.reference = ref      
-                ref.autopopulate()
-                ref.save()      
-        else:
-            self.reference = None
-
-        super(Method, self).save(force_insert, force_update)
     # Information
     name = models.CharField('Name', max_length = 50, blank = False)
     slug = AutoSlugField(populate_from='name')
@@ -68,13 +47,13 @@ class Method(models.Model):
     # this is a temporary botch until then/parsing is possible.
     materials = models.TextField(blank = True)
 
-    uri = models.CharField('Published URI', max_length = 255, blank = True)
-    reference = models.ForeignKey(Reference, null=True, editable = False)
-
     image = ThumbnailerImageField(max_length=255, upload_to=method_file_path, blank=True)    
 
-    author = models.ForeignKey(User, related_name='authored_methods') # Author originally submitted method
-    latest_editor = models.ForeignKey(User, related_name='edited_methods', blank=True, null=True) # Author of current version/sets
+    created_by = models.ForeignKey(User, related_name='created_methods') # Author originally submitted method
+    edited_by = models.ForeignKey(User, related_name='edited_methods', blank=True, null=True) # Author of latest edit
+
+    authors = generic.GenericRelation(Author)
+    references = generic.GenericRelation(Reference)
 
     objects = models.Manager()  
 
@@ -132,5 +111,33 @@ class Step(models.Model):
 
     class Meta:
         ordering = ['order']
+
+
+#class MethodAuthor(models.Model):
+#    
+#    user = models.ForeignKey(User)
+#    method = models.ForeignKey(Method)##
+#
+#    CONTRIBUTION_MARKERS = (
+#        ( 0, ''),
+#        ( 1, '&sup1;'),
+#        ( 2, '&sup2;'),
+#        ( 3, '&sup3;'),
+#        ( 1, '*'),
+#        ( 2, '&dagger;'),
+#        ( 3, '&Dagger;'),
+#    )
+#
+#    equal_contrib = models.PositiveIntegerField(default=0,choices=CONTRIBUTION_MARKERS)
+#
+#    class Meta:
+#        order_with_respect_to = 'method'    
+
+
+
+
+
+
+
 
 

@@ -10,7 +10,7 @@
 
 {% block content %}
 
-        <form action="{% url method-create %}" method="POST">
+        <form action="{% url 'method-create' %}" method="POST">
         {% csrf_token %}
             {{ form|as_bootstrap }}
         <div class="form-actions">

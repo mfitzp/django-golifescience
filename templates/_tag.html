@@ -8,7 +8,7 @@
             {% if tag.meta %}{% tagmeta_for_tag tag as tagmeta %}
                 {% if tagmeta.sponsor.icon %}<img src="{% thumbnail tagmeta.sponsor.icon 16x16 crop %}" class="tagicon">{% endif %}
             {% endif %}
-            <a href="{% url method-tagged slug=tag.slug %}" alt="{{tag}}" title="{{tag}}">{{tag}} </a></span>
+            <a href="{% url 'method-tagged' slug=tag.slug %}" alt="{{tag}}" title="{{tag}}">{{tag}} </a></span>
             <small>x{{ tag.taggit_taggeditem_items.count }}</small>
             <br />
             <!-- tag.meta.description -->

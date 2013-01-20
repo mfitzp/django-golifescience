@@ -1,5 +1,6 @@
 {% load thumbnail %}
 {% load core_tags %}
+{% load author_tags %}
 
 <div class="listing">
 
@@ -9,7 +10,7 @@
             <img src="{% thumbnail method.image 205x80 upscale crop %}">
         {% endif %}
         </div>
-        <div class="nine columns"><h5><a href="{% url method-detail method_id=method.id method_slug=method.slug %}">{{ method }}</a></h5>
+        <div class="nine columns"><h5><a href="{% url 'method-detail' method_id=method.id method_slug=method.slug %}">{{ method }}</a></h5>
     <p>{{ method.description }}</p>
     </div>    
     </div>
@@ -21,7 +22,7 @@
     <div class="row listing-metadata">
         <div class="nine columns offset-by-three ">
             <p>
-                <i class="social foundicon-torso"></i> Author list, Author list, Author list, Author list &bull;
+                <i class="social foundicon-torso"></i> {% author_et_al method.authors.all %} &bull;
 <!--                <i class="social foundicon-torso"></i> Added by {{ method.author.get_full_name }} &bull; -->
                 <i class="general foundicon-clock"></i> Updated {{ method.updated_at|brieftimesince }} ago.
             </p>

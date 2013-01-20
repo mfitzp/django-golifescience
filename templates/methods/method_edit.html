@@ -158,7 +158,7 @@
 
 {% block content %}
 
-    <form action="{% url method-edit method_id=method.id %}" method="post" enctype="multipart/form-data" id="method-edit" class="form-horizontal">
+    <form action="{% url 'method-edit' method_id=method.id %}" method="post" enctype="multipart/form-data" id="method-edit" class="form-horizontal">
 
     {% csrf_token %}    
 
@@ -198,7 +198,7 @@
 </div>
 
 <div class="form-actions">
-    <a class="btn" href="{% url method-detail method_id=method.id %}">Cancel</a>
+    <a class="btn" href="{% url 'method-detail' method_id=method.id %}">Cancel</a>
     <button class="btn btn-primary" type="submit">Save Changes</button>
 </div>
 

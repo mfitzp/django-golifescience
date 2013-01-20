@@ -4,14 +4,12 @@
 {% load thumbnail %}
 {% load macros %}
 
-{% macro title %}
-    {% block title %}Installables{% endblock %}
-{% endmacro %}
+{% macro title %}{% block title %}Installables{% endblock %}{% endmacro %}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 	<head>
-		<title>{% if title %}{{ title }}{% else %}{% usemacro title %}{% endif %} | Installables&reg; Research and educational software for scientists</title>
+		<title>{% if title %}{{ title }}{% else %}{% usemacro title %}{% endif %} | {{ site.name }}&trade; {{ site.slogan }}</title>
 		<link rel="icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 		<link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 
@@ -22,11 +20,13 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,300italic,300,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 
         <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}foundation/stylesheets/foundation.min.css" />
-        <link rel="stylesheet" href="stylesheets/foundation.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}foundation/webicons/fc-webicons.css" />
 
         <script src="{{ MEDIA_URL }}javascripts/modernizr.foundation.js"></script>
 
 		<!-- Base CSS --><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
+        <!-- Subdomain CSS --><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/subdomains/{{ request.subdomain }}.css" />
+
         <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/general_foundicons.css" />
         <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/social_foundicons.css" />
 
@@ -66,29 +66,29 @@
     <!-- Basic Needs -->
     <nav class="top-bar">
       <ul>
-        <li class="name"><h1><a href="/"><span style="color:#ad7fa8">Install</span>ables</a></h1></li>
+        <li class="name"><h1><a href="/">{% colorname site.name %}</h1></li>
         <li class="toggle-topbar"><a href="#"></a></li>
       </ul>
     <section>
       <ul class="right">
-        <li><a href="{% url about %}">About</a></li>
-        <li><a href="{% url blog %}">Blog</a></li>
+        <li><a href="{% url 'about' None %}">About</a></li>
+        <li><a href="{% url 'blog' None %}">Blog</a></li>
 
         <li class="has-dropdown">
           <a href="#">Software</a>
 
           <ul class="dropdown">
             {% for application in all_applications %}
-                <li><a href="{% url application application_slug=application.slug %}">{{ application.name }}</a></li>
+                <li><a href="{% url 'application' application_slug=application.slug subdomain='install' %}">{{ application.name }}</a></li>
             {% endfor %}
           </ul>
 
         </li>
 
-        <li><a href="{% url methods %}">Protocols</a></li>
+        <li><a href="{% url 'methods' subdomain='do' %}">Protocols</a></li>
 
         <li><a href="#">Register</a></li>
-        <li><a href="{% url contact %}">Contact</a></li>
+        <li><a href="{% url 'contact' None %}">Contact</a></li>
       </ul>
 
     </section>
@@ -103,7 +103,7 @@
       <div class="row">
         <div class="twelve columns header-content">
             <h1 itemprop="name">{% usemacro title %}</h1>
-            <h4>{% block subtitle %}Innovative scientific software for research and education{% endblock %}</h4>
+            <h4>{% block subtitle %}{{ site.slogan }}{% endblock %}</h4>
         </div>
         </div>
   </div>
@@ -130,17 +130,17 @@
         <div class="five columns header-content">
         <h6>Made by abl.es</h6>
         <p>An open science project based in Birmingham, United Kingdom.
-         <a href="{% url about %}">Find out more →</a></p>
+         <a href="{% url 'about' None %}">Find out more →</a></p>
         </div>
 
         <div class="three columns header-content">
         <h6>Using our software?</h6>
-        <p>Let us know and we'll feature you on our site! <a href="{% url contact %}">Get in touch →</a></p>
+        <p>Let us know and we'll feature you on our site! <a href="{% url 'contact' None %}">Get in touch →</a></p>
         </div>
 
         <div class="four columns header-content">
         <h6>Questions?</h6>
-        <p><a href="{% url faq %}">Read the FAQ →</a></p>
+        <p><a href="{% url 'faq' None %}">Read the FAQ →</a></p>
         </div>
 
       </div>
@@ -151,6 +151,8 @@
 
       </div>
   </div>
+
+{% block modals %}{% endblock %}
 
   <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
   <!-- Included JS Files (Minified) -->

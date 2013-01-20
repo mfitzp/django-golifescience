@@ -21,7 +21,7 @@
 
 {% block content %}
 
-        <form action="{% if article %}{% url article-edit article_id=article.id %}{% else %}{% url article-create %}{% endif %}" method="POST">
+        <form action="{% if article %}{% url 'article-edit' article_id=article.id %}{% else %}{% url article-create %}{% endif %}" method="POST">
         {% csrf_token %}
         <table class="form">
             {{ form.as_table }}

@@ -11,11 +11,15 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
+from django.contrib.contenttypes import generic
 # External
 from easy_thumbnails.fields import ThumbnailerImageField
 from autoslug.fields import AutoSlugField
 from taggit.models import Tag
 from taggit.managers import TaggableManager
+# Methodmint
+from references.models import Reference
+from authors.models import Author
 
 def application_file_path(instance=None, filename=None):
     return os.path.join('application', str(instance.id), filename)
@@ -46,6 +50,8 @@ class Application(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)   
 
+    authors = generic.GenericRelation(Author)
+    references = generic.GenericRelation(Reference)
 
 # Release class
 class Release(models.Model):
@@ -73,6 +79,7 @@ class Release(models.Model):
 
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)   
+
 
 
 # Feature class
