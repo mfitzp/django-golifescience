@@ -11,6 +11,14 @@
 
 {% block header_classes %}header-front{% endblock %}
 
+{% block extrajs %}
+<script type='text/javascript'>
+   $(window).load(function() {
+       $('#featuredContent').orbit({ fluid: '16x3' });
+   });
+</script>
+{% endblock %}
+
 {% block content %}
 
 
@@ -22,7 +30,6 @@
             <h4><a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}">{{ method }}</a></h4>
             <p>{{ method.description|truncatewords:50 }}</p>
       </div>
-    </div>
 {% endfor %}
 </div>
 
