@@ -130,7 +130,8 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader'
 )
 
-add_to_builtins('subdomains.templatetags.subdomainurls')
+if 'DJANGO_SETTINGS_MODULE' in os.environ: # We're in a live web session (via wsgi)
+    add_to_builtins('subdomains.templatetags.subdomainurls')
 
 MIDDLEWARE_CLASSES = (
 
