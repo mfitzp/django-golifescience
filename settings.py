@@ -26,6 +26,29 @@ DATABASES = {
     }
 }
 
+
+
+MEDIA_URL_ROOT = ''
+STATIC_URL_ROOT = ''
+ADMIN_MEDIA_URL_ROOT = ''
+
+# local_settings.py can be used to override environment-specific settings
+# like database and email that diffeinstallables/static/admin/css/base.cssr between development and production.
+try:
+    from local_settings import *
+except ImportError:
+    pass
+    
+
+# *** DEFINE URLS HERE SO LOCAL SETTINGS CAN OVERRIDE PATH BASE ***
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash if there is a path component (optional in other cases).
+# Examples: "http://media.lawrence.com", "http://example.com/media/"
+MEDIA_URL = MEDIA_URL_ROOT + '/media/'
+STATIC_URL = STATIC_URL_ROOT + '/static/'
+
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -224,24 +247,5 @@ EMAIL_SUBJECT_PREFIX ='[abl.es] '
 DEFAULT_FROM_EMAIL = 'noreply@abl.es'
 SERVER_EMAIL = 'noreply@abl.es'
 
-MEDIA_URL_ROOT = ''
-STATIC_URL_ROOT = ''
-ADMIN_MEDIA_URL_ROOT = ''
-
-# local_settings.py can be used to override environment-specific settings
-# like database and email that diffeinstallables/static/admin/css/base.cssr between development and production.
-try:
-    from local_settings import *
-except ImportError:
-    pass
-    
-
-# *** DEFINE URLS HERE SO LOCAL SETTINGS CAN OVERRIDE PATH BASE ***
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = MEDIA_URL_ROOT + '/media/'
-STATIC_URL = STATIC_URL_ROOT + '/static/'
 
 
