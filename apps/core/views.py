@@ -75,8 +75,8 @@ def home(request):
         # Latest/viewed/voted
         'top': top,
     }
-
-    return render_to_response('home/%s.html' % request.subdomain, context, context_instance=RequestContext(request))
+    #/%s.html' % request.subdomain
+    return render_to_response('home.html', context, context_instance=RequestContext(request))
 
 def error500(request, template_name='500.html'):
     """
