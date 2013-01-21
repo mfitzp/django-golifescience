@@ -21,15 +21,58 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 # External
 from taggit.models import Tag
+from methods.models import Method
+from tagmeta.models import TagMeta
 # Methodmint
 
 
 def home(request):
  
-    context = {
+   # Build list of 'sections' using site tags & featured methods [TODO: Add 'featured' boolean flag to method model to mark appropriate for front page; or do by vote?]
+    # FIXME: Cache the hell out of this
+    sections = list()
 
+
+    # Generate tags-based featured items (sticky, standard based on sites)
+    allsections = cache.get('allsections', list() ) 
+    if not allsections: # No tags
+        # Get featured tags for site based on the root tagmeta fields
+        tags = Tag.objects.filter(meta__parent=None).order_by('?') # remove the meta__parent none restriction to get more variation
+        for tag in tags:
+           # tag = tagm.tag
+            items = list( Method.objects.filter(tags__slug=tag.slug).exclude(image='').order_by('?')[:5] ) #.filter(is_featured=True)
+            #items += list( Method.on_site.filter(tags__slug=tag.slug).filter(image='').order_by('?')[:5-len(items)] ) #.filter(is_featured=True)
+            section = { 
+                'type': 'method',
+                'tag': tag,
+                'items': items,
+                    }
+
+            allsections.append( section )
+
+        cache.set('allsections', allsections ) 
+
+    directory = TagMeta.objects.filter(level__lt=2)
+    topsection = allsections[0]
+    sections = allsections[1:]
+
+    # Top n for each area
+    top = {
+        'views': Method.objects.extra(
+                select={ 'hit_count': 'SELECT hits from hitcount_hit_count as t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id',}
+                                   ,).order_by('-hit_count')[:5],
     }
-     
+
+    context = {
+        'topsection': topsection,
+        'sections': sections,
+
+        'directory':directory,
+
+        # Latest/viewed/voted
+        'top': top,
+    }
+
     return render_to_response('home/%s.html' % request.subdomain, context, context_instance=RequestContext(request))
 
 def error500(request, template_name='500.html'):

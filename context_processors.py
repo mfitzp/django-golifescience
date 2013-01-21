@@ -16,4 +16,7 @@ def modelglobals( context ):
     } 
 
 def site( context ):
-    return {'site': settings.SUBDOMAIN_SITES[ context.subdomain ] }
+    return {
+        'site': settings.SUBDOMAIN_SITES[ context.subdomain ],
+        'all_sites': settings.SUBDOMAIN_SITES,
+    }

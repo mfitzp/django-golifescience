@@ -8,7 +8,7 @@
     <div class="directory">
         {% for node,structure in directory|tree_info %}
             {% if structure.new_level %}<ul class="disc"><li>{% else %}</li><li>{% endif %}
-                <a href="{% url 'method-tagged' slug=node.tag.slug %}">{{ node.tag|capfirst }}</a>{% if node.parent_id != tagmeta.pk and not structure.closed_levels|first %},{% endif %}
+                <a href="{% url 'method-tagged' slug=node.tag.slug subdomain='do' %}">{{ node.tag|capfirst }}</a>{% if node.parent_id != tagmeta.pk and not structure.closed_levels|first %},{% endif %}
                 {% ifequal node.parent_id tagmeta.pk %}({{ node.tag.taggit_taggeditem_items.count }}){% endifequal %}
             {% for level in structure.closed_levels %}</li></ul>{% endfor %}
         {% endfor %}

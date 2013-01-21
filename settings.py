@@ -119,6 +119,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
 
     'django.middleware.common.CommonMiddleware',
+    'subdomains.middleware.SubdomainURLRoutingMiddleware',
+
 	'django.middleware.locale.LocaleMiddleware',						# should be after SessionMiddleware and CacheMiddleware, if used
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
@@ -127,7 +129,7 @@ MIDDLEWARE_CLASSES = (
     'pagination.middleware.PaginationMiddleware',
     'core.http.Http403Middleware',
 
-    'subdomains.middleware.SubdomainURLRoutingMiddleware',
+
 
 #    'django.middleware.cache.FetchFromCacheMiddleware',
 )

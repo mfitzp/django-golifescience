@@ -22,7 +22,7 @@
         <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}foundation/stylesheets/foundation.min.css" />
         <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}foundation/webicons/fc-webicons.css" />
 
-        <script src="{{ MEDIA_URL }}javascripts/modernizr.foundation.js"></script>
+        <script src="{{ MEDIA_URL }}foundation/javascripts/modernizr.foundation.js"></script>
 
 		<!-- Base CSS --><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
         <!-- Subdomain CSS --><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/subdomains/{{ request.subdomain }}.css" />
@@ -66,6 +66,7 @@
     <!-- Basic Needs -->
     <nav class="top-bar">
       <ul>
+
         <li class="name"><h1><a href="/">{% colorname site.name %}</h1></li>
         <li class="toggle-topbar"><a href="#"></a></li>
       </ul>
@@ -159,10 +160,9 @@
   <script src="{{ MEDIA_URL }}foundation/javascripts/foundation.min.js"></script>
   <!-- Initialize JS Plugins -->
   <script src="{{ MEDIA_URL }}foundation/javascripts/app.js"></script>
+
+  <script src="{{ MEDIA_URL }}js/core.js"></script>
    
 {% block extrajs %}{% endblock %}
-<script>
-    
-</script>
 </body>
 </html>
