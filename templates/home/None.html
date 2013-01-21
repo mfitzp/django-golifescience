@@ -30,6 +30,7 @@
     <div class="home-sections"><!-- section tags -->
     
     {% for section in sections %}
+        <h6>{{ section.tag }}</h6>
         <div class="row">
 
             {% for method in section.items|slice:":4" %}
