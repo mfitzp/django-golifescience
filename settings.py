@@ -107,15 +107,15 @@ SUBDOMAIN_URLCONFS = {
 SUBDOMAIN_SITES = {
     None: {
             'name': '*ables',
-            'tagline':'Open Source solutions for scientific progress',
+            'tagline':'Open Source solutions for science',
           },
     'install': {
             'name': 'Installables',
-            'tagline':'Open access scientific protocols',
+            'tagline':'Innovative scientific software for research and education',
           },
     'do': {
             'name': 'Doables',
-            'tagline':'Innovative scientific software for research and education',
+            'tagline':'Open access scientific protocols',
           },
 }
 
