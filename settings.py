@@ -107,19 +107,21 @@ SUBDOMAIN_URLCONFS = {
 SUBDOMAIN_SITES = {
     None: {
             'name': '*ables',
-            'tagline':'Open Source solutions for scientific progress',
+            'tagline':'Open Source solutions for science',
           },
     'install': {
             'name': 'Installables',
-            'tagline':'Open access scientific protocols',
+            'tagline':'Innovative scientific software for research and education',
           },
     'do': {
             'name': 'Doables',
-            'tagline':'Innovative scientific software for research and education',
+            'tagline':'Open access scientific protocols',
           },
 }
 
 DEFAULT_HOST = 'abl.es'
+SESSION_COOKIE_DOMAIN = '.abl.es'
+#CSRF_COOKIE_DOMAIN = '.abl.es'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'u2y=71bj-k%-iubxq+gvtwo7__7#b2gr^^4ug)a4*uzy^c7d#m'
