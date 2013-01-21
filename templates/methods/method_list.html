@@ -22,7 +22,7 @@
    {% if tagmeta.description %}
     <div class="row">
         <div class="twelve columns">
-            <p itemprop="description">
+            
                 {% if tagmeta.sponsor.links %}
                     <div class="tagsponsor"><span>Sponsored links for this tag</span>
                     <p>{{ tagmeta.sponsor.links|markdown }}</p>
@@ -30,8 +30,8 @@
                     </div>
                 {% endif %}
                 <!-- Include tag meta description here -->
-                <div class="tagmeta">{{ tagmeta.description|markdown:"safe,tables" }}</div>
-            </p>
+                <div class="tagmeta"><p itemprop="description">{{ tagmeta.description|markdown:"safe,tables" }}</p></div>
+           
         </div>
     </div>
     {% endif %}
