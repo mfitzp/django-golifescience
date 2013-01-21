@@ -1,0 +1,13 @@
+{% load thumbnail %}
+{% load core_tags %}
+<div class="reference">
+    <div class="row">
+        <div class="twelve columns">
+            <p>
+            {{ reference.author }} <a href="{{ reference.url }}">{{ reference.title }}</a> <i>{{ reference.publisher }}</i> ({{ reference.published.year }})
+            <p/>
+        </div>
+    </div>
+</div>
+
+

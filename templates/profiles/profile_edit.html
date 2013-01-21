@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block content_title %}{% trans "Introduce yourself" %}{% endblock %}
+
+{% block content %}
+<form action="{% url 'profile-edit' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}    
+<table class="form">
+{{ uform.as_table }}
+{{ pform.as_table }}
+</table>
+<p style="text-align:right"><input type="submit" value="{% trans "Save" %}" /></p>
+</form>
+
+<p class="notice">{% trans "Information you enter (except your email) will be visible on your personal profile page." %}</p>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}

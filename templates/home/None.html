@@ -1,0 +1,75 @@
+{% extends "base_with_sidebar_right.html" %}
+{% load i18n %}
+{% load core_tags %}
+{% load thumbnail %}
+{% load humanize %}
+{% load hitcount_tags %}
+{% load cache %}
+
+{% block title %}{{ site.name }}{% endblock %}
+{% block subtitle %}{{ site.tagline }}{% endblock %}
+
+{% block header_classes %}header-front{% endblock %}
+
+{% block content %}
+
+
+<div id="featuredContent">
+{% for method in topsection.items|slice:":5" %}
+    <div class="feature">
+        <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}"><img src="{% thumbnail method.image 560x300 upscale crop %}"></a>
+            <span class="object-type object-type-method">Protocol</span>
+            <h4><a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}">{{ method }}</a></h4>
+            <p>{{ method.description|truncatewords:50 }}</p>
+      </div>
+    </div>
+{% endfor %}
+</div>
+
+<br />
+    <div class="home-sections"><!-- section tags -->
+    
+    {% for section in sections %}
+        <div class="row">
+
+            {% for method in section.items|slice:":4" %}
+                {% if forloop.first %} 
+                    <div class="three columns">
+                        <img src="{% thumbnail method.image 160x120 upscale crop %}" class="span2 home-section-image-{% cycle 'left' 'right' %}">
+                    </div>
+                    <div class="nine columns">
+                    <ul class="navlist">
+                {% endif %}
+                    <li>
+                        <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+                    </li>
+                {% if forloop.last %} 
+                    </ul>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+
+        </div>
+    {% endfor %}
+    </div>       
+
+
+{% endblock %}
+
+{% block sidebar_right %}
+
+    <h6>Browse</h6>
+    {% include "_directory.html" %}
+
+    <h6>Most viewed</h6>
+    <ul class="navlist">
+    {% for method in top.views %}
+        <li>
+            {% get_hit_count for method as score %}
+            <span class="label radius">{{ score }}</span>&nbsp; 
+            <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% load avatar_tags %}
+{% load thumbnail %}
+{% load countries_tags %}
+{% load core_tags %}
+
+  <div class="stack-item stack-user {% if is_long_profile %}stack-boxout stack-user-about{% endif %}">
+        <div class="stack-item-image">{% avatar profile.user 40 %}</div>
+        <div class="stack-item-detail">
+            <a href="{% url 'user-profile' profile.user %}">{{ profile.fullname }}</a> 
+        </div>
+        <div class="stack-item-meta">
+            {% if profile.country %}<span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span><br />{% endif %}
+
+            <span class="reputation" title="{{ profile.user.reputation.reputation }} reputation awarded">{{ profile.user.reputation.reputation }}</span>
+            {% with profile.user as u %}
+	            {% include "badges/badges_display.html" %}
+            {% endwith %}
+
+            after {{ profile.user.date_joined|brieftimesince }}
+
+        </div>
+        {% if is_long_profile %}<p>{{ profile.about|truncatewords:'25' }}</p>{% endif %}
+    </div>
+

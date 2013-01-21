@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block breadcrumbs %} 
+    {{ block.super }}
+    &raquo; {{ profile }}
+{% endblock %}
+
+{% block content_title %}{% trans "Looking good" %}{% endblock %}
+
+{% block content %}
+
+{% blocktrans with '<a href="http://gravatar.com" target="_blank">Gravatar</a>' as gravatar %}
+<p>By default <strong>{{ SITE_NAME }}</strong> will use any avatar image you upload to identify you throughout the site.
+However, if you choose not to upload an image we will try and get one via the {{ gravatar }} service.</p>
+{% endblocktrans %}
+{% if request.user.facebook_profile %}
+    <p>{% blocktrans with '<a href="http://www.facebook.com" target="_blank">Facebook</a>' as facebook %}If you have logged in via {{ facebook }} we'll use that image in preference to gravatar, but you can
+    still upload your own to use on <strong>{{ SITE_NAME }}</strong>!{% endblocktrans %}</p>
+{% endif %}       
+
+    <table style="text-align:center">
+    <tr>
+        <td>{% avatar request.user %}</td>
+
+    {% if profile.avatar %}
+        <td>{% avatar_from_provider request.user 50 'profile' %}</td>    
+    {% endif %}        
+        
+    {% if request.user.facebook_profile %}
+        <td>{% avatar_from_provider request.user 50 'facebook' %}</td>    
+    {% endif %}       
+     
+        <td>{% avatar_from_provider request.user 50 'gravatar' %}</td>
+    </tr> 
+    <tr>
+        <th>{% trans "Current" %}</th>
+
+    {% if profile.avatar %}<th>{% trans "Uploaded" %}</th>{% endif %}        
+    {% if request.user.facebook_profile %}<th>{% trans "Facebook" %}</th>{% endif %}
+
+        <th>{% trans "Gravatar" %}</th>
+    </tr>
+    
+</table>
+
+    <h5>{% trans "Upload New Avatar" %}</h5>
+    <form action="{% url 'avatar-change' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+    {% csrf_token %}    
+    <table>
+    <tr><th>{{ form.avatar.label }}</th><td>{{ form.avatar }}</td></tr>
+    {% if profile.avatar %}
+        <tr><th></th><td>{{ form.delete.label }}: {{ form.delete }}</td>
+    {% endif %}     
+    </table>
+
+<p style="text-align:right"><input type="submit" value="{% trans "Save changes" %} &raquo;" /></p>
+    </form>
+
+
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}

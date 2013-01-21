@@ -1,0 +1,47 @@
+[
+  {
+    "pk": 1,
+    "model": "profiles.userprofile",
+    "fields": {
+      "city": "Birmingham",
+      "about": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+      "url": "",
+      "country": "GB",
+      "avatar": "",
+      "state": "",
+      "postcode": "",
+      "telno": "",
+      "user": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "profiles.userprofile",
+    "fields": {
+      "city": "Utrecht",
+      "about": "A bit about me",
+      "url": "",
+      "country": "NL",
+      "avatar": "",
+      "state": "Utrecht",
+      "postcode": "",
+      "telno": "",
+      "user": 2
+    }
+  },
+  {
+    "pk": 3,
+    "model": "profiles.userprofile",
+    "fields": {
+      "city": "York",
+      "about": "",
+      "url": "",
+      "country": "GB",
+      "avatar": "avatar/philippa/mum.jpg",
+      "state": "",
+      "postcode": "",
+      "telno": "",
+      "user": 3
+    }
+  }
+]

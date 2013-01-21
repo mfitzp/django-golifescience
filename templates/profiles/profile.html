@@ -1,0 +1,110 @@
+{% extends "base_with_sidebar_right.html" %}
+{% load i18n %}
+{% load core_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+{% load hitcount_tags %}
+
+{% block title %}{% if profile.title %}<small>{{ profile.title }}&nbsp;</small>{% endif %}{{ profile.get_full_name }}{% if profile.postnomials %}<small>&nbsp;{{ profile.postnomials }}</small>{% endif %}{% endblock %}
+{% block subtitle %}{% if profile.organisation %}{{ profile.organisation }} &bull; {% endif %}{{ profile.country }} {% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script> 
+        $(function() { $('#content-tabs').tabs(); });
+    </script>
+{% endblock %}
+
+{% block content_tabs %}
+    <ul>
+    <li><a href="#tab-about">{% trans "About" %}</a></li>
+    <li><a href="#tab-methods">{% trans site.meta.method_name_plural|capfirst %}</a></li>
+    <li><a href="#tab-favorites">{% trans "Favorites" %}</a></li>
+    </ul>
+{% endblock %}
+
+
+
+{% block content_header %}
+<div class="row">
+<div class="two columns">
+    {% avatar puser 128 %}
+</div>
+<div class="ten columns">
+    <blockquote>{{ profile.about }}
+    <cite>{{ profile.get_full_name }}</cite></blockquote>
+</div></div>
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-details">
+{% if puser == user and profile.about == "" %}
+
+<div class="boxout"><div>
+<p>This is your profile, your opportunity to tell the world a little bit about yourself.</p>
+<p>It looks very empty... <a href="{% url 'profile-edit' %}">{% trans "why not fix that now?" %}</a> </p>
+</div></div>
+
+{% endif %}
+
+
+</div>
+
+           {% for method in methods %}
+            
+                {% include "methods/_method.html" %}
+
+            {% endfor %}
+    <br class="clear" />
+
+
+
+{% endblock %}
+
+{% block sidebar_right %}
+
+        <h6>Actions</h6>
+        <ul class="navlist">
+        {% ifnotequal puser user %}
+        <li class="icon_mail_write"><a href="{ % url 'postman_write' recipients=puser.username % }">{% trans "Send me a private message" %}</a></li>
+        {% endifnotequal %}
+
+        {% ifequal puser user %}
+
+            <li><i class="general foundicon-edit"></i> <a href="{ % url 'profile-edit' % }">{% trans "Edit your profile" %}</a></li>
+            <li><i class="general foundicon-photo"></i> <a href="{ % url 'avatar-change' % }">{% trans "Change your profile picture" %}</a></li>
+            <li><i class="general foundicon-lock"></i> 
+                {% if password_change_url %}
+                    <a href="{{ password_change_url }}">
+                {% else %}
+                    <a href="{{ root_path }}password_change/">
+                {% endif %}
+            {% trans "Change password" %}</a></li>
+        {% endifequal %}
+        </ul>
+
+        <h6>About</h6>
+<ul class="navlist">
+{% if profile.url %}<li><i class="general foundicon-website"></i> <a href="{{ profile.url }}" target="_blank" rel="nofollow">{% trans "Homepage" %}</a></dd>{% endif %}
+
+{% if profile.social_researchgate %}<li><i class="social foundicon-torso"></i> <a href="http://www.researchgate.net/profile/{{ profile.social_researchgate }}/" target="_blank" rel="nofollow">{% trans "ResearchGate" %}</a></dd>{% endif %}
+{% if profile.social_twitter %}<li><i class="social foundicon-twitter"></i> <a href="https://www.twitter.com/#!/{{ profile.social_twitter }}/" target="_blank" rel="nofollow">{% trans "Twitter" %}</a></dd>{% endif %}
+{% if profile.social_facebook %}<li><i class="social foundicon-facebook"></i> <a href="https://www.facebook.com//{{ profile.social_facebook }}/" target="_blank" rel="nofollow">{% trans "Facebook" %}</a></dd>{% endif %}
+{% if profile.social_googleplus %}<li><i class="social foundicon-google-plus"></i> <a href="https://plus.google.com/u/0/{{ profile.social_googleplus }}/" target="_blank" rel="nofollow">{% trans "Google+" %}</a></dd>{% endif %}
+
+{% if profile.city or profile.country %}
+<li><i class="general foundicon-location"></i> 
+<a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.city }}, {{ profile.state }} {% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
+{% else %}{% trans "Unknown location" %}{% endif %}
+</li>
+
+</ul>
+
+<h6>Meta</h6>
+<ul class="navlist">
+<li><i class="general foundicon-clock"></i> {% trans "Member for" %} {{ puser.date_joined|timesince }}</li>
+</ul>
+
+
+{% endblock %}
