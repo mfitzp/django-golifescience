@@ -155,7 +155,7 @@ INSTALLED_APPS = (
     'taggit',
     'markdown',
     'haystack',
-    'picklefield',
+    'jsonfield',
     'mptt',
     'hitcount',
     'countries',    
