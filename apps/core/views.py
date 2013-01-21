@@ -76,7 +76,7 @@ def home(request):
         'top': top,
     }
     #/%s.html' % request.subdomain
-    return render_to_response('home_None.html', context, context_instance=RequestContext(request))
+    return render_to_response('home/None.html', context, context_instance=RequestContext(request))
 
 def error500(request, template_name='500.html'):
     """
