@@ -14,7 +14,7 @@
 {% block extrajs %}
 <script type='text/javascript'>
    $(window).load(function() {
-       $('#featuredContent').orbit({ fluid: '16x3' });
+       $('#featuredContent').orbit({ fluid: '16x8' });
    });
 </script>
 {% endblock %}
@@ -37,7 +37,7 @@
     <div class="home-sections"><!-- section tags -->
     
     {% for section in sections %}
-        <h6>{{ section.tag }}</h6>
+        <h6>{{ section.tag|capfirst }}</h6>
         <div class="row">
 
             {% for method in section.items|slice:":4" %}
