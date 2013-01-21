@@ -31,7 +31,7 @@
 <!--            <div class="feature-caption-tab object-type object-type-method">Protocol</div> -->
             <h4><a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}">{{ method }}</a></h4>
             <p class="author_list">{% author_list method.authors.all %}</p>
-            <p>{{ method.description|truncatewords:50 }}</p>
+            <p class="about">{{ method.description|truncatewords:50 }}</p>
         </div>
     </div>
 {% endfor %}
