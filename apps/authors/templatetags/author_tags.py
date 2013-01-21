@@ -26,6 +26,8 @@ def author_list( authors ):
         for author in authors:
             if author.contrib_marker > 0: # We have a marker
                 s_author_marker = author.get_contrib_marker_display()
+            else:
+                s_author_marker = ''
 
             if author.user.get_profile().organisation:
                 if author.user.get_profile().organisation in l_orgs: # Already have it
