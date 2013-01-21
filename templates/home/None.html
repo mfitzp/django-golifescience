@@ -31,7 +31,7 @@
 </div>
 
 {% for method in topsection.items|slice:":5" %}
-    <span class="orbit-caption" id="caption{{ forloop.counter }}"><a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}">{{ method }}</a></span>
+    <span class="orbit-caption" id="caption{{ forloop.counter }}">{{ method }}</span>
 {% endfor %}
 
 <br />
