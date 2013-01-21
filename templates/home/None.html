@@ -24,14 +24,15 @@
 
 <div id="featuredContent">
 {% for method in topsection.items|slice:":5" %}
-    <div class="feature">
-        <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}"><img src="{% thumbnail method.image 560x300 upscale crop %}"></a>
-            <span class="object-type object-type-method">Protocol</span>
-            <h4><a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}">{{ method }}</a></h4>
-            <p>{{ method.description|truncatewords:50 }}</p>
-      </div>
+    <div class="feature" data-caption="#caption{{ forloop.counter }}">
+    <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}"><img src="{% thumbnail method.image 560x300 upscale crop %}"></a>
+    </div>
 {% endfor %}
 </div>
+
+{% for method in topsection.items|slice:":5" %}
+    <span class="orbit-caption" id="caption{{ forloop.counter }}"><a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}">{{ method }}</a></span>
+{% endfor %}
 
 <br />
     <div class="home-sections"><!-- section tags -->
@@ -61,6 +62,7 @@
         </div>
     {% endfor %}
     </div>       
+
 
 
 {% endblock %}
