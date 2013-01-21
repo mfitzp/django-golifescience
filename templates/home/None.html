@@ -5,6 +5,7 @@
 {% load humanize %}
 {% load hitcount_tags %}
 {% load cache %}
+{% load author_tags %}
 
 {% block title %}{{ site.name }}{% endblock %}
 {% block subtitle %}{{ site.tagline }}{% endblock %}
@@ -24,17 +25,17 @@
 
 <div id="featuredContent">
 {% for method in topsection.items|slice:":5" %}
-    <div class="feature" data-caption="#caption{{ forloop.counter }}">
-        <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}"><img src="{% thumbnail method.image 680x340 upscale crop %}"></a>
-        <div class="feature-caption">
-            <span class="object-type object-type-method">Protocol</span>
-            <h4><a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a></h4>
+    <div>
+        <img src="{% thumbnail method.image 960x480 upscale crop %}">
+        <div class="feature-overlay">    
+<!--            <div class="feature-caption-tab object-type object-type-method">Protocol</div> -->
+            <h4><a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}">{{ method }}</a></h4>
+            <p class="author_list">{% author_list method.authors.all %}</p>
             <p>{{ method.description|truncatewords:50 }}</p>
         </div>
     </div>
 {% endfor %}
 </div>
-
 
 <br />
     <div class="home-sections"><!-- section tags -->
@@ -64,7 +65,6 @@
         </div>
     {% endfor %}
     </div>       
-
 
 
 {% endblock %}

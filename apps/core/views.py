@@ -39,7 +39,7 @@ def home(request):
     if not allsections: # No tags
         allsections = list()
         # Get featured tags for site based on the root tagmeta fields
-        tags = Tag.objects.exclude(meta__tag_id=None).filter(meta__parent=None).order_by('?') # remove the meta__parent none restriction to get more variation
+        tags = Tag.objects.exclude(meta__tag_id=None).filter(meta__parent=None).order_by('name') # remove the meta__parent none restriction to get more variation
 
         for tag in tags[:5]:
            # tag = tagm.tag
