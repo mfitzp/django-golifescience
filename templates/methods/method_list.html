@@ -23,17 +23,14 @@
     <div class="row">
         <div class="twelve columns">
             <p itemprop="description">
-
-                    {% tagmeta_for_tag tag as tagmeta %}
-                    {% if tagmeta.sponsor.links %}
-                        <div class="tagsponsor"><span>Sponsored links for this tag</span>
-                        <p>{{ tagmeta.sponsor.links|markdown }}</p>
-                        {% if tagmeta.sponsor.image %}<img src="{% thumbnail tagmeta.sponsor.image 100x100 crop %}">{% endif %}
-                        </div>
-                    {% endif %}
-                    <!-- Include tag meta description here -->
-                    <div class="tagmeta">{{ tagmeta.description|markdown:"safe,tables" }}</div>
-
+                {% if tagmeta.sponsor.links %}
+                    <div class="tagsponsor"><span>Sponsored links for this tag</span>
+                    <p>{{ tagmeta.sponsor.links|markdown }}</p>
+                    {% if tagmeta.sponsor.image %}<img src="{% thumbnail tagmeta.sponsor.image 100x100 crop %}">{% endif %}
+                    </div>
+                {% endif %}
+                <!-- Include tag meta description here -->
+                <div class="tagmeta">{{ tagmeta.description|markdown:"safe,tables" }}</div>
             </p>
         </div>
     </div>
