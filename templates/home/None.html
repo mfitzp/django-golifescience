@@ -25,7 +25,7 @@
 <div id="featuredContent">
 {% for method in topsection.items|slice:":5" %}
     <div class="feature" data-caption="#caption{{ forloop.counter }}">
-    <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}"><img src="{% thumbnail method.image 560x300 upscale crop %}"></a>
+    <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}"><img src="{% thumbnail method.image 680x340 upscale crop %}"></a>
     </div>
 {% endfor %}
 </div>
