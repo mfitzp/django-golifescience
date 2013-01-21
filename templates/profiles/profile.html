@@ -67,7 +67,7 @@
         <h6>Actions</h6>
         <ul class="navlist">
         {% ifnotequal puser user %}
-        <li class="icon_mail_write"><a href="{ % url 'postman_write' recipients=puser.username % }">{% trans "Send me a private message" %}</a></li>
+        <li><i class="general foundicon-mail"></i> <a href="{ % url 'postman_write' recipients=puser.username % }">{% trans "Send me a private message" %}</a></li>
         {% endifnotequal %}
 
         {% ifequal puser user %}
