@@ -25,14 +25,16 @@
 <div id="featuredContent">
 {% for method in topsection.items|slice:":5" %}
     <div class="feature" data-caption="#caption{{ forloop.counter }}">
-    <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}"><img src="{% thumbnail method.image 680x340 upscale crop %}"></a>
+        <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do'%}"><img src="{% thumbnail method.image 680x340 upscale crop %}"></a>
+        <div class="feature-caption">
+            <span class="object-type object-type-method">Protocol</span>
+            <h4><a href="{% url 'method-detail' method_id=method.id method_slug=method.slug %}">{{ method }}</a></h4>
+            <p>{{ method.description|truncatewords:50 }}</p>
+        </div>
     </div>
 {% endfor %}
 </div>
 
-{% for method in topsection.items|slice:":5" %}
-    <div class="orbit-caption" id="caption{{ forloop.counter }}"><h6>{{ method }}</h6></div>
-{% endfor %}
 
 <br />
     <div class="home-sections"><!-- section tags -->
