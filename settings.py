@@ -120,7 +120,7 @@ SUBDOMAIN_SITES = {
 }
 
 DEFAULT_HOST = 'abl.es'
-SESSION_COOKIE_DOMAIN = DEFAULT_HOST
+SESSION_COOKIE_DOMAIN = '.abl.es'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'u2y=71bj-k%-iubxq+gvtwo7__7#b2gr^^4ug)a4*uzy^c7d#m'
