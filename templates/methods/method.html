@@ -152,25 +152,6 @@
         </div></div>        
     {% endwith %}{% endwith %}
 
-    {% if method.referenceR %}{% with method.reference as reference %}
-    <h6>Published</h6>
-    <div class="published hilite hilite-2">
-    <table>
-
-    {% if reference.title %}<tr><th>Title</th><td><a href="{{ method.reference.url }}">{{ reference.title }}</a></td></tr>{% endif %}
-    {% if reference.description %}<tr><th>Description</th><td>{{ reference.description }}</td></tr>{% endif %}
-    {% if reference.author %}<tr><th>Author</th><td>{{ reference.author }}</td></tr>{% endif %}
-    {% if reference.publisher or reference.published %}<tr><th>Published</th><td>
-       {% if reference.publisher %}<em>{{ reference.publisher }}</em>{% endif %}
-       {% if reference.published %}{{ reference.published }}{% endif %}
-    </td></tr>{% endif %}
-
-    </table>
-    </div>
-
-    {% endwith %}
-    
-    {% endif %}
 
     <h6>Related Protocols</h6>
 <ul class="navlist">
