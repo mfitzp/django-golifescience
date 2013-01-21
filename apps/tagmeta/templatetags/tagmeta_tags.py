@@ -23,7 +23,7 @@ class TagMetaForTagNode(template.Node):
         except template.VariableDoesNotExist:
             return ''
         try:
-            context[self.context_var] = TagMeta.on_site.get(tag=object)
+            context[self.context_var] = TagMeta.objects.get(tag=object)
         except:
             context[self.context_var] = None
            
