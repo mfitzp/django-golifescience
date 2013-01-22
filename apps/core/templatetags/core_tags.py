@@ -136,7 +136,7 @@ def verybrieftimesince(value, arg=None):
         t = brieftimesince(value)
         # Substitute the words for d, h, m, s
         sdict = {
-            'years':'y', 'months': 'm', 'days':'d', 'hours':'h', 'minutes':'m', 'seconds':'s'
+            'years':'y', 'months': 'm', 'days':'d', 'hours':'h', 'minutes':'m', 'seconds':'s',
             'year':'y', 'month': 'm', 'day':'d', 'hour':'h', 'minute':'m', 'second':'s',
             }
         t = reduce(lambda x, y: x.replace(y, sdict[y]), sdict, t)
