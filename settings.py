@@ -176,7 +176,7 @@ INSTALLED_APPS = (
     'pagination',       #http://code.google.com/p/django-pagination
     'easy_thumbnails',  #http://github.com/SmileyChris/easy-thumbnails
 #    'south',            # Database migrations: http://south.aeracode.org/
-#    'memcache_status',
+    'memcache_status',
     'taggit',
     'markdown',
     'haystack',
