@@ -1,4 +1,5 @@
 import datetime, collections
+from random import choice
 # Django
 from django.conf import settings
 from django import http
@@ -66,7 +67,7 @@ def home(request):
     }
 
     for section in allsections:
-        topsection['items'].append(section['items'][0])
+        topsection['items'].append( choice(section['items']) )
 
 
 
