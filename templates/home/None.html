@@ -3,7 +3,6 @@
 {% load core_tags %}
 {% load thumbnail %}
 {% load humanize %}
-{% load hitcount_tags %}
 {% load cache %}
 {% load author_tags %}
 
@@ -70,19 +69,57 @@
 
 {% endblock %}
 
+
 {% block sidebar_right %}
 
     <h6>Browse</h6>
     {% include "_directory.html" %}
 
-    <h6>Most viewed</h6>
-    <ul class="navlist">
-    {% for method in top.views %}
-        <li>
-            {% get_hit_count for method as score %}
-            <span class="label radius">{{ score }}</span>&nbsp; 
-            <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
-        </li>
-    {% endfor %}
-    </ul>
+{% endblock %}
+
+
+{% block content_footer %}
+<div class="content-footer">
+
+    <div class="row">
+    <div class="four columns">
+        <h6>Latest</h6>
+        <ul class="navlist">
+        {% for method in top.latest %}
+            <li>
+                <span class="label radius">{{ method.created_at|verybrieftimesince }}</span>&nbsp; 
+                <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="four columns">
+        <h6>Trending</h6>
+        <ul class="navlist">
+        {% for method in top.trending %}
+            <li>
+                <span class="label radius">{{ method.hit_count }}</span>&nbsp; 
+                <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="four columns">
+        <h6>Most viewed</h6>
+        <ul class="navlist">
+        {% for method in top.views %}
+            <li>
+                <span class="label radius">{{ method.hit_count }}</span>&nbsp; 
+                <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    </div>
+
+</div>
+
 {% endblock %}

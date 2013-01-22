@@ -111,7 +111,7 @@ splitnewlines.is_safe = False
 
 @register.filter
 def brieftimesince(value, arg=None):
-    """Formats a date as the time since that date (i.e. "4 days, 6 hours")."""
+    """Formats a date as the time since that date (i.e. "4 days")."""
     if not value:
         return u''
     try:
@@ -120,9 +120,31 @@ def brieftimesince(value, arg=None):
             return t.partition(',')[0]
         t = timesince(value)
         return t.partition(',')[0]
+
     except (ValueError, TypeError):
         return u''
-timesince.is_safe = False
+brieftimesince.is_safe = False
+
+@register.filter
+def verybrieftimesince(value, arg=None):
+    """Formats a date as the time since that date (i.e. " 6h")."""
+    if not value:
+        return u''
+    try:
+        if arg:
+            t = brieftimesince(value, arg)
+        t = brieftimesince(value)
+        # Substitute the words for d, h, m, s
+        sdict = {
+            'year':'y', 'month': 'm', 'day':'d', 'hour':'h', 'minute':'m', 'second':'s',
+            'years':'y', 'months': 'm', 'days':'d', 'hours':'h', 'minutes':'m', 'seconds':'s'
+            }
+        t = reduce(lambda x, y: x.replace(y, sdict[y]), sdict, t)
+        return t.replace(" ", "")
+
+    except (ValueError, TypeError):
+        return u''
+verybrieftimesince.is_safe = False
 
 
 @register.simple_tag
