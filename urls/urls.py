@@ -65,5 +65,7 @@ urlpatterns = patterns('',
 	# Localization - /i18n/setlang/
 	(r'^i18n/', include('django.conf.urls.i18n')),
 
+    (r'widgets/wordpress/methods/',  'django.views.generic.simple.direct_to_template', {'template': 'widgets/disabled.html'}),
+
 )
 
