@@ -87,7 +87,7 @@
         <ul class="navlist">
         {% for method in top.latest %}
             <li>
-                <span class="label radius">{{ method.created_at|verybrieftimesince }}</span>&nbsp; 
+                <span class="label radius">{{ method.updated_at|verybrieftimesince }}</span>&nbsp; 
                 <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
             </li>
         {% endfor %}
