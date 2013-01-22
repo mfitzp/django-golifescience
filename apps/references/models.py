@@ -121,6 +121,7 @@ class Reference(models.Model):
     NAMESPACE_CHOICES = (
         ('isbn', 'ISBN: International Standard Book Number'),
         ('doi', 'DOI: Digital Object Identifier'),
+        ('pmid', 'PMID: PubMed Identifier'),
     )
     namespace = models.CharField(max_length=4,choices=NAMESPACE_CHOICES, null = True, blank = True, default=None)
 
@@ -140,6 +141,6 @@ class Reference(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     class Meta:
-        unique_together = (('namespace', 'uri'),)
+        #unique_together = (('namespace', 'uri'),)
         ordering = ['-published']
 
