@@ -35,8 +35,7 @@ def home(request):
 
 
     # Generate tags-based featured items (sticky, standard based on sites)
-    # allsections = cache.get('allsections', list() ) 
-    allsections = None
+    allsections = cache.get('allsections', list() ) 
     if not allsections: # No tags
         allsections = list()
         # Get featured tags for site based on the root tagmeta fields
@@ -71,20 +70,23 @@ def home(request):
 
 
 
+    top = cache.get('top5s', None ) 
+    if top is None:
+        # Top N methods
+        top = {
+            'latest': Method.objects.order_by('-updated_at')[:5],
 
-    # Top n for each area
-    top = {
-        'latest': Method.objects.order_by('-updated_at')[:5],
+            'views': Method.objects.extra(
+                    select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id',}
+                                       ,).order_by('-hit_count')[:5],
 
-        'views': Method.objects.extra(
-                select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id',}
-                                   ,).order_by('-hit_count')[:5],
+            'trending': Method.objects.extra(
+                    select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > DATE(NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id GROUP BY t.id',}
+                                       ,).order_by('-hit_count')[:5],
 
-        'trending': Method.objects.extra(
-                select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > DATE(NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id GROUP BY t.id',}
-                                   ,).order_by('-hit_count')[:5],
+        }
 
-    }
+        cache.set('top5s', top ) 
 
     context = {
         'topsection': topsection,
