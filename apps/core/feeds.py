@@ -43,7 +43,7 @@ class LatestAllFeed(Feed):
     def item_enclosure_url(self, item):
         try:
             if item.image:
-                return '%s%s' % (settings.MEDIA_URL, item.image)
+                return '%s%s' % (settings.MEDIA_URL, item.image.url)
         except:
             return None
 
