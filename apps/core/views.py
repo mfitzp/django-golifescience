@@ -68,26 +68,6 @@ def home(request):
     for section in allsections:
         topsection['items'].append( choice(section['items']) )
 
-
-
-    top = cache.get('top5s', None ) 
-    if top is None:
-        # Top N methods
-        top = {
-            'latest': Method.objects.order_by('-updated_at')[:5],
-
-            'views': Method.objects.extra(
-                    select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id',}
-                                       ,).order_by('-hit_count')[:5],
-
-            'trending': Method.objects.extra(
-                    select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > DATE(NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id GROUP BY t.id',}
-                                       ,).order_by('-hit_count')[:5],
-
-        }
-
-        cache.set('top5s', top ) 
-
     context = {
         'topsection': topsection,
         'sections': sections,
@@ -95,7 +75,7 @@ def home(request):
         'directory':directory,
 
         # Latest/viewed/voted
-        'top': top,
+        #'top': top,
     }
     #/%s.html' % request.subdomain
     return render_to_response('home/None.html', context, context_instance=RequestContext(request))

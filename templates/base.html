@@ -130,24 +130,20 @@
 {% endblock %}
 </div>
 
-{% block content_footer %}
-{% endblock %}
-
-
   <div class="footer">
       <div class="row footer-top">
-        <div class="five columns footer-content">
+        <div class="five columns">
         <h6>Made by abl.es</h6>
         <p>An open science project based in Birmingham, United Kingdom.
          <a href="{% url 'about' None %}">Find out more →</a></p>
         </div>
 
-        <div class="three columns footer-content">
+        <div class="three columns">
         <h6>Using our software?</h6>
         <p>Let us know and we'll feature you on our site! <a href="{% url 'contact' None %}">Get in touch →</a></p>
         </div>
 
-        <div class="four columns footer-content">
+        <div class="four columns">
         <h6>Want to know more?</h6>
             <dl>
                 <dd><i class="general foundicon-idea"></i> <a href="{% url 'faq' None %}">Read the FAQ →</a></dd>
@@ -158,9 +154,56 @@
 
       </div>
 
+
+{% block footer_content %}
+<div class="footer-content">
+
+    <div class="row">
+    <div class="four columns">
+        <h6>Latest updates</h6>
+        <ul class="navlist">
+        {% for method in top5s.latest %}
+            <li>
+                <span class="label radius">{{ method.updated_at|verybrieftimesince }}</span>&nbsp; 
+                <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="four columns">
+        <h6>Trending</h6>
+        <ul class="navlist">
+        {% for method in top5s.trending %}
+            <li>
+                <span class="label radius">{{ method.hit_count }}</span>&nbsp; 
+                <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="four columns">
+        <h6>Most viewed</h6>
+        <ul class="navlist">
+        {% for method in top5s.views %}
+            <li>
+                <span class="label radius">{{ method.hit_count }}</span>&nbsp; 
+                <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
       <div class="row footer-bottom">
-        <div class="six columns footer-content">Site content &copy;2012 abl.es</div>
-        <div class="six columns footer-content"></div>
+        <div class="six columns">Site content &copy;2012 abl.es</div>
+        <div class="six columns"></div>
 
       </div>
   </div>

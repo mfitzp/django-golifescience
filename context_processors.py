@@ -3,9 +3,12 @@ import datetime
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext as _
+from django.core.cache import cache
+from django.contrib.contenttypes.models import ContentType
 # External
 # Installables
 from applications.models import Application
+from methods.models import Method
 
 def languages( context ):
 	return { 'LANGUAGES': settings.LANGUAGES, 'LANGUAGE_CODE': context.LANGUAGE_CODE }
@@ -21,3 +24,27 @@ def site( context ):
         'site': settings.SUBDOMAIN_SITES[ context.subdomain ],
         'all_sites': settings.SUBDOMAIN_SITES,
     }
+
+def top5s( context ):
+
+    top5s = cache.get('top5s', None ) 
+    if top5s is None:
+        # Top N methods
+        top5s = {
+            'latest': Method.objects.order_by('-updated_at')[:5],
+
+            'views': Method.objects.extra(
+                    select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id',}
+                                       ,).order_by('-hit_count')[:5],
+
+            'trending': Method.objects.extra(
+                    select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > DATE(NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id GROUP BY t.id',}
+                                       ,).order_by('-hit_count')[:5],
+
+        }
+
+        cache.set('top5s', top5s ) 
+    return {
+        'top5s': top5s
+    }
+
