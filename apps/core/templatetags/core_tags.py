@@ -138,8 +138,8 @@ def verybrieftimesince(value, arg=None):
         slist = ('years', 'months', 'days', 'hours', 'minutes', 'seconds',
                 'year', 'month', 'day', 'hour', 'minute', 'second',)
         sdict = {
-            'years':'y', 'months': 'm', 'days':'d', 'hours':'h', 'minutes':'m', 'seconds':'s',
-            'year':'y', 'month': 'm', 'day':'d', 'hour':'h', 'minute':'m', 'second':'s',
+            'years':'y', 'months': 'mo', 'days':'d', 'hours':'h', 'minutes':'m', 'seconds':'s',
+            'year':'y', 'month': 'mo', 'day':'d', 'hour':'h', 'minute':'m', 'second':'s',
             }
         t = reduce(lambda x, y: x.replace(y, sdict[y]), slist, t)
         return t.replace(" ", "")
