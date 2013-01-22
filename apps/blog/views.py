@@ -30,7 +30,7 @@ from forms import *
 def article_noslug(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
-    return HttpResponsePermanentRedirect( reverse('article-detail',kwargs={'article_id':article.id, 'article_slug':article.slug} ) + suffix )
+    return HttpResponsePermanentRedirect( reverse('article-detail',kwargs={'article_id':article.id, 'article_slug':article.slug, subdomain=None} ) + suffix )
 
 def article(request, article_id, article_slug = None): 
 # answer_id is to allow #'d links to specific answers

@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
-from django.core.urlresolvers import reverse
+#from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
@@ -24,6 +24,7 @@ from django.conf import settings
 #from haystack.forms import SearchForm
 #from haystack.views import SearchView
 from taggit.views import tagged_object_list
+from subdomains.utils import reverse
 # Methodmint
 from methods.models import *
 from methods.forms import *
