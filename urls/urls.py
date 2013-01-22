@@ -4,6 +4,7 @@ from django.utils.translation import ugettext as _
 admin.autodiscover()
 # Sitemaps
 from sitemap import *
+from core.feeds import *
 
 
 def i18n_javascript(request):
@@ -46,6 +47,10 @@ urlpatterns = patterns('',
 
     # Ajax
     (r'^ajax/',      include('ajax.urls')),
+
+    # RSS
+    url(r'^rss/latest/$', LatestAllFeed(), name='all-rss-latest'),
+    url(r'^rss/latest/twitter/$', LatestAllFeedTwitter(), name='all-rss-latest-twitter'),
 
     #url(r'^welcome/$', 'django.views.generic.simple.direct_to_template', {'template': 'welcome.html'}, name='welcome'),
     

@@ -21,8 +21,7 @@ from django.utils.encoding import force_unicode
 from django.utils import formats
 from django.conf import settings
 # External
-#from haystack.query import SearchQuerySet, RelatedSearchQuerySet
-#from voting.models import Vote
+from haystack.query import SearchQuerySet, RelatedSearchQuerySet
 from taggit.views import tagged_object_list
 # abl.es
 from models import *
@@ -39,10 +38,7 @@ def article(request, article_id, article_slug = None):
 
     article = get_object_or_404(Article, pk=article_id)
 
-    if article.site_id is not None:
-        mlt = SearchQuerySet().more_like_this(article).models(Article).filter(site_id=article.site.id)[:10],
-    else:
-        mlt = list()
+    mlt = SearchQuerySet().more_like_this(article).models(Article)[:10]
 
     context = {
         'title':        article,

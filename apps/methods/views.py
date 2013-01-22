@@ -33,7 +33,7 @@ from tagmeta.models import TagMeta
 def method_noslug(request, method_id):
     method = get_object_or_404(Method, pk=method_id)
     suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
-    return HttpResponsePermanentRedirect( reverse('method-detail',kwargs={'method_id':method.id, 'method_slug':method.slug} ) + suffix )
+    return HttpResponsePermanentRedirect( reverse('method-detail',kwargs={'method_id':method.id, 'method_slug':method.slug}, subdomain='do' ) + suffix )
 
 
 def method(request, method_id, method_slug = None):
@@ -309,7 +309,7 @@ def methods_tagged(request, slug, **kwargs):
     if 'sort' in request.GET:
         sort_by = request.GET['sort']
     else:
-        sort_by = 'latest'
+        sort_by = 'views'
 
 
     if sort_by == 'latest':
