@@ -70,7 +70,7 @@ class LatestAllFeedTwitter(LatestAllFeed):
 
         # Now get tags off the item; only those with root metadata (important tags) and add to beginning of list
         # Optionally supports >1 root metatag (could happen)
-        tags = item.tags.exclude(meta__tag_id=None).filter(meta__tag_parent=None).order_by('?')[:3]
+        tags = item.tags.exclude(meta__tag_id=None).filter(meta__parent=None).order_by('?')[:3]
         if tags:
             for tag in tags:
                 hashtags.append( tag.slug.replace('-', '') ) # Use slug to remove most funky stuff, then - since hashtags tend to be bunched
