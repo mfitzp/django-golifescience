@@ -26,7 +26,12 @@ DATABASES = {
     }
 }
 
-
+  
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
 
 MEDIA_URL_ROOT = ''
 STATIC_URL_ROOT = ''
@@ -198,12 +203,7 @@ INSTALLED_APPS = (
     'authors',
     
 )
-   
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    }
-}
+ 
 
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_SECONDS = 600
