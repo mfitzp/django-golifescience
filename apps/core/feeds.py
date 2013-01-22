@@ -33,9 +33,9 @@ class LatestAllFeed(Feed):
 
     def item_description(self, item):
         try:
-            return markdown.markdown(item.description)
+            return item.description
         except:
-            return markdown.markdown(item.content)
+            return item.content
 
     def item_pubdate(self, item):
         return item.created_at
