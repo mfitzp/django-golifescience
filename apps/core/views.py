@@ -74,7 +74,7 @@ def home(request):
 
     # Top n for each area
     top = {
-        'latest': Method.objects.order_by('-created_at')[:5],
+        'latest': Method.objects.order_by('-updated_at')[:5],
 
         'views': Method.objects.extra(
                 select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id',}
