@@ -33,9 +33,9 @@ class LatestAllFeed(Feed):
 
     def item_description(self, item):
         try:
-            return item.description
+            return markdown.markdown(item.description)
         except:
-            return item.content
+            return markdown.markdown(item.content)
 
     def item_pubdate(self, item):
         return item.created_at
@@ -45,7 +45,7 @@ class LatestAllFeed(Feed):
             if item.image:
                 return '%s%s' % (settings.MEDIA_URL, item.image)
         except:
-            pass
+            return None
 
     def item_enclosure_length(self, item):
         if item.image:
