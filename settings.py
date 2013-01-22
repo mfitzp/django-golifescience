@@ -107,7 +107,7 @@ SUBDOMAIN_URLCONFS = {
 SUBDOMAIN_SITES = {
     None: {
             'name': '*ables',
-            'tagline':'Open Source solutions for science',
+            'tagline':'Open access. Open source.',
           },
     'install': {
             'name': 'Installables',

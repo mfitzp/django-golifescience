@@ -19,8 +19,8 @@ class LatestAllFeed(Feed):
 
     def items(self):    ## thanks to http://demongin.org/blog/780/ for sorted combined entries
         results = itertools.chain(
-            Method.objects.order_by('-created_at')[:20],
-            Article.objects.order_by('-created_at')[:20],
+            Method.objects.order_by('?')[:20],
+            Article.objects.order_by('?')[:20],
         ) 
 
         return sorted(results, key=lambda x: x.created_at, reverse=True)
