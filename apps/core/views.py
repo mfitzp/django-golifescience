@@ -68,7 +68,7 @@ def home(request):
                                    ,).order_by('-hit_count')[:5],
 
         'trending': Method.objects.extra(
-                select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > DATE(NOW() - INTERVAL 1 MONTH) AND t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id GROUP BY t.id',}
+                select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > DATE(NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id GROUP BY t.id',}
                                    ,).order_by('-hit_count')[:5],
 
     }
