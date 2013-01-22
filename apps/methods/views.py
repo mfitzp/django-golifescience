@@ -249,7 +249,7 @@ def method_list(request, **kwargs):
     if 'sort' in request.GET:
         sort_by = request.GET['sort']
     else:
-        sort_by = 'latest'
+        sort_by = 'views'
 
     if sort_by == 'latest':
         q = q.order_by('-created_at')
