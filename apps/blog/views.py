@@ -30,7 +30,7 @@ from forms import *
 def article_noslug(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
-    return HttpResponsePermanentRedirect( reverse('article-detail',kwargs={'article_id':article.id, 'article_slug':article.slug, subdomain=None} ) + suffix )
+    return HttpResponsePermanentRedirect( reverse('article-detail',kwargs={'article_id':article.id, 'article_slug':article.slug}, subdomain=None ) + suffix )
 
 def article(request, article_id, article_slug = None): 
 # answer_id is to allow #'d links to specific answers
@@ -38,15 +38,15 @@ def article(request, article_id, article_slug = None):
 
     article = get_object_or_404(Article, pk=article_id)
 
-    mlt = SearchQuerySet().more_like_this(article).models(Article)[:10]
+    #mlt = SearchQuerySet().more_like_this(article).models(Article)[:10]
 
     context = {
         'title':        article,
         'article':     article, 
-        'morelikethis':    mlt
+    #    'morelikethis':    mlt
     }
 
-    return render_to_response('news/article.html', context, context_instance=RequestContext(request))
+    return render_to_response('blog/article.html', context, context_instance=RequestContext(request))
 
 # Wrapper provides sorting via GET request url, handling via generic view
 def article_list(request, **kwargs):

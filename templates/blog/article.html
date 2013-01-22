@@ -3,19 +3,10 @@
 {% load core_tags %}
 {% load thumbnail %}
 {% load markup %}
+{% load hitcount_tags %}
 
-{% block content_title %}<span itemprop="name">{{ article }}</span>{% endblock %}
-{% block content_title_extra %}{% with article as object %}{% include "_vote.html" %}{% endwith %}{% endblock %}
+{% block title %}{{ article }}{% endblock %}
 
-{% block content_meta %}
-Posted by <a href="{ % url 'user-profile' username=article.author % }">{{ article.author.get_full_name }}</a>
-{{ article.created_at|brieftimesince }} ago.
-{% if article.latest_editor %}
-    Latest edit by <a href="{ % url 'user-profile' username=article.latest_editor % }">{{ article.latest_editor.get_full_name }}</a>
-    {{ article.updated_at|brieftimesince }} ago.
-{% endif %}
-Viewed {% get_hit_count for article %} times.
-{% endblock %}
 
 {% block content %}
 <a name="about"></a>
@@ -23,10 +14,9 @@ Viewed {% get_hit_count for article %} times.
 
 {% endblock %}
 
-{% block sidebar %}
+{% block sidebar_right %}
     <h5>Actions</h5>
     <ul class="navlist navlist-icon">
-        {% if request.user.is_authenticated %}<li class="icon_fave">{% with 1 as do_list_view %}{% add_remove_favorite article request.user %}{% endwith %}</li>{% endif %}
         <li class="icon_print"><a href="javascript:window.print()">{% trans "Printer friendly view" %}</a></li>
         <li class="icon_share">{% with article as object %}{% include "_social.html" %}{% endwith %}</li>
     </ul>
@@ -34,15 +24,12 @@ Viewed {% get_hit_count for article %} times.
     <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e75051d50065d70"></script>
     <!-- AddThis Button END -->
 
-{% if site.id != 1 %}
     <h5>{% trans "Tags" %}</h5>
 
     {% with article.tags.all as tags %}{% with 1 as show_tag_counts %}
         <div class="tags-vertical">{% include "_tags.html" %}</div>
         <br class="clear">
     {% endwith %}{% endwith %}
-
-{% endif %}
 
     <h5>Related articles</h5>
     <ul class="navlist">
@@ -54,6 +41,17 @@ Viewed {% get_hit_count for article %} times.
     {% endwith %}
     {% endfor %}
     </ul>
+
+    <h6>Meta</h6>
+<ul>
+<li>Posted by <a href="{ % url 'user-profile' username=article.author % }">{{ article.author.get_full_name }}</a>
+{{ article.created_at|brieftimesince }} ago.</li>
+{% if article.latest_editor %}<li>
+    Latest edit by <a href="{ % url 'user-profile' username=article.latest_editor % }">{{ article.latest_editor.get_full_name }}</a>
+    {{ article.updated_at|brieftimesince }} ago.</li>
+{% endif %}
+<li>Viewed {% get_hit_count for article %} times.</li>
+</ul>
 
 {% endblock %}
 
