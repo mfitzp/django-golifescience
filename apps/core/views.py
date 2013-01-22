@@ -45,19 +45,31 @@ def home(request):
            # tag = tagm.tag
             items = list( Method.objects.filter(tags__slug=tag.slug).exclude(image='').order_by('?')[:5] ) #.filter(is_featured=True)
             #items += list( Method.on_site.filter(tags__slug=tag.slug).filter(image='').order_by('?')[:5-len(items)] ) #.filter(is_featured=True)
-            section = { 
-                'type': 'method',
-                'tag': tag,
-                'items': items,
-                    }
+            if len(items) > 0:
+                section = { 
+                    'type': 'method',
+                    'tag': tag,
+                    'items': items,
+                        }
 
-            allsections.append( section )
+                allsections.append( section )
 
         cache.set('allsections', allsections ) 
 
     directory = TagMeta.objects.filter(level__lt=2)
-    topsection = allsections[0]
-    sections = allsections[1:]
+    sections = allsections
+
+    topsection = {
+        'type': 'method',
+        'tag': 'all',
+        'items': list(),
+    }
+
+    for section in allsections:
+        topsection['items'].append(section['items'][0])
+
+
+
 
     # Top n for each area
     top = {
