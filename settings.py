@@ -137,7 +137,7 @@ if 'DJANGO_SETTINGS_MODULE' in os.environ: # We're in a live web session (via ws
 
 MIDDLEWARE_CLASSES = (
 
-#    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
 
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
@@ -156,7 +156,7 @@ MIDDLEWARE_CLASSES = (
 
     'subdomains.middleware.SubdomainURLRoutingMiddleware',
 
-#    'django.middleware.cache.FetchFromCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 INSTALLED_APPS = (
@@ -205,9 +205,10 @@ CACHES = {
     }
 }
 
-#CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
-#CACHE_MIDDLEWARE_SECONDS = 600
-#CACHE_MIDDLEWARE_KEY_PREFIX = 'middleware_anon_cache_'
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+CACHE_MIDDLEWARE_SECONDS = 600
+CACHE_MIDDLEWARE_KEY_PREFIX = 'middleware_anon_cache_'
+
 KEY_PREFIX = 'cache_'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
