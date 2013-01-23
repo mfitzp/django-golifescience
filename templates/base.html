@@ -3,6 +3,7 @@
 {% load adminmedia %}
 {% load thumbnail %}
 {% load macros %}
+{% load postman_tags %}
 
 {% macro title %}{% block title %}Installables{% endblock %}{% endmacro %}
 
@@ -93,7 +94,26 @@
 
         <li><a href="{% url 'methods' subdomain='do' %}">Protocols</a></li>
 
-        <li><a href="#">Register</a></li>
+		{% if user.get_profile %}
+        {% postman_unread as unread_count %}
+            <li class="has-dropdown">
+              <a href="#">{% trans "Welcome," %}
+                {% firstof user.first_name user.username %} {% if unread_count %} <span class="label">{{ unread_count }}</span>{% endif %}</a>
+
+                 <ul class="dropdown">
+                    <li><a href="{% url 'user-profile' user_id=user.id  subdomain=None %}">{% trans "Profile" %}</a></li>
+                    <li><a href="{% url 'postman_inbox' subdomain=None %}">{% trans "Inbox" %}</a>  {% if unread_count %} <span class="label">{{ unread_count }}</span>{% endif %}</li>
+                    <li class="divider"></li>
+                    <li> <a href="{% url 'django.contrib.auth.views.logout' %}">
+			        {% trans 'Sign out' %}</a></li>
+                </ul>
+
+            </li>
+		{% else %}
+            <li><a href="{% url 'django.contrib.auth.views.login' %}" onclick="$('#modal-login').modal('show'); return false;">{% trans "Sign in" %}</a></li>
+            <li><a href="{% url 'registration_register' %}">{% trans "Register" %}</a></li>
+        {% endif %}
+
         <li><a href="{% url 'contact' None %}">Contact</a></li>
       </ul>
 

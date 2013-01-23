@@ -67,20 +67,14 @@
         <h6>Actions</h6>
         <ul class="navlist">
         {% ifnotequal puser user %}
-        <li><i class="general foundicon-mail"></i> <a href="{ % url 'postman_write' recipients=puser.username % }">{% trans "Send me a private message" %}</a></li>
+        <li><i class="general foundicon-mail"></i> <a href="{% url 'postman_write' recipients=puser.username %}">{% trans "Send me a private message" %}</a></li>
         {% endifnotequal %}
 
         {% ifequal puser user %}
 
-            <li><i class="general foundicon-edit"></i> <a href="{ % url 'profile-edit' % }">{% trans "Edit your profile" %}</a></li>
-            <li><i class="general foundicon-photo"></i> <a href="{ % url 'avatar-change' % }">{% trans "Change your profile picture" %}</a></li>
-            <li><i class="general foundicon-lock"></i> 
-                {% if password_change_url %}
-                    <a href="{{ password_change_url }}">
-                {% else %}
-                    <a href="{{ root_path }}password_change/">
-                {% endif %}
-            {% trans "Change password" %}</a></li>
+            <li><i class="general foundicon-edit"></i> <a href="{% url 'profile-edit' %}">{% trans "Edit your profile" %}</a></li>
+            <li><i class="general foundicon-photo"></i> <a href="{% url 'avatar-change' %}">{% trans "Change your profile picture" %}</a></li>
+            <li><i class="general foundicon-lock"></i> <a href="{% url 'django.contrib.auth.views.password_change' %}">{% trans "Change password" %}</a></li>
         {% endifequal %}
         </ul>
 

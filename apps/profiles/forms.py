@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.admin import widgets        
 from django.contrib.auth.models import User                               
+from django.contrib.auth.forms import SetPasswordForm                               
 # Theproject
 from profiles.models import *
 
@@ -22,7 +23,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         # Hide avatar, seperate form/view
-        fields = ['about', 'city', 'state', 'postcode', 'country', 'telno', 'url']
+        fields = ['about', 'title', 'postnomials',  'organisation', 'city', 'state', 'postcode', 'country', 'telno', 'url']
  
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
@@ -38,5 +39,7 @@ class AvatarForm(forms.ModelForm):
         super(AvatarForm, self).__init__(*args, **kwargs)        
         
     delete = forms.BooleanField(required=False,label='Delete current upload')
+
+
 
 

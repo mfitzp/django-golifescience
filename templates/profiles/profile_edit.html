@@ -5,7 +5,8 @@
 
 {% cycle 'odd' 'even' as zebra %}
 
-{% block content_title %}{% trans "Introduce yourself" %}{% endblock %}
+{% block title %}{% trans "Introduce yourself" %}{% endblock %}
+{% block subtitle %}{% trans "Tell the world a bit about you and your work" %}{% endblock %}
 
 {% block content %}
 <form action="{% url 'profile-edit' %}" method="post" enctype="multipart/form-data">

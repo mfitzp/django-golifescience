@@ -37,6 +37,9 @@ MEDIA_URL_ROOT = ''
 STATIC_URL_ROOT = ''
 ADMIN_MEDIA_URL_ROOT = ''
 
+DEFAULT_HOST = 'abl.es'
+SESSION_COOKIE_DOMAIN = '.abl.es'
+
 # local_settings.py can be used to override environment-specific settings
 # like database and email that diffeinstallables/static/admin/css/base.cssr between development and production.
 try:
@@ -63,7 +66,7 @@ TIME_ZONE = 'Europe/London'
 
 # Disable to fix problems with Favorite app
 # FIXME: Probably due to our multisite middleware?
-# APPEND_SLASH = False 
+APPEND_SLASH = True
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -124,8 +127,7 @@ SUBDOMAIN_SITES = {
           },
 }
 
-DEFAULT_HOST = 'abl.es'
-SESSION_COOKIE_DOMAIN = '.abl.es'
+
 #CSRF_COOKIE_DOMAIN = '.abl.es'
 
 # Make this unique, and don't share it with anybody.
@@ -190,6 +192,8 @@ INSTALLED_APPS = (
     'hitcount',
     'countries',    
     'subdomains',
+    'registration',
+    'postman',
 # installables
     'core',
     'ajax',

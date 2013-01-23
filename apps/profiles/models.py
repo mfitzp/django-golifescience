@@ -52,9 +52,13 @@ class UserProfile(models.Model):
     
     PROFESSIONAL_TITLE_CHOICES = (
         ('Mr','Mr'),
+        ('Miss','Miss'),
+        ('Mrs','Mrs'),
+        ('Ms','Ms'),
         ('Dr', 'Dr'),
         ('Prof', 'Prof'),
         ('Sir', 'Sir'),
+        ('Dame', 'Dame'),
     )
     title = models.CharField(max_length=4,
                                       choices=PROFESSIONAL_TITLE_CHOICES,

@@ -36,6 +36,8 @@ urlpatterns = patterns('',
 
     (r'^blog/',      include('blog.urls')),
 
+    (r'^messages/',  include('postman.urls')),
+
     # Search
 #    url(r'^tags/$', 'core.views.tag_search', {
 #                'template':'search/tag_search.html',
@@ -44,6 +46,15 @@ urlpatterns = patterns('',
 #            }, 
 #            name='tags'
 #        ),
+
+
+    # Registration and user management
+#    url(r'^accounts/register/$',
+#       register,
+#       {'backend': 'captcha.backends.default.CaptchaDefaultBackend', # Enable captcha
+#        'form_class': RegistrationFormCaptchaNoUserName}, # Allow registration without username
+#       name='registration_register'),
+    (r'^accounts/', include('registration.backends.default.urls')),
 
     # Ajax
     (r'^ajax/',      include('ajax.urls')),

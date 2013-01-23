@@ -60,7 +60,7 @@ def edit_profile(request):
         pform = ProfileForm(instance=profile)
         
     context = {
-        'title': _('Edit %(user)s') % { 'user':profile.fullname() },
+        'title': _('Edit %(user)s') % { 'user':user.get_full_name() },
         'profile': profile,
         'uform': uform,
         'pform': pform,
@@ -89,7 +89,7 @@ def change_avatar(request):
         form = AvatarForm(instance=profile)
         
     context = {
-        'title': _('Change profile picture for %(user)s') % { 'user':profile.fullname() },
+        'title': _('Change profile picture for %(user)s') % { 'user':user.get_full_name() },
         'profile': profile,
         'form': form,
     }
