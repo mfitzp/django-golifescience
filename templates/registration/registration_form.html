@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Get involved{% endblock %}
+{% block subtitle %}Open access is depending on you{% endblock %}
+
+{% block widebar %}{% endblock %}
+
+{% block content %}
+<div class="boxout"><div>
+<p><strong><a href="http://{{ site.domain }}/">{{ site.name }}</a></strong> is a community dedicated to open acces and open source in science.</p>
+<p>To get started simply pick yourself <strong>a username</strong>, enter <strong>your email address</strong> and pick yourself <strong>a password</strong>.</p>
+</div></div>
+<p>
+
+<form action="" method="post" class="well">
+{% csrf_token %}
+<table>
+{{ form.as_table}}
+</table>
+<div class="actions">
+    <button type="submit" class="btn btn-primary">Get started &raquo;</button>
+</div>
+</form>
+</p>
+
+{% endblock %}
+
+{% block sidebar %}
+
+<h5>Social Login</h5>
+<p>You can also log in with your favourite social network. Click a logo to begin.</p>
+<table class="form" style="width:150px;">
+<tr><td><a href="{% url socialauth_begin 'facebook' %}"><img src="{{ MEDIA_URL }}img/social/facebook-logo.png" alt="Log in using Facebook"></a></td></tr>
+<td><a href="{% url socialauth_begin 'twitter' %}"><img src="{{ MEDIA_URL }}img/social/twitter-logo.png" alt="Log in using Twitter"></a></td></tr></tr>
+<tr><td><a href="{% url socialauth_begin 'google-oauth2' %}"><img src="{{ MEDIA_URL }}img/social/google-logo.png" alt="Log in using Google"></a></td></tr>
+<td><a href="{% url socialauth_begin 'browserid' %}" id="browserid"><img src="{{ MEDIA_URL }}img/social/browserid-logo.png" alt="Log in using BrowserID"></a>
+<!-- Define a form to send the POST data -->
+<form method="post" action="{% url socialauth_complete 'browserid' %}"><input type="hidden" name="assertion" value="" /></form>
+</td></tr>
+</table>
+
+{% endblock %}
+

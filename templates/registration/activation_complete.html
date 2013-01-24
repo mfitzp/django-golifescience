@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load thumbnail %}
+{% load hitcount_tags %}
+{% load core_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+
+{% block title %}Welcome to abl.es!{% endblock %}
+{% block subtitle %}Great to have you involved{% endblock %}
+
+{% block content %}
+<div class="boxout"><div>
+<p><strong>Welcome and thankyou</strong> for joining our exciting new community. Here you will find like minded experts sharing {{ site.method_name_plural }}, exchanging 
+Q&A's and discussing ideas. Your contribution is important to the community and will gain you access to extra features.</p>
+</div></div>
+
+<!-- Community guidelines in here -->
+
+<p>Once again, welcome to the community. <a href="{% url home %}">We look forward to seeing you around!</a></p>
+
+{% endblock %}
+

@@ -101,17 +101,17 @@
                 {% firstof user.first_name user.username %} {% if unread_count %} <span class="label">{{ unread_count }}</span>{% endif %}</a>
 
                  <ul class="dropdown">
-                    <li><a href="{% url 'user-profile' user_id=user.id  subdomain=None %}">{% trans "Profile" %}</a></li>
                     <li><a href="{% url 'postman_inbox' subdomain=None %}">{% trans "Inbox" %}</a>  {% if unread_count %} <span class="label">{{ unread_count }}</span>{% endif %}</li>
+                    <li><a href="{% url 'user-profile' user_id=user.id  subdomain=None %}">{% trans "Profile" %}</a></li>
                     <li class="divider"></li>
-                    <li> <a href="{% url 'django.contrib.auth.views.logout' %}">
+                    <li> <a href="{% url 'logout' subdomain=None %}?next=/">
 			        {% trans 'Sign out' %}</a></li>
                 </ul>
 
             </li>
 		{% else %}
-            <li><a href="{% url 'django.contrib.auth.views.login' %}" onclick="$('#modal-login').modal('show'); return false;">{% trans "Sign in" %}</a></li>
-            <li><a href="{% url 'registration_register' %}">{% trans "Register" %}</a></li>
+            <li><a href="{% url 'login' subdomain=None %}" onclick="$('#modal-login').modal('show'); return false;">{% trans "Sign in" %}</a></li>
+            <li><a href="{% url 'registration_register' subdomain=None  %}">{% trans "Register" %}</a></li>
         {% endif %}
 
         <li><a href="{% url 'contact' None %}">Contact</a></li>

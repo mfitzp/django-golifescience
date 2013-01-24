@@ -54,7 +54,9 @@ urlpatterns = patterns('',
 #       {'backend': 'captcha.backends.default.CaptchaDefaultBackend', # Enable captcha
 #        'form_class': RegistrationFormCaptchaNoUserName}, # Allow registration without username
 #       name='registration_register'),
+    (r'^accounts/', include('django.contrib.auth.urls')),
     (r'^accounts/', include('registration.backends.default.urls')),
+
 
     # Ajax
     (r'^ajax/',      include('ajax.urls')),

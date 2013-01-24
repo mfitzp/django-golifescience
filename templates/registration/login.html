@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Sign in and get involved!{% endblock %}
+{% block subtitle %}Or just sign in, that's fine too{% endblock %}
+{% block widebar %}{% endblock %}
+
+{% block content %}
+
+<p><strong><a href="http://{{ site.domain }}/">{{ site.name }}</a></strong> is a community network where you can {{ site.meta.tagline|lower }}.</p>
+<p><strong>Sign in</strong> below or <strong><a href="{% url 'registration_register' %}">create a new account</a></strong> to get involved.</p>
+</div></div>
+<div class="row">
+<div class="span8">
+
+<form action="/accounts/login/" method="post" class="well">{% csrf_token %}
+<input type="hidden" name="next" value="{{ request.GET.next }}">
+<table>
+{{ form.as_table}}
+</table>
+<div class="form-actions">
+    <a class="btn btn-success" href="{% url 'registration_register' %}">Create an account</a>
+    <a class="btn btn-info" href="{% url 'password_reset' %}">Forgot your password?</a>
+    <button type="submit" class="btn btn-primary">Sign in</button>
+</div>
+
+</form>
+
+</div>
+<div class="span4">
+<!--
+<h5>Social Login</h5>
+<p>You can also log in with your favourite social network.</p>
+<table class="form" style="width:250px;">
+<tr><td><a href="{ % url socialauth_begin 'facebook' % }"><img src="{{ MEDIA_URL }}img/social/facebook-logo.png" alt="Log in using Facebook"></a></td>
+<td><a href="{ % url socialauth_begin 'twitter' % }"><img src="{{ MEDIA_URL }}img/social/twitter-logo.png" alt="Log in using Twitter"></a></td></tr>
+<tr><td><a href="{ % url socialauth_begin 'google-oauth2' % }"><img src="{{ MEDIA_URL }}img/social/google-logo.png" alt="Log in using Google"></a></td>
+<td><a href="{ % url socialauth_begin 'browserid' % }" id="browserid"><img src="{{ MEDIA_URL }}img/social/browserid-logo.png" alt="Log in using BrowserID"></a>
+<form method="post" action="{ % url socialauth_complete 'browserid' % }"><input type="hidden" name="assertion" value="" /></form>
+-->
+</td></tr>
+</table>
+</div>
+
+</div>
+
+{% endblock %}
+
