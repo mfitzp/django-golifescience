@@ -46,13 +46,11 @@
 <form action="" method="post">{% csrf_token %}
 <input type="hidden" {% if message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} />
 <a href="{{ next_url }}">{% trans "Back" %}</a>
-<span id="pm_buttons">
 
 <ul class="button-group">
-
-<li><button type="submit" onclick="this.form.action='{% url 'postman_delete' %}?next={{ next_url|urlencode }}'" class="button">{% trans "Delete" %}</button></li>
-{% if not archived %}<li><button type="submit" onclick="this.form.action='{% url 'postman_archive' %}?next={{ next_url|urlencode }}'" class="button">{% trans "Archive" %}</button></li>{% endif %}
-{% if reply_to_pk %}<li><a href="{% url 'postman_reply' message_id=reply_to_pk %}?next={{ next_url|urlencode }}" class="button">{% trans "Reply" %}</a></li>{% endif %}
+<li><button type="submit" onclick="this.form.action='{% url 'postman_delete' %}?next={{ next_url|urlencode }}'" class="small button">{% trans "Delete" %}</button></li>
+{% if not archived %}<li><button type="submit" onclick="this.form.action='{% url 'postman_archive' %}?next={{ next_url|urlencode }}'" class="small button">{% trans "Archive" %}</button></li>{% endif %}
+{% if reply_to_pk %}<li><a href="{% url 'postman_reply' message_id=reply_to_pk %}?next={{ next_url|urlencode }}" class="small button">{% trans "Reply" %}</a></li>{% endif %}
 </ul>
 
 </form>

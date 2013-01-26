@@ -67,10 +67,10 @@
 </div>
 
 <form action="{% block pm_form_action %}{% endblock %}" method="post">{% csrf_token %}
-{% block pm_form_buttons %}<span id="pm_buttons">
-{% block pm_delete_button %}<button type="submit" onclick="this.form.action='{% url 'postman_delete' %}'">{% trans "Delete" %}</button>{% endblock %}
-{% block pm_archive_button %}<button type="submit" onclick="this.form.action='{% url 'postman_archive' %}'">{% trans "Archive" %}</button>{% endblock %}
-{% block pm_undelete_button %}<button type="submit" onclick="this.form.action='{% url 'postman_undelete' %}'">{% trans "Undelete" %}</button>{% endblock %}
-</span>{% endblock %}
+{% block pm_form_buttons %}<ul class="button-group">
+{% block pm_delete_button %}<button type="submit" onclick="this.form.action='{% url 'postman_delete' %}'" class="small button">{% trans "Delete" %}</button>{% endblock %}
+{% block pm_archive_button %}<button type="submit" onclick="this.form.action='{% url 'postman_archive' %}'" class="small button">{% trans "Archive" %}</button>{% endblock %}
+{% block pm_undelete_button %}<button type="submit" onclick="this.form.action='{% url 'postman_undelete' %}'" class="small button">{% trans "Undelete" %}</button>{% endblock %}
+</ul>{% endblock %}
 
 {% endblock content %}
