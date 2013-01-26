@@ -159,7 +159,7 @@ def colorname( name ):
         pos = name.lower().index('ables')
         return '<span class="sitecolor">' + name[:pos] + '</span>' + name[pos:]
     except:
-        return ''
+        return name
 
 @register.filter
 def classname(obj):
