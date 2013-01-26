@@ -11,7 +11,7 @@ class LatestMethodsFeed(Feed):
     description = "Latest methods added to the site"
 
     def items(self):
-        return Method.objects.order_by('-created_at')[:30] 
+        return Method.objects.order_by('-created_at')[:20] 
         
     def item_title(self, item):
         return item.name
