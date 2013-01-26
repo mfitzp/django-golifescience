@@ -242,9 +242,9 @@ HAYSTACK_CONNECTIONS = {
         'ENGINE': 'haystack.backends.xapian_backend.XapianEngine',
         'PATH': os.path.join(SITE_ROOT, 'search_index'),
 #        'TIMEOUT': 60 * 5,
-        'INCLUDE_SPELLING': True,
-        'BATCH_SIZE': 100,
-        'DEFAULT_OPERATOR': 'OR',
+#        'INCLUDE_SPELLING': True,
+#        'BATCH_SIZE': 100,
+#        'DEFAULT_OPERATOR': 'OR',
 #        'EXCLUDED_INDEXES': ['thirdpartyapp.search_indexes.BarIndex'],
     },
 }

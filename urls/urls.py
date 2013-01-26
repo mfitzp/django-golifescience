@@ -57,6 +57,7 @@ urlpatterns = patterns('',
     (r'^accounts/', include('django.contrib.auth.urls')),
     (r'^accounts/', include('registration.backends.default.urls')),
 
+    (r'^search/', include('haystack.urls')),
 
     # Ajax
     (r'^ajax/',      include('ajax.urls')),

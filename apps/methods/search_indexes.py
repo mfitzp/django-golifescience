@@ -1,15 +1,14 @@
 import datetime
-from haystack.indexes import *
-from haystack import site
+from haystack import indexes
 from methods.models import *
 
 
-class MethodIndex(SearchIndex):
-    text = CharField(document=True, use_template=True) #name, description 
-    site_id = IntegerField(model_attr='site__id')
+class MethodIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(document=True, use_template=True) #name, description 
 
-    def index_queryset(self):
+    def get_model(self):
+        return Method
+
+    def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
-        return Method.objects.all() #.filter(pub_date__lte=datetime.datetime.now())
-
-site.register(Method, MethodIndex)
+        return self.get_model().objects.all()

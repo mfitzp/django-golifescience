@@ -20,9 +20,9 @@ from django.utils.encoding import force_unicode
 from django.utils import formats
 from django.conf import settings
 # External
-#from haystack.query import SearchQuerySet, RelatedSearchQuerySet
-#from haystack.forms import SearchForm
-#from haystack.views import SearchView
+from haystack.query import SearchQuerySet, RelatedSearchQuerySet
+from haystack.forms import SearchForm
+from haystack.views import SearchView
 from taggit.views import tagged_object_list
 from subdomains.utils import reverse
 # Methodmint
@@ -110,7 +110,7 @@ def method(request, method_id, method_slug = None):
         'total_active':     total_active,
         'total_waiting':    total_waiting,
 
-        #'morelikethis':     SearchQuerySet().more_like_this(method).models(Method).filter(site_id=method.site.id)[:10],
+        'morelikethis':     SearchQuerySet().more_like_this(method).models(Method)[:10],
 
         'microdata':        True,
 
