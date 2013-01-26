@@ -182,10 +182,13 @@
     <div class="four columns">
         <h6>Latest updates</h6>
         <ul class="navlist">
-        {% for method in top5s.latest %}
+        {% for object in top5s.latest %}
             <li>
-                <span class="label radius">{{ method.updated_at|verybrieftimesince }}</span>&nbsp; 
-                <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+                <span class="label radius label-{{ object|classname|lower }}">{{ object.updated_at|verybrieftimesince }}</span>&nbsp; 
+                {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }}</a>{% else %}
+                {% if object|classname = 'Article' %}<a href="{% url 'article-detail' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
+                {% if object|classname = 'Method' %}<a href="{% url 'method-detail' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
+                {% endif %} {% endif %} {% endif %}         
             </li>
         {% endfor %}
         </ul>
@@ -194,10 +197,13 @@
     <div class="four columns">
         <h6>Trending</h6>
         <ul class="navlist">
-        {% for method in top5s.trending %}
+        {% for object in top5s.trending %}
             <li>
-                <span class="label radius">{{ method.hit_count }}</span>&nbsp; 
-                <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+                <span class="label radius label-{{ object|classname|lower }}">{{ object.hit_count }}</span>&nbsp; 
+                {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }}</a>{% else %}
+                {% if object|classname = 'Article' %}<a href="{% url 'article-detail' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
+                {% if object|classname = 'Method' %}<a href="{% url 'method-detail' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
+                {% endif %} {% endif %} {% endif %}                      
             </li>
         {% endfor %}
         </ul>
@@ -206,10 +212,13 @@
     <div class="four columns">
         <h6>Most viewed</h6>
         <ul class="navlist">
-        {% for method in top5s.views %}
+        {% for object in top5s.views %}
             <li>
-                <span class="label radius">{{ method.hit_count }}</span>&nbsp; 
-                <a href="{% url 'method-detail' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+                <span class="label radius label-{{ object|classname|lower }}">{{ object.hit_count }}</span>&nbsp; 
+                {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }}</a>{% else %}
+                {% if object|classname = 'Article' %}<a href="{% url 'article-detail' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
+                {% if object|classname = 'Method' %}<a href="{% url 'method-detail' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
+                {% endif %} {% endif %} {% endif %}       
             </li>
         {% endfor %}
         </ul>

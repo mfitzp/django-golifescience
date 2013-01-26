@@ -135,11 +135,11 @@ def verybrieftimesince(value, arg=None):
             t = brieftimesince(value, arg)
         t = brieftimesince(value)
         # Substitute the words for d, h, m, s
-        slist = ('years', 'months', 'days', 'hours', 'minutes', 'seconds',
-                'year', 'month', 'day', 'hour', 'minute', 'second',)
+        slist = ('years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds',
+                'year', 'month', 'week', 'day', 'hour', 'minute', 'second',)
         sdict = {
-            'years':'y', 'months': 'mo', 'days':'d', 'hours':'h', 'minutes':'m', 'seconds':'s',
-            'year':'y', 'month': 'mo', 'day':'d', 'hour':'h', 'minute':'m', 'second':'s',
+            'years':'y', 'months': 'mo', 'weeks': 'w', 'days':'d', 'hours':'h', 'minutes':'m', 'seconds':'s',
+            'year':'y', 'month': 'mo', 'week': 'w', 'day':'d', 'hour':'h', 'minute':'m', 'second':'s',
             }
         t = reduce(lambda x, y: x.replace(y, sdict[y]), slist, t)
         return t.replace(" ", "")
@@ -158,5 +158,13 @@ def colorname( name ):
     
     pos = name.lower().index('ables')
     return '<span class="sitecolor">' + name[:pos] + '</span>' + name[pos:]
+
+
+@register.filter
+def classname(obj):
+    classname = obj.__class__.__name__
+    return classname
+
+
 
 

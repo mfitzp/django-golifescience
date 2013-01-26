@@ -23,7 +23,7 @@ class LatestAllFeed(Feed):
             Article.objects.order_by('?')[:20],
         ) 
 
-        return results #sorted(results, key=lambda x: x.created_at, reverse=True)
+        return sorted(results, key=lambda x: x.created_at, reverse=True)
 
     def item_title(self, item):
         try:

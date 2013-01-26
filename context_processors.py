@@ -1,4 +1,5 @@
 import datetime
+import itertools
 # Django
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -8,6 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 # External
 # Installables
 from applications.models import Application
+from blog.models import Article
 from methods.models import Method
 
 def languages( context ):
@@ -29,18 +31,44 @@ def top5s( context ):
 
     top5s = cache.get('top5s', None ) 
     if top5s is None:
+
         # Top N methods
         top5s = {
-            'latest': Method.objects.order_by('-updated_at')[:5],
+             'latest': sorted( itertools.chain(
+                        Application.objects.order_by('-updated_at')[:5],
+                        Article.objects.order_by('-updated_at')[:5],
+                        Method.objects.order_by('-updated_at')[:5],
+                    ),  key=lambda x: x.updated_at, reverse=True)[:5], 
 
-            'views': Method.objects.extra(
-                    select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id',}
-                                       ,).order_by('-hit_count')[:5],
+            'views': sorted( itertools.chain( 
+                        Application.objects.extra(
+                        select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + 
+                                str(ContentType.objects.get_for_model(Application).id) + ' AND t.object_pk=applications_application.id',}
+                            ,).order_by('-hit_count')[:5],
+                        Article.objects.extra(
+                        select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + 
+                                str(ContentType.objects.get_for_model(Article).id) + ' AND t.object_pk=blog_article.id',}
+                            ,).order_by('-hit_count')[:5],
+                        Method.objects.extra(
+                        select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + 
+                                str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id',}
+                            ,).order_by('-hit_count')[:5],
+                    ),  key=lambda x: x.hit_count, reverse=True)[:5], 
 
-            'trending': Method.objects.extra(
-                    select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > DATE(NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id GROUP BY t.id',}
-                                       ,).order_by('-hit_count')[:5],
-
+            'trending': sorted( itertools.chain( 
+                            Application.objects.extra(
+                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > DATE(NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + 
+                                    str(ContentType.objects.get_for_model(Application).id) + ' AND t.object_pk=applications_application.id GROUP BY t.id',}
+                                ,).order_by('-hit_count')[:5],
+                            Article.objects.extra(
+                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > DATE(NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + 
+                                    str(ContentType.objects.get_for_model(Article).id) + ' AND t.object_pk=blog_article.id GROUP BY t.id',}
+                                ,).order_by('-hit_count')[:5],
+                            Method.objects.extra(
+                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > DATE(NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + 
+                                    str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id GROUP BY t.id',}
+                                ,).order_by('-hit_count')[:5],
+                    ),  key=lambda x: x.hit_count, reverse=True)[:5], 
         }
 
         cache.set('top5s', top5s ) 
