@@ -2,8 +2,20 @@
 {% load i18n %}{% load postman_tags %}
 {% load avatar_tags %}{% load markup %}
 
-{% block title %}{% if pm_messages|length > 1 %}{% trans "Conversation" %}{% else %}{% trans "Message" %}{% endif %}:
-{% with pm_messages|first as message %}{{ message.thread.subject }}{% endwith %}
+{% block title %}
+{% if pm_messages|length > 1 %}
+    {% with pm_messages|first as message %}{{ message.thread.subject }}{% endwith %}
+{% else %}
+    {% with pm_messages|first as message %}{{ message.subject }}{% endwith %}
+{% endif %}
+{% endblock %}
+
+{% block subtitle %}
+    {% if pm_messages|length > 1 %}
+        {% trans "Conversation" %}
+    {% else %}
+        {% trans "Message" %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -17,13 +29,13 @@
         <div class="emblem-deleted" title="Deleted"></div>
 
     <div class="pm_avatar">
-        <a href="{% url user-profile user_id=message.sender.id %}" title="{{ message.sender.get_profile.fullname }}">{% avatar message.sender 32 %}</a>
+        <a href="{% url 'user-profile' user_id=message.sender.id %}" title="{{ message.sender.get_profile.fullname }}">{% avatar message.sender 32 %}</a>
     </div>
 
  <div class="pm_body">{{ message.body|markdown:"safe,tables,codehilite" }}</div>
  <div class="pm_meta">
         Sent {% if message.recipient != request.user %}to
-        <a href="{% url user-profile user_id=message.sender.id %}" title="{{ message.obfuscated_recipient|or_me:user }}">{% avatar message.recipient 16 %}
+        <a href="{% url 'user-profile' user_id=message.sender.id %}" title="{{ message.obfuscated_recipient|or_me:user }}">{% avatar message.recipient 16 %}
         {{ message.recipient.get_profile.fullname }}</a>{% endif %}
     <span class="pm_date">{{ message.sent_at|timesince }} ago</span>
     {% if message.is_rejected %} <span class="pm_status">{% trans "Rejected" %}{% if message.moderation_reason %}{% trans ":" %} {{ message.moderation_reason }}{% endif %}</span>{% endif %}
@@ -35,17 +47,22 @@
 <input type="hidden" {% if message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} />
 <a href="{{ next_url }}">{% trans "Back" %}</a>
 <span id="pm_buttons">
-<button type="submit" onclick="this.form.action='{% url postman_delete %}?next={{ next_url|urlencode }}'">{% trans "Delete" %}</button>
-{% if not archived %}<button type="submit" onclick="this.form.action='{% url postman_archive %}?next={{ next_url|urlencode }}'">{% trans "Archive" %}</button>{% endif %}
-</span>
-{% if reply_to_pk %}<a href="{% url postman_reply reply_to_pk %}?next={{ next_url|urlencode }}" class="button">{% trans "Reply" %}</a>{% endif %}
+
+<ul class="button-group">
+
+<li><button type="submit" onclick="this.form.action='{% url 'postman_delete' %}?next={{ next_url|urlencode }}'" class="button">{% trans "Delete" %}</button></li>
+{% if not archived %}<li><button type="submit" onclick="this.form.action='{% url 'postman_archive' %}?next={{ next_url|urlencode }}'" class="button">{% trans "Archive" %}</button></li>{% endif %}
+{% if reply_to_pk %}<li><a href="{% url 'postman_reply' message_id=reply_to_pk %}?next={{ next_url|urlencode }}" class="button">{% trans "Reply" %}</a></li>{% endif %}
+</ul>
+
 </form>
 {% if reply_to_pk %}<hr />
 <h2>{% trans 'Reply' %}</h2>
-<form action="{% url postman_reply reply_to_pk %}?next={{ next_url|urlencode }}" method="post">{% csrf_token %}
+<form action="{% url 'postman_reply' message_id=reply_to_pk %}?next={{ next_url|urlencode }}" method="post">{% csrf_token %}
 <div id="pm_reply">{{ form.body }}</div>
-<button type="submit">{% trans 'Reply' %}</button>
+<button type="submit" class="button">{% trans 'Reply' %}</button>
 </form>{% endif %}
+</ul>
 {% endif %}
 {% endfor %}
 </div>
