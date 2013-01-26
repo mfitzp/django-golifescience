@@ -39,7 +39,7 @@
         <dl id="magellanTopNav" data-magellan-expedition="fixed" class="sub-nav">
 
           <dt>Background</dt>
-          {% if application.features %}<dd data-magellan-arrival="features"><a href="#features">Key Features</a></dd>{% endif %}
+          {% if application.features.count > 0 %}<dd data-magellan-arrival="features"><a href="#features">Key Features</a></dd>{% endif %}
           <dd data-magellan-arrival="requirements"><a href="#requirements">Requirements</a></dd>
           <dt>Install</dt>
           <dd data-magellan-arrival="packages"><a href="#packages">Packages</a></dd>
@@ -54,7 +54,7 @@
 {% endblock %}
 
 {% block content %}
-{% if application.features %}
+{% if application.features.count > 0 %}
 <h3 data-magellan-destination="features">{% trans "Key Features" %}</h3>
 
 <div id="featuredContent">
@@ -110,7 +110,7 @@ contributions of code and other resources can be found <a href="https://github.c
     {% endif %}
 
 <h3 data-magellan-destination="licensing">Licensing</h3>
-<p><strong>{{ application.name }}</strong> is provided free for any use under the GPLv3 license. This grants you the right to unrestricted copying, modification and sharing
+<p><strong>{{ application.name }}</strong> is provided free for any use under the <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a> license. This grants you the right to unrestricted copying, modification and sharing
 of the software, with the proviso that distribution of your own modifications must be under this same license.</p>
 
 {% endblock %}
