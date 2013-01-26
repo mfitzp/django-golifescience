@@ -139,7 +139,7 @@
 {% endblock %}
 </div>
  
-<div class="body">
+<div class="body"><a name="top"></a>
 {% block layout %}
   <div class="row">
     <div class="twelve columns">
@@ -155,19 +155,19 @@
         <div class="five columns">
         <h6>Made by abl.es</h6>
         <p>An open science project based in Birmingham, United Kingdom.
-         <a href="{% url 'about' None %}">Find out more →</a></p>
+         <a href="{% url 'about' None %}">Find out more &rarr;</a></p>
         </div>
 
         <div class="three columns">
         <h6>Using our software?</h6>
-        <p>Let us know and we'll feature you on our site! <a href="{% url 'contact' None %}">Get in touch →</a></p>
+        <p>Let us know and we'll feature you on our site! <a href="{% url 'contact' None %}">Get in touch &rarr;</a></p>
         </div>
 
         <div class="four columns">
         <h6>Want to know more?</h6>
             <dl>
-                <dd><i class="general foundicon-idea"></i> <a href="{% url 'faq' None %}">Read the FAQ →</a></dd>
-                <dd><i class="social foundicon-twitter"></i> <a href="http://twitter.com/#!/_ables_" target="_blank">Follow us on Twitter →</a></dd>
+                <dd><i class="general foundicon-idea"></i> <a href="{% url 'faq' None %}">Read the FAQ &rarr;</a></dd>
+                <dd><i class="social foundicon-twitter"></i> <a href="http://twitter.com/#!/_ables_" target="_blank">Follow us on Twitter &rarr;</a></dd>
                 <!-- <li><i class="social foundicon-facebook"></i> <a href="http://facebook.com/_ables_">Find us on Facebook →</a></li> -->
             </dl>
         </div>
@@ -200,10 +200,10 @@
         {% for object in top5s.trending %}
             <li>
                 <span class="label radius label-{{ object|classname|lower }}">{{ object.hit_count }}</span>&nbsp; 
-                {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }}</a> {{ object.tagline }}{% else %}
+                {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
                 {% if object|classname = 'Article' %}<a href="{% url 'article-detail' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
                 {% if object|classname = 'Method' %}<a href="{% url 'method-detail' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
-                {% endif %} {% endif %} {% endif %}                      
+                {% endif %} {% endif %} {% endif %}                       
             </li>
         {% endfor %}
         </ul>
@@ -215,10 +215,10 @@
         {% for object in top5s.views %}
             <li>
                 <span class="label radius label-{{ object|classname|lower }}">{{ object.hit_count }}</span>&nbsp; 
-                {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }}</a> {{ object.tagline }}{% else %}
+                {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
                 {% if object|classname = 'Article' %}<a href="{% url 'article-detail' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
                 {% if object|classname = 'Method' %}<a href="{% url 'method-detail' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
-                {% endif %} {% endif %} {% endif %}       
+                {% endif %} {% endif %} {% endif %}      
             </li>
         {% endfor %}
         </ul>
@@ -231,9 +231,13 @@
 {% endblock %}
 
       <div class="row footer-bottom">
-        <div class="six columns">Site content &copy;2012-{% now "Y" %} abl.es &bull; Licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a> and <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a></div>
-        <div class="six columns"></div>
-
+        <div class="six columns">Site content &copy;2012-{% now "Y" %} <a href="http://abl.es">abl.es</a> &bull; Licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a> and <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a></div>
+        <div class="six columns" style="text-align:right;">
+            <a href="{% url 'home' %}">Home</a> &bull;
+            <a href="{% url 'faq' None %}">FAQ</a> &bull;
+            <a href="#top">&uarr;</a>
+       <!--     <a href="{ % url 'statistics' None % }">Statistics</a> &bull; -->
+        </div>
       </div>
   </div>
 
