@@ -9,7 +9,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('Martin Fitzpatrick', 'mfitzp@methodmint.com'),
+     ('Martin Fitzpatrick', 'mfitzp@abl.es'),
 )
 
 MANAGERS = ADMINS
