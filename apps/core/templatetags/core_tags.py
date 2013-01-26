@@ -155,10 +155,11 @@ def colorname( name ):
     Wrap the prefix of the ables name in a color span for theming on header bar
     """
     # Find 'ables' in the string, wrap span around the bit before this
-    
-    pos = name.lower().index('ables')
-    return '<span class="sitecolor">' + name[:pos] + '</span>' + name[pos:]
-
+    try:
+        pos = name.lower().index('ables')
+        return '<span class="sitecolor">' + name[:pos] + '</span>' + name[pos:]
+    except:
+        return ''
 
 @register.filter
 def classname(obj):
