@@ -39,7 +39,7 @@
         <dl id="magellanTopNav" data-magellan-expedition="fixed" class="sub-nav">
 
           <dt>Background</dt>
-          <dd data-magellan-arrival="features"><a href="#features">Key Features</a></dd>
+          {% if application.features %}<dd data-magellan-arrival="features"><a href="#features">Key Features</a></dd>{% endif %}
           <dd data-magellan-arrival="requirements"><a href="#requirements">Requirements</a></dd>
           <dt>Install</dt>
           <dd data-magellan-arrival="packages"><a href="#packages">Packages</a></dd>
@@ -54,8 +54,8 @@
 {% endblock %}
 
 {% block content %}
+{% if application.features %}
 <h3 data-magellan-destination="features">{% trans "Key Features" %}</h3>
-
 
 <div id="featuredContent">
 {% for feature in application.features.all %}
@@ -72,6 +72,7 @@
     </div>
 {% endfor %}
 </div>
+{% endif %}
 
 
 <h3 data-magellan-destination="requirements">Requirements</h3>
