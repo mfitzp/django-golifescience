@@ -92,11 +92,13 @@
 
 <h3 data-magellan-destination="publications">Publications</h3>
 
-    {% for publication in application.publications.all %}
-        Publication
-    {% empty %}
-        <p>No publications yet. Don't forget to <a href="{% url 'contact' None %}">let us know</a> if you use <strong>{{ application.name }}</strong> in your published work. We'll feature you here!</p>
-    {% endfor %}
+<h3 data-magellan-destination="publications">{% trans "References" %}</h3>
+{% for reference in application.references.all %}
+    {% include "references/_reference.html" %}
+{% empty %}
+    <p>No publications yet. Don't forget to <a href="{% url 'contact' None %}">let us know</a> if you use <strong>{{ application.name }}</strong> in your published work. We'll feature you here!</p>
+{% endfor %}
+
 
 <h3 data-magellan-destination="contributors">Contributors</h3>
 <p>The following individuals and associated organisations have made significant contributions towards the development of <strong>{{ application.name }}</strong>. Complete listings of all
