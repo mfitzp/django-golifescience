@@ -4,6 +4,9 @@
 {% load thumbnail %}
 {% load macros %}
 {% load postman_tags %}
+{% load tagmeta_tags %}
+
+{% set_default_tagged_model %}
 
 {% macro title %}{% block title %}Installables{% endblock %}{% endmacro %}
 
@@ -82,7 +85,7 @@
         <li><a href="{% url 'blog' None %}">Blog</a></li>
 
         <li class="has-dropdown">
-          <a href="#">Software</a>
+          <a href="{% url 'application-list' subdomain='install' %}">Software</a>
 
           <ul class="dropdown">
             {% for application in all_applications %}
@@ -92,7 +95,7 @@
 
         </li>
 
-        <li><a href="{% url 'methods' subdomain='do' %}">Protocols</a></li>
+        <li><a href="{% url 'method-list' subdomain='do' %}">Protocols</a></li>
 
 		{% if user.get_profile %}
         {% postman_unread as unread_count %}
@@ -186,8 +189,8 @@
             <li>
                 <span class="label radius label-{{ object|classname|lower }}">{{ object.updated_at|verybrieftimesince }}</span>&nbsp; 
                 {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
-                {% if object|classname = 'Article' %}<a href="{% url 'article-detail' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
-                {% if object|classname = 'Method' %}<a href="{% url 'method-detail' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
+                {% if object|classname = 'Article' %}<a href="{% url 'article' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
+                {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
                 {% endif %} {% endif %} {% endif %}         
             </li>
         {% endfor %}
@@ -201,8 +204,8 @@
             <li>
                 <span class="label radius label-{{ object|classname|lower }}">{{ object.hit_count }}</span>&nbsp; 
                 {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
-                {% if object|classname = 'Article' %}<a href="{% url 'article-detail' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
-                {% if object|classname = 'Method' %}<a href="{% url 'method-detail' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
+                {% if object|classname = 'Article' %}<a href="{% url 'article' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
+                {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
                 {% endif %} {% endif %} {% endif %}                       
             </li>
         {% endfor %}
@@ -216,8 +219,8 @@
             <li>
                 <span class="label radius label-{{ object|classname|lower }}">{{ object.hit_count }}</span>&nbsp; 
                 {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
-                {% if object|classname = 'Article' %}<a href="{% url 'article-detail' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
-                {% if object|classname = 'Method' %}<a href="{% url 'method-detail' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
+                {% if object|classname = 'Article' %}<a href="{% url 'article' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
+                {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
                 {% endif %} {% endif %} {% endif %}      
             </li>
         {% endfor %}

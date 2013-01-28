@@ -114,6 +114,8 @@ def method(request, method_id, method_slug = None):
 
         'microdata':        True,
 
+        'tagcount_for_model': Method,
+
     }
 
     return render_to_response('methods/method.html', context, context_instance=RequestContext(request))
@@ -189,7 +191,7 @@ def method_create(request):
     return render_to_response('methods/method_form.html',
         {
             'form': form,
-            'action': 'create'
+            'action': 'create',
         },
         context_instance=RequestContext(request))
 
@@ -260,13 +262,15 @@ def method_list(request, **kwargs):
                   ,).order_by('-hit_count')
 
     kwargs['queryset'] = q.all()
+    if 'extra_context' not in kwargs:
+        kwargs['extra_context'] = {}
 
     # Generate a directory listing of categorised (tagged) things
-    kwargs['extra_context'] = {
+    kwargs['extra_context'].update( {
         'directory': TagMeta.objects.filter(level__lt=2),
         'sorted_by': sort_by,
-
-         } #.order_by('tag__slug') }
+        'tagcount_for_model': Method,
+         } )
 
     return object_list(request, **kwargs)
 
@@ -298,50 +302,6 @@ def parse_duration_ajax(request):
     return HttpResponse(simplejson.dumps({
         'success': False,
     }))
-
-
-def methods_tagged(request, slug, **kwargs):
-
-    tag = get_object_or_404(Tag, slug=slug)
-
-    q=Method.objects
-
-
-    if 'sort' in request.GET:
-        sort_by = request.GET['sort']
-    else:
-        sort_by = 'views'
-
-
-    if sort_by == 'latest':
-        q = q.order_by('-created_at').exclude(steps=None)
-
-
-    if sort_by == 'views':
-        q =  q.extra(
-                  select={ 'hit_count': 'SELECT hits from hitcount_hit_count as t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id',}
-                  ,).order_by('-hit_count')
- 
-    kwargs['queryset'] = q.all()
-
-    try:
-        tagmeta = TagMeta.objects.get(tag__slug=slug)
-    except:
-        kwargs['extra_context'] = {
-            'tag': tag,
-            'sorted_by': sort_by,
-        }  
-    else:
-        # Generate a directory listing of categorised (tagged) things
-        kwargs['extra_context'] = {
-            'directory': tagmeta.get_descendants(),
-            'tagmeta': tagmeta,
-            'tag': tag,
-            'sorted_by': sort_by,
-        }
-
-    return tagged_object_list(request, slug, **kwargs)
-
 
 
 def search(request):

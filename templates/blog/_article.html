@@ -2,17 +2,17 @@
 {% load core_tags %}
 {% load markup %}
 
-<div class="article">
+<div class="object">
 
-        <div class="article-title"><h3><a href="{% url 'article-detail' article_id=article.id article_slug=article.slug %}">{{ article }}</a></h3></div>
-        <div class="article-content">
-            <p>{{ article.content|markdown:"safe,tables"  }}</p>
+        <div class="object-title"><h3><a href="{% url 'article' article_id=object.id article_slug=object.slug %}">{{ object }}</a></h3></div>
+        <div class="object-content">
+            <p>{{ object.content|markdown }}</p>
         </div>
 		{% if site.id != 1 %}
-		    <div class="article-tags tags-horizontal">{% with article.tags.all as tags %}{% include "_tags.html" %}{% endwith %}</div>
+		    <div class="object-tags tags-horizontal">{% with object.tags.all as tags %}{% include "_tags.html" %}{% endwith %}</div>
         {% endif %}
-        <div class="article-timestamp">        
-        Posted by <a href="{ % url 'user-profile' username=article.author % }">{{ article.author.get_full_name }}</a> {{ article.created_at|brieftimesince }} ago
+        <div class="object-timestamp">        
+        Posted by <a href="{ % url 'user-profile' username=object.author % }">{{ object.author.get_full_name }}</a> {{ object.created_at|brieftimesince }} ago
         </div>
 </div>
 

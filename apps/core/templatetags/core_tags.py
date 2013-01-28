@@ -8,7 +8,9 @@ from django.template import resolve_variable, NodeList
 from django.template.defaultfilters import stringfilter
 from django.contrib.auth.models import User, Group
 from django.utils.timesince import timesince
+from django.contrib.contenttypes.models import ContentType
 # External
+
 
 register = template.Library()
 

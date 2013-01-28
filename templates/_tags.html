@@ -1,5 +1,6 @@
 {% load thumbnail %}
 {% load tagmeta_tags %}
+{% load core_tags %}
 
 {% if tags %}
 {% for tag in tags %}
@@ -8,10 +9,19 @@
             {% if tag.meta %}{% tagmeta_for_tag tag as tagmeta %}
                 {% if tagmeta.sponsor.icon %}<img src="{% thumbnail tagmeta.sponsor.icon 16x16 crop %}" class="tagicon">{% endif %}
             {% endif %}
-            <a href="{% url 'method-tagged' slug=tag.slug  %}" alt="{{tag}}" title="{{tag}}">
-                {{tag}} 
-            </a>
-        </span>{% if show_tag_counts %}<small>x{{ tag.taggit_taggeditem_items.count }}</small>{% endif %} &nbsp;
+
+            <a href="{% include "_tagurl.html" %}">{{tag}} </a>
+        </span>
+        {% if show_tag_counts %}
+
+            {% if tagcount_for_model %}
+                {% tagged_count for node.tag with tagged_model as tag_count %}
+            {% else %}
+                {% tagged_count for node.tag as tag_count %}
+            {% endif %}
+
+            <small>x{{ tag_count }}</small>
+        {% endif %} &nbsp;
     </div>
 {% endfor %}
 {% endif%}

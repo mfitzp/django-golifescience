@@ -1,4 +1,5 @@
 {% extends "base_with_sidebar_right.html" %}
+{% load core_tags %}
 {% load markup %}
 {% load pagination_tags %}
 {% load tagmeta_tags %}
@@ -10,11 +11,11 @@
     {% if tag %}
         {{ tag|capfirst }} {{ site.meta.method_name_plural }}
     {% else %}
-        Protocols
+        {% trans "Protocols" %}
     {% endif %}
 {% endblock %}
 
-{% block subtitle %}Explore our catalogue of protocols and guides{% endblock %}
+{% block subtitle %}{% trans "Explore our catalogue of protocols" %}{% endblock %}
 
 
 {% block content_header %}
@@ -49,16 +50,13 @@
 {% endblock %}
 
 {% block content %}
-
     {% if object_list %}
 
         {% autopaginate object_list %}
 
             <div style="margin-top:1em;">
-               {% for method in object_list %}
-                
+               {% for object in object_list %}
                     {% include "methods/_method.html"%}
-
                 {% endfor %}
             </div>            
         <br class="clear" />
@@ -78,8 +76,8 @@
 
     <h6>Actions</h6>
     <ul class="navlist">
-        <li><i class="social foundicon-rss"></i> <a href={% url 'method-rss-latest' %}>{% trans "Follow latest protocols" %}</a></li>
-<!--        <li><i class="social foundicon-rss"></i> <a href={% url 'method-rss-latest' %}>{% trans "Updated protocols" %}</a></li> -->
+        <li><i class="social foundicon-rss"></i> <a href={% url 'method-rss-latest' subdomain='do' %}>{% trans "Follow latest protocols" %}</a></li>
+<!--        <li><i class="social foundicon-rss"></i> <a href={% url 'method-rss-latest'  subdomain='do' %}>{% trans "Updated protocols" %}</a></li> -->
     </ul>
 
 {% endblock %}

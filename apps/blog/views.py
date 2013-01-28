@@ -85,37 +85,3 @@ def article_list(request, **kwargs):
 
 
 
-def articles_tagged(request, slug, **kwargs):
-
-    site = Site.objects.get_current()
-
-    if site.id == 1:
-        q=Article.objects
-    else:
-        q=Article.on_site
-
-
-    if 'sort' in request.GET:
-        sort_by = request.GET['sort']
-    else:
-        sort_by = 'votes'
-
-
-    if sort_by == 'latest':
-        q = q.order_by('-created_at')
-
-    if sort_by == 'votes':
-        q =  q.extra(
-                select={ 'votes': 'SELECT SUM(vote) from votes as t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Article).id) + ' AND t.object_id=articles_article.id GROUP BY t.content_type_id,t.object_id',}
-                   ,).order_by('-votes')
-
-    if sort_by == 'views':
-        q =  q.extra(
-                  select={ 'hit_count': 'SELECT hits from hitcount_hit_count as t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Article).id) + ' AND t.object_pk=articles_article.id',}
-                  ,).order_by('-hit_count')
-
-    kwargs['queryset'] = q.all()
-
-    return tagged_object_list(request, slug, **kwargs)
-
-

@@ -16,18 +16,43 @@ from django.views.generic.list_detail import object_list
 from core.http import Http403  
 from applications.models import *
 # External
+from tagmeta.models import TagMeta
 
 # Wrapper provides sorting via GET request url, handling via generic view
 def applications(request, **kwargs):
     
-    applications = Application.objects.order_by('?')[:20]
+    # Do method-specific sorting on fields, ratings, etc.
+    #    # Check valid
+    #    kwargs['queryset'] = kwargs['queryset'].order_by(order_by)
 
+    q = Application.objects
 
-    context = { 'title': 'Applications',
-                'applications': applications,
-              }
+    if 'sort' in request.GET:
+        sort_by = request.GET['sort']
+    else:
+        sort_by = 'views'
 
-    return render_to_response('applications/applications.html', context, context_instance=RequestContext(request))
+    if sort_by == 'latest':
+        q = q.order_by('-created_at')
+
+    if sort_by == 'views':
+        q =  q.extra(
+                  select={ 'hit_count': 'SELECT hits from hitcount_hit_count as t WHERE t.content_type_id=' + str(ContentType.objects.get_for_model(Application).id) + ' AND t.object_pk=applications_application.id',}
+                  ,).order_by('-hit_count')
+
+    kwargs['queryset'] = q.all()
+    if 'extra_context' not in kwargs:
+        kwargs['extra_context'] = {}
+
+    # Generate a directory listing of categorised (tagged) things
+    kwargs['extra_context'].update( {
+        'directory': TagMeta.objects.filter(level__lt=2),
+        'sorted_by': sort_by,
+        'tagcount_for_model': Application,
+         } )
+
+    return object_list(request, **kwargs)
+
 
 # Wrapper provides sorting via GET request url, handling via generic view
 def application(request, application_slug):
@@ -37,6 +62,7 @@ def application(request, application_slug):
 
     context = { 'title': 'Applications',
                 'application': application,
+                'tagcount_for_model': Application,
               }
 
     return render_to_response('applications/application.html', context, context_instance=RequestContext(request))

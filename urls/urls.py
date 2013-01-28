@@ -14,8 +14,12 @@ handler500 = 'core.views.error500' # Override default handler to pass MEDIA_URL
 
 sitemaps = {
     # Structure
-    #'groups': GroupSitemap,
+    # 'tasks': TaskSitemap,
+    'articles': ArticleSitemap,
+    # Users
+    'profiles': UserProfileSitemap, 
 }
+
 
 urlpatterns = patterns('',
 
@@ -58,6 +62,8 @@ urlpatterns = patterns('',
     (r'^accounts/', include('registration.backends.default.urls')),
 
     (r'^search/', include('haystack.urls')),
+
+    url(r'^search/tagged/(?P<slug>[^/]+)/$', 'core.views.objects_tagged', {'Model':None, 'template_name':'search/object_list.html',}, name='object-tagged',),
 
     # Ajax
     (r'^ajax/',      include('ajax.urls')),

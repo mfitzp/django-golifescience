@@ -24,6 +24,7 @@ from django.core.cache import cache
 from taggit.models import Tag
 from methods.models import Method
 from tagmeta.models import TagMeta
+from taggit.views import tagged_object_list
 # Methodmint
 
 
@@ -98,5 +99,55 @@ def error500(request, template_name='500.html'):
 def tag_search(request, **kwargs):
     kwargs['extra_context'] = {'all_objects':Tag.objects.filter(method__site=Site.objects.get_current()).distinct().order_by('name'), 'title':_('Tags') }
     return basic_search(request, **kwargs)
+
+
+def objects_tagged(request, slug, Model, **kwargs):
+
+    tag = get_object_or_404(Tag, slug=slug)
+
+    q = Model.objects
+    ct = ContentType.objects.get_for_model(Model)
+
+    if 'sort' in request.GET:
+        sort_by = request.GET['sort']
+    else:
+        sort_by = 'views'
+
+    if sort_by == 'latest':
+        q = q.order_by('-created_at').exclude(steps=None)
+
+    if sort_by == 'views':
+        q =  q.extra(
+                  select={ 'hit_count': 'SELECT hits from hitcount_hit_count as t WHERE t.content_type_id=%s AND t.object_pk=%s_%s.id' % (ct.id, ct.app_label, ct.model) }
+                  ,).order_by('-hit_count')
+ 
+    kwargs['queryset'] = q.all()
+
+    # Build to a list of the entire set from all of the searches
+
+    if 'extra_context' not in kwargs:
+        kwargs['extra_context'] = {}
+
+    kwargs['extra_context'].update( {   
+        'tagged_model': Model,
+    } )
+
+    try:
+        tagmeta = TagMeta.objects.get(tag__slug=slug)
+    except:
+        kwargs['extra_context'].update( {   
+            'tag': tag,
+            'sorted_by': sort_by,
+        } )
+    else:
+        # Generate a directory listing of categorised (tagged) things
+        kwargs['extra_context'].update( {
+            'directory': tagmeta.get_descendants(),
+            'tagmeta': tagmeta,
+            'tag': tag,
+            'sorted_by': sort_by,
+        } )
+
+    return tagged_object_list(request, slug, **kwargs)
 
 

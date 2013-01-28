@@ -18,12 +18,12 @@ urlpatterns = patterns('',
 
     url(r'^$', 'methods.views.method_list', {
                 'template_name':'methods/method_list.html',
-                'paginate_by':20,                
+                'paginate_by':20,    
             },
-            name='methods'),
+            name='method-list'),
 
     # Methods
-    url(r'^(?P<method_id>\d+)/$', 'methods.views.method_noslug', name='method-detail' ),
+    url(r'^(?P<method_id>\d+)/$', 'methods.views.method_noslug', name='method' ),
     url(r'^(?P<method_id>\d+)/edit/$', 'methods.views.method_edit', name='method-edit' ),
 
     url(r'^rss/$', LatestMethodsFeed(), name='method-rss-latest'),
@@ -37,7 +37,7 @@ urlpatterns = patterns('',
 
 
     # Searching/finding
-    url(r'^tagged/(?P<slug>[^/]+)/$', 'methods.views.methods_tagged', name='method-tagged'),
+    url(r'^tagged/(?P<slug>[^/]+)/$', 'core.views.objects_tagged', {'Model': Method, 'template_name':'methods/method_list.html',}, name='method-tagged',),
 
 
 #    url(r'^search/$', 'methods.views.search', name='method-search'),
@@ -54,6 +54,6 @@ urlpatterns = patterns('',
 #    url(r'^ajax/parse-duration/$', 'methods.views.parse_duration_ajax' ),
 
     # this is potentially buggy if the slug is anything listed above, oh dear
-    url(r'^(?P<method_id>\d+)/(?P<method_slug>.+)/$', 'methods.views.method', name='method-detail' ),
+    url(r'^(?P<method_id>\d+)/(?P<method_slug>.+)/$', 'methods.views.method', name='method' ),
 
 )

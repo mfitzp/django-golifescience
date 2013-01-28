@@ -158,7 +158,7 @@
     {% for result in morelikethis %}
     {% with result.object as mlt_method %}
     {% if mlt_method %}
-        <li><a href="{% url 'method-detail' method_id=mlt_method.id %}">{{ mlt_method }}</a></li>
+        <li><a href="{% url 'method' method_id=mlt_method.id %}">{{ mlt_method }}</a></li>
     {% endif %}
     {% endwith %}
     {% empty %}

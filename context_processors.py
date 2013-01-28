@@ -18,6 +18,7 @@ def languages( context ):
 def modelglobals( context ):
     return {
         'all_applications': Application.objects.order_by('-name').all(),
+        #'default_tagged_model': None,
     } 
 
 def site( context ):

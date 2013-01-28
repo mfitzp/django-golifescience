@@ -21,15 +21,16 @@ urlpatterns = patterns('',
             name='blog'),
 
     # Methods
-    url(r'^(?P<article_id>\d+)/$', 'blog.views.article_noslug', name='article-detail' ),
+    url(r'^(?P<article_id>\d+)/$', 'blog.views.article_noslug', name='article' ),
     #url(r'^(?P<article_id>\d+)/edit/$', 'news.views.article_edit', name='article-edit' ),
     #url(r'^create/$', 'news.views.article_edit', name='article-create' ),
 
     url(r'^rss/$', LatestArticlesFeed(), name='articles-rss-latest'),
 
     # oh dear, potentially buggy if slug is 'edit, or answer or :/'
-    url(r'^(?P<article_id>\d+)/(?P<article_slug>.+)/$', 'blog.views.article', name='article-detail' ),
+    url(r'^(?P<article_id>\d+)/(?P<article_slug>.+)/$', 'blog.views.article', name='article' ),
 
+    url(r'^tagged/(?P<slug>[^/]+)/$', 'core.views.objects_tagged', {'Model':Article, 'template_name':'blog/article_list.html',}, name='article-tagged',),
 
 
 )
