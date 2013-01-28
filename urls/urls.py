@@ -63,8 +63,6 @@ urlpatterns = patterns('',
 
     (r'^search/', include('haystack.urls')),
 
-    url(r'^search/tagged/(?P<slug>[^/]+)/$', 'core.views.objects_tagged', {'Model':None, 'template_name':'search/object_list.html',}, name='object-tagged',),
-
     # Ajax
     (r'^ajax/',      include('ajax.urls')),
 

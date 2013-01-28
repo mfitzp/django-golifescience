@@ -11,7 +11,7 @@
             <img src="{% thumbnail object.image 205x80 upscale crop %}">
         {% endif %}
         </div>
-        <div class="nine columns"><h5><a href="{% url 'method' method_id=object.id method_slug=object.slug %}">{{ object }}</a></h5>
+        <div class="nine columns"><h5><a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}">{{ object }}</a></h5>
     <p>{{ object.description|markdown }}</p>
     </div>    
     </div>

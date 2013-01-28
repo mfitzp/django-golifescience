@@ -20,8 +20,9 @@ from django.contrib.sites.models import Site
 from django.utils.translation import ugettext as _
 from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
+from django.views.generic.list_detail import object_list
 # External
-from taggit.models import Tag
+from taggit.models import TaggedItem, Tag
 from methods.models import Method
 from tagmeta.models import TagMeta
 from taggit.views import tagged_object_list
@@ -33,7 +34,6 @@ def home(request):
    # Build list of 'sections' using site tags & featured methods [TODO: Add 'featured' boolean flag to method model to mark appropriate for front page; or do by vote?]
     # FIXME: Cache the hell out of this
     sections = list()
-
 
     # Generate tags-based featured items (sticky, standard based on sites)
     allsections = cache.get('allsections', list() ) 
@@ -105,49 +105,45 @@ def objects_tagged(request, slug, Model, **kwargs):
 
     tag = get_object_or_404(Tag, slug=slug)
 
-    q = Model.objects
-    ct = ContentType.objects.get_for_model(Model)
-
     if 'sort' in request.GET:
         sort_by = request.GET['sort']
     else:
         sort_by = 'views'
 
+    qs = Model.objects
+    ct = ContentType.objects.get_for_model(Model)
+
+
     if sort_by == 'latest':
-        q = q.order_by('-created_at').exclude(steps=None)
+        qs = qs.order_by('-created_at').exclude(steps=None)
 
     if sort_by == 'views':
-        q =  q.extra(
+        qs =  qs.extra(
                   select={ 'hit_count': 'SELECT hits from hitcount_hit_count as t WHERE t.content_type_id=%s AND t.object_pk=%s_%s.id' % (ct.id, ct.app_label, ct.model) }
                   ,).order_by('-hit_count')
  
-    kwargs['queryset'] = q.all()
-
     # Build to a list of the entire set from all of the searches
 
-    if 'extra_context' not in kwargs:
-        kwargs['extra_context'] = {}
+    if "extra_context" not in kwargs:
+        kwargs["extra_context"] = {}
 
     kwargs['extra_context'].update( {   
         'tagged_model': Model,
+        'tag': tag,
+        'sorted_by': sort_by,
     } )
 
     try:
         tagmeta = TagMeta.objects.get(tag__slug=slug)
     except:
-        kwargs['extra_context'].update( {   
-            'tag': tag,
-            'sorted_by': sort_by,
-        } )
+        pass
     else:
         # Generate a directory listing of categorised (tagged) things
         kwargs['extra_context'].update( {
             'directory': tagmeta.get_descendants(),
             'tagmeta': tagmeta,
-            'tag': tag,
-            'sorted_by': sort_by,
         } )
 
-    return tagged_object_list(request, slug, **kwargs)
+    return tagged_object_list(request, slug, qs, **kwargs)
 
 
