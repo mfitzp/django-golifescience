@@ -9,12 +9,12 @@ from django.db import models
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 from django.core.exceptions import ObjectDoesNotExist
-#from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
 # Externals
 from countries.models import Country
 from easy_thumbnails.fields import ThumbnailerImageField
-from subdomains.utils import reverse
+#from subdomains.utils import reverse
 
 def avatar_file_path(instance=None, filename=None):
     return os.path.join('avatar', str(instance.user.username), filename)
