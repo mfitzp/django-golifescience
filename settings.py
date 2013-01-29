@@ -209,10 +209,12 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/accounts/logout/'
 
-
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_SECONDS = 600
 CACHE_MIDDLEWARE_KEY_PREFIX = 'middleware_anon_cache_'
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
 
 KEY_PREFIX = 'cache_'
 
