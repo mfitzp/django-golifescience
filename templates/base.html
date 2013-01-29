@@ -42,11 +42,32 @@
 		<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% load adminmedia %}{% admin_media_prefix %}css/ie.css{% endblock %}" /><![endif]-->
 		{% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% admin_media_prefix %}css/rtl.css{% endblock %}" />{% endif %}
 
-        {% block extrahead %}
+        <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
         <script type="text/javascript">
-            var csrf_token = '{{ csrf_token }}';
-            //document.domain = '{{ default_host }}';
+            // Javascript support enabled, initialise document
+            $(function() {
+                
+                /* Bind to base ajaxSend class and provide CSRF token with each ajax POST submit */
+        
+                    var csrftoken = $.cookie('csrftoken');
+                    //document.domain = '{{ default_host }}';
+                    function csrfSafeMethod(method) {
+                        // these HTTP methods do not require CSRF protection
+                        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                    }
+                    $.ajaxSetup({
+                        crossDomain: false, // obviates need for sameOrigin test
+                        beforeSend: function(xhr, settings) {
+                            if (!csrfSafeMethod(settings.type)) {
+                                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                            }
+                        }
+                    });
+             
+            });
         </script>
+        
+        {% block extrahead %}
 	    {% endblock %}
 
         {% if not user.is_staff %}
@@ -246,7 +267,6 @@
 
 {% block modals %}{% endblock %}
 
-  <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
   <!-- Included JS Files (Minified) -->
   <script src="{{ MEDIA_URL }}foundation/javascripts/foundation.min.js"></script>
   <!-- Initialize JS Plugins -->

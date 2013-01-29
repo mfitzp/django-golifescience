@@ -257,5 +257,9 @@ EMAIL_SUBJECT_PREFIX ='[abl.es] '
 DEFAULT_FROM_EMAIL = 'noreply@abl.es'
 SERVER_EMAIL = 'noreply@abl.es'
 
+# Hit count
+HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 1 }
+HITCOUNT_HITS_PER_IP_LIMIT = 0
+#HITCOUNT_EXCLUDE_USER_GROUP = ( 'Admin', )
 
 
