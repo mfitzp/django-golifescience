@@ -244,21 +244,23 @@
 
     <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
     <script type="text/javascript">
-        // Javascript support enabled, initialise document
-        var csrftoken = $.cookie('csrftoken');
-        //document.domain = '{{ default_host }}';
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
-        $.ajaxSetup({
-            crossDomain: false, // obviates need for sameOrigin test
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type)) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
+        $(function() {
+            // Javascript support enabled, initialise document
+            var csrftoken = $.cookie('csrftoken');
+            //document.domain = '{{ default_host }}';
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
             }
-        });
+            $.ajaxSetup({
+                crossDomain: false, // obviates need for sameOrigin test
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type)) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+        }
     </script>
   <!-- Included JS Files (Minified) -->
   <script src="{{ MEDIA_URL }}foundation/javascripts/foundation.min.js"></script>
