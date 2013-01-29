@@ -5,7 +5,7 @@
 
     {% if directory %}
 
-    {% cache 600 directory directory tagged_model LANGUAGE_CODE %}
+    {% cache 600 directory tagged_model LANGUAGE_CODE %}
     <div class="directory">
         {% for node,structure in directory|tree_info %}
 
