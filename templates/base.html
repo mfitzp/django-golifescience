@@ -244,6 +244,7 @@
 
     <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
     <script type="text/javascript">
+        $(function() {
         // Javascript support enabled, initialise document
         function getCookie(name) {
             var cookieValue = null;
@@ -273,6 +274,7 @@
                     xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 }
             }
+        });
         });
     </script>
   <!-- Included JS Files (Minified) -->
