@@ -4,8 +4,7 @@
 {% load core_tags %}
 
     {% if directory %}
-    [{{ tagged_model|classname }}]
-    {% cache 600 directory tagged_model LANGUAGE_CODE %}
+    {% cache 600 directory_tree tagged_model LANGUAGE_CODE %}
     <div class="directory">
         {% for node,structure in directory|tree_info %}
 
