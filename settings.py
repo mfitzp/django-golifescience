@@ -64,10 +64,6 @@ STATIC_URL = STATIC_URL_ROOT + '/static/'
 # system time zone.
 TIME_ZONE = 'Europe/London'
 
-# Disable to fix problems with Favorite app
-# FIXME: Probably due to our multisite middleware?
-APPEND_SLASH = True
-
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
