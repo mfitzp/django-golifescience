@@ -9,7 +9,7 @@
     <div class="directory">
         {% for node,structure in directory|tree_info %}
 
-            {% if tagcount_for_model %}
+            {% if tagged_model %}
                 {% tagged_count for node.tag with tagged_model as tag_count %}
             {% else %}
                 {% tagged_count for node.tag as tag_count %}
