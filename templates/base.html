@@ -42,31 +42,6 @@
 		<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% load adminmedia %}{% admin_media_prefix %}css/ie.css{% endblock %}" /><![endif]-->
 		{% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% admin_media_prefix %}css/rtl.css{% endblock %}" />{% endif %}
 
-        <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
-        <script type="text/javascript">
-            // Javascript support enabled, initialise document
-            $(function() {
-                
-                /* Bind to base ajaxSend class and provide CSRF token with each ajax POST submit */
-        
-                    var csrftoken = $.cookie('csrftoken');
-                    //document.domain = '{{ default_host }}';
-                    function csrfSafeMethod(method) {
-                        // these HTTP methods do not require CSRF protection
-                        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-                    }
-                    $.ajaxSetup({
-                        crossDomain: false, // obviates need for sameOrigin test
-                        beforeSend: function(xhr, settings) {
-                            if (!csrfSafeMethod(settings.type)) {
-                                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                            }
-                        }
-                    });
-             
-            });
-        </script>
-        
         {% block extrahead %}
 	    {% endblock %}
 
@@ -267,13 +242,29 @@
 
 {% block modals %}{% endblock %}
 
+    <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
+    <script type="text/javascript">
+        // Javascript support enabled, initialise document
+        var csrftoken = $.cookie('csrftoken');
+        //document.domain = '{{ default_host }}';
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            crossDomain: false, // obviates need for sameOrigin test
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type)) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    </script>
   <!-- Included JS Files (Minified) -->
   <script src="{{ MEDIA_URL }}foundation/javascripts/foundation.min.js"></script>
   <!-- Initialize JS Plugins -->
   <script src="{{ MEDIA_URL }}foundation/javascripts/app.js"></script>
 
-  <script src="{{ MEDIA_URL }}js/core.js"></script>
-   
 {% block extrajs %}{% endblock %}
 </body>
 </html>
