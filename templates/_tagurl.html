@@ -2,4 +2,4 @@
 {% if tagged_model|classname == 'Application' %}{% url 'application-tagged' slug=tag.slug subdomain='install' %}{% else %}
 {% if tagged_model|classname == 'Article' %}{% url 'article-tagged' slug=tag.slug subdomain=None %}{% else %}
 {% if tagged_model|classname == 'Method' %}{% url 'method-tagged' slug=tag.slug subdomain='do' %}{% else %}
-{% url 'haystack_search' subdomain=None %}?q={{ tag.slug }}{% endif %}{% endif %}{% endif %}
+{% url 'haystack_search' subdomain=None %}?q={{ tag.name|urlencode }}{% endif %}{% endif %}{% endif %}
