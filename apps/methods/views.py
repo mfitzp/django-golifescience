@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
-#from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse as django_reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
@@ -34,8 +34,7 @@ from tagmeta.models import TagMeta
 def method_noslug(request, method_id):
     method = get_object_or_404(Method, pk=method_id)
     suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
-    return HttpResponsePermanentRedirect( reverse('method-detail',kwargs={'method_id':method.id, 'method_slug':method.slug}, subdomain='do' ) + suffix )
-
+    return HttpResponsePermanentRedirect( django_reverse('method',kwargs={'method_id':method.id, 'method_slug':method.slug}) + suffix )
 
 def method(request, method_id, method_slug = None):
 # slug is to allow specifying in url, but ignored
@@ -142,7 +141,7 @@ def method_edit(request, method_id):
             form.save_m2m()
             formset.save()
             messages.add_message(request, messages.SUCCESS, _(u"Saved your changes") )
-            return HttpResponseRedirect( reverse('method-detail',kwargs={'method_id':method.id} ) )
+            return HttpResponseRedirect( reverse('method-detail',kwargs={'method_id':method.id}, subdomain=None ) )
         #else: fall out with formset & errors
 
     else:
@@ -183,7 +182,7 @@ def method_create(request):
             messages.add_message(request, messages.SUCCESS, _(u"You have successfully added ") + method.name )
 
             # Create default protocol for this task; skip through to editing it immediately to add steps/etc.
-            return HttpResponseRedirect(reverse('method-edit', kwargs={'method_id':method.id} ) + '#tab-method')
+            return HttpResponseRedirect(reverse('method-edit', kwargs={'method_id':method.id}, subdomain=None ) + '#tab-method')
     else:
         # Fill in the field with the current user by default
         form = MethodForm(initial={'author': request.user})   

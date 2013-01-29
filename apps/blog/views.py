@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse as django_reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
@@ -30,7 +30,7 @@ from forms import *
 def article_noslug(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
-    return HttpResponsePermanentRedirect( reverse('article-detail',kwargs={'article_id':article.id, 'article_slug':article.slug}, subdomain=None ) + suffix )
+    return HttpResponsePermanentRedirect( django_reverse('article-detail',kwargs={'article_id':article.id, 'article_slug':article.slug} ) + suffix )
 
 def article(request, article_id, article_slug = None): 
 # answer_id is to allow #'d links to specific answers
