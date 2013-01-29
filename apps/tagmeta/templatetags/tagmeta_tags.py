@@ -108,8 +108,10 @@ register.tag('tagged_count', tagged_count)
 class SetDefaultTaggedModel(template.Node):
 
     def render(self, context):
-        subdomain = template.Variable('request.subdomain').resolve(context)
-        #var_name = template.Variable(self.var_name).resolve(context)
+        try:
+            subdomain = template.Variable('request.subdomain').resolve(context)
+        except template.VariableDoesNotExist:
+            subdomain = None
 
         try:
             default_tag_model = template.Variable('tagged_model').resolve(context)
