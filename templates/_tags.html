@@ -15,9 +15,9 @@
         {% if show_tag_counts %}
 
             {% if tagcount_for_model %}
-                {% tagged_count for node.tag with tagged_model as tag_count %}
+                {% tagged_count for tag with tagged_model as tag_count %}
             {% else %}
-                {% tagged_count for node.tag as tag_count %}
+                {% tagged_count for tag as tag_count %}
             {% endif %}
 
             <small>x{{ tag_count }}</small>
