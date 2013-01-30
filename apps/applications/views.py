@@ -12,6 +12,7 @@ from django.core.paginator import Paginator, InvalidPage
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list_detail import object_list
+from django.views.decorators.csrf import ensure_csrf_cookie
 # Theproject
 from core.http import Http403  
 from applications.models import *
@@ -55,6 +56,7 @@ def applications(request, **kwargs):
 
 
 # Wrapper provides sorting via GET request url, handling via generic view
+@ensure_csrf_cookie
 def application(request, application_slug):
     
     application = get_object_or_404(Application, slug=application_slug)
