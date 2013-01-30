@@ -140,6 +140,8 @@ if 'DJANGO_SETTINGS_MODULE' in os.environ: # We're in a live web session (via ws
 
 MIDDLEWARE_CLASSES = (
 
+    'django.middleware.csrf.CsrfViewMiddleware',
+
     'django.middleware.cache.UpdateCacheMiddleware',
 
     'django.middleware.gzip.GZipMiddleware',
@@ -152,7 +154,6 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.locale.LocaleMiddleware',						# should be after SessionMiddleware and CacheMiddleware, if used
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'core.http.Http403Middleware',
