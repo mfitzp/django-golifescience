@@ -243,6 +243,10 @@
 {% block modals %}{% endblock %}
 
     <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
+    <!-- Included JS Files (Minified) -->
+    <script src="{{ MEDIA_URL }}foundation/javascripts/foundation.min.js"></script>
+    <!-- Initialize JS Plugins -->
+    <script src="{{ MEDIA_URL }}foundation/javascripts/app.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
         // Javascript support enabled, initialise document
@@ -277,10 +281,6 @@
         });
         });
     </script>
-  <!-- Included JS Files (Minified) -->
-  <script src="{{ MEDIA_URL }}foundation/javascripts/foundation.min.js"></script>
-  <!-- Initialize JS Plugins -->
-  <script src="{{ MEDIA_URL }}foundation/javascripts/app.js"></script>
 
 {% block extrajs %}{% endblock %}
 </body>
