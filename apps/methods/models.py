@@ -8,7 +8,7 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-#from django.core.urlresolvers import reverse as django_reverse
+from django.core.urlresolvers import reverse as django_reverse
 # Externals
 from taggit.models import Tag
 from taggit.managers import TaggableManager
@@ -36,7 +36,7 @@ class Method(models.Model):
     def get_absolute_url(self):
         return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)}, subdomain='do')
     def get_absolute_path(self):
-        return reverse('method-detail',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
+        return django_reverse('method-detail',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
 
     # Information
     name = models.CharField('Name', max_length = 50, blank = False)

@@ -12,7 +12,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.contenttypes import generic
-#from django.core.urlresolvers import reverse as django_reverse
+from django.core.urlresolvers import reverse as django_reverse
 # External
 from easy_thumbnails.fields import ThumbnailerImageField
 from autoslug.fields import AutoSlugField
@@ -35,7 +35,7 @@ class Application(models.Model):
         return reverse('application',kwargs={'application_slug':str(self.slug)}, subdomain='install')
 
     def get_absolute_path(self):
-        return reverse('application',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
+        return django_reverse('application',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
 
     # Fields
     name = models.CharField('Name', max_length = 50, blank = False)
