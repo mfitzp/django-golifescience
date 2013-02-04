@@ -36,7 +36,7 @@ class Method(models.Model):
     def get_absolute_url(self):
         return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)}, subdomain='do')
     def get_absolute_path(self):
-        return django_reverse('method-detail',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
+        return django_reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
 
     # Information
     name = models.CharField('Name', max_length = 50, blank = False)
