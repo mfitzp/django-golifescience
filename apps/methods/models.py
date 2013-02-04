@@ -34,7 +34,7 @@ class Method(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)}, domain='do')
+        return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)}, subdomain='do')
     def get_absolute_path(self):
         return reverse('method-detail',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
 
