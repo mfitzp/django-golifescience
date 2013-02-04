@@ -14,8 +14,8 @@ class MethodSitemap(Sitemap):
     def items(self):
         return Method.objects.all()
 
-    #def location(self, obj):
-    #    return obj.get_absolute_path()
+    def location(self, obj):
+        return obj.get_absolute_path()
 
 
 class ApplicationSitemap(Sitemap):
@@ -26,6 +26,9 @@ class ApplicationSitemap(Sitemap):
     def items(self):
         return Application.objects.all()
 
+    def location(self, obj):
+        return obj.get_absolute_path()
+
 class ArticleSitemap(Sitemap):
     changefreq = "monthly"
     priority = 1
@@ -33,6 +36,9 @@ class ArticleSitemap(Sitemap):
 
     def items(self):
         return Article.objects.all()
+
+    def location(self, obj):
+        return obj.get_absolute_path()
 
 class UserProfileSitemap(Sitemap):
     changefreq = "monthly"

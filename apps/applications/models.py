@@ -18,6 +18,7 @@ from easy_thumbnails.fields import ThumbnailerImageField
 from autoslug.fields import AutoSlugField
 from taggit.models import Tag
 from taggit.managers import TaggableManager
+from subdomains.utils import reverse
 # Methodmint
 from references.models import Reference
 from authors.models import Author
@@ -31,10 +32,10 @@ class Application(models.Model):
         return "%s" % (self.name)
 
     def get_absolute_url(self):
-        return reverse('application',kwargs={'application_slug':str(self.slug)})
+        return reverse('application',kwargs={'application_slug':str(self.slug)}, domain='install')
 
-    #def get_absolute_path(self):
-    #    return django_reverse('application',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
+    def get_absolute_path(self):
+        return reverse('application',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
 
     # Fields
     name = models.CharField('Name', max_length = 50, blank = False)

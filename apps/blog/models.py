@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
-#from django.core.urlresolvers import reverse
+#from django.core.urlresolvers import reverse as django_reverse
 # Externals
 from taggit.models import Tag
 from taggit.managers import TaggableManager
@@ -26,7 +26,11 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('article-detail',kwargs={'article_id':str(self.id)}, subdomain=None)#, 'slug':str(self.slug)})
+        return reverse('article-detail',kwargs={'article_id':str(self.id)}, subdomain=None)
+
+    def get_absolute_path(self):
+        return reverse('article-detail',kwargs={'article_id':str(self.id)})
+
 
     title = models.CharField('Title', max_length = 80, blank = False)
     slug = AutoSlugField(populate_from='title')
