@@ -115,7 +115,7 @@ def objects_tagged(request, slug, Model, **kwargs):
 
 
     if sort_by == 'latest':
-        qs = qs.order_by('-created_at').exclude(steps=None)
+        qs = qs.order_by('-created_at') #.exclude(steps=None)
 
     if sort_by == 'views':
         qs =  qs.extra(
