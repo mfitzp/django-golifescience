@@ -92,9 +92,7 @@
 Here's a direct link to the <a href="http://github.com/ables/{{ application.github }}/archive/master.zip">.zip package</a> to save some time.
 
 
-<h3 data-magellan-destination="publications">Publications</h3>
-
-<h3 data-magellan-destination="publications">{% trans "References" %}</h3>
+<h3 data-magellan-destination="publications">{% trans "Publications" %}</h3>
 {% for reference in application.references.all %}
     {% include "references/_reference.html" %}
 {% empty %}
