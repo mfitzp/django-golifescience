@@ -28,15 +28,17 @@ class LatestAllFeed(Feed):
         return sorted(results, key=lambda x: x.created_at, reverse=True)
 
     def item_title(self, item):
-        try:
+        if hasattr(item, 'tagline'):
+            return "%s - %s" % (item.name, item.tagline)
+        elif hasattr(item, 'name'):
             return item.name
-        except:
+        else:
             return item.title
 
     def item_description(self, item):
-        try:
+        if hasattr(item, 'description'):
             return item.description
-        except:
+        else:
             return item.content
 
     def item_pubdate(self, item):
@@ -63,9 +65,11 @@ class LatestAllFeedTwitter(LatestAllFeed):
 
     def item_title(self, item):
         # Twitter is restricted to 140 characters so do some fancies
-        try:
+        if hasattr(item, 'tagline'):
+            title = "%s - %s" % (item.name, item.tagline)
+        elif hasattr(item, 'name'):
             title = item.name
-        except:
+        else:
             title = item.title
 
         hashtags = list()

@@ -26,10 +26,10 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('article-detail',kwargs={'article_id':str(self.id)}, subdomain=None)
+        return reverse('article',kwargs={'article_id':str(self.id)}, subdomain=None)
 
     def get_absolute_path(self):
-        return django_reverse('article-detail',kwargs={'article_id':str(self.id)})
+        return django_reverse('article',kwargs={'article_id':str(self.id)})
 
 
     title = models.CharField('Title', max_length = 80, blank = False)
