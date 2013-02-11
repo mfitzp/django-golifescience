@@ -169,5 +169,38 @@ def classname(obj):
     return classname
 
 
+@register.filter
+def rcs_host(url):
+    rcs_hosts = {
+        'github': 'github',
+        'bitbucket': 'BitBucket',
+        'sourceforge': 'Sourceforge',
+        'subversion': 'Subversion',
+        'mercurial': 'Mercurial',
+        'bazaar': 'Bazaar',
+        'launchpad': 'Launchpad',
+    }
+
+    for rcs in rcs_hosts.keys():
+        if rcs in url:
+            return "%s" % rcs_hosts[ rcs ]
+    return 'this link'
+
+@register.filter
+def rcs_type(url):
+    rcs_types = {
+        'git': 'Git',
+        'bitbucket': 'Git/Hg',
+        'subversion': 'SVN',
+        'mercurial': 'Hg',
+        'bazaar': 'Bzr',
+        'launchpad': 'Bzr',
+    }
+
+    for rcs in rcs_types.keys():
+        if rcs in url:
+            return rcs_types[ rcs ]
+    return ''
+
 
 

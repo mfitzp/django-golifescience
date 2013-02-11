@@ -47,8 +47,7 @@ class Application(models.Model):
     tags = TaggableManager() #through=TaggedMethod)
 
     url = models.URLField('URL', blank = True)
-
-    github = models.CharField('Github', max_length = 50, blank = True)
+    source_url = models.URLField('Source URL (e.g. Github)', blank = True)
 
     icon = ThumbnailerImageField('Icon', max_length=255, upload_to=application_file_path, blank=True)    
     image = ThumbnailerImageField('Image', max_length=255, upload_to=application_file_path, blank=True)    
