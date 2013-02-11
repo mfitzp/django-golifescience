@@ -29,7 +29,7 @@ class LatestAllFeed(Feed):
 
     def item_title(self, item):
         if hasattr(item, 'tagline'):
-            return "%s - %s" % (item.name, item.tagline)
+            return "%s: %s" % (item.name, item.tagline)
         elif hasattr(item, 'name'):
             return item.name
         else:
@@ -66,7 +66,7 @@ class LatestAllFeedTwitter(LatestAllFeed):
     def item_title(self, item):
         # Twitter is restricted to 140 characters so do some fancies
         if hasattr(item, 'tagline'):
-            title = "%s - %s" % (item.name, item.tagline)
+            title = "%s: %s" % (item.name, item.tagline)
         elif hasattr(item, 'name'):
             title = item.name
         else:
