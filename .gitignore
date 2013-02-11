@@ -1,4 +1,5 @@
 !.gitignore
 static/*
+search_index/*
 local_settings.py
 *.pyc
