@@ -62,7 +62,7 @@ def application(request, application_slug):
     application = get_object_or_404(Application, slug=application_slug)
 
 
-    context = { 'title': 'Applications',
+    context = { 'title': application.name,
                 'application': application,
                 'tagcount_for_model': Application,
               }
