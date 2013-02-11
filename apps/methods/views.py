@@ -19,6 +19,7 @@ from django.utils import simplejson
 from django.utils.encoding import force_unicode
 from django.utils import formats
 from django.conf import settings
+from django.views.decorators.csrf import ensure_csrf_cookie
 # External
 from haystack.query import SearchQuerySet, RelatedSearchQuerySet
 from haystack.forms import SearchForm
@@ -36,6 +37,7 @@ def method_noslug(request, method_id):
     suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
     return HttpResponsePermanentRedirect( django_reverse('method',kwargs={'method_id':method.id, 'method_slug':method.slug}) + suffix )
 
+@ensure_csrf_cookie
 def method(request, method_id, method_slug = None):
 # slug is to allow specifying in url, but ignored
 

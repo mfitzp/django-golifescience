@@ -20,6 +20,7 @@ from django.utils import simplejson
 from django.utils.encoding import force_unicode
 from django.utils import formats
 from django.conf import settings
+from django.views.decorators.csrf import ensure_csrf_cookie
 # External
 from haystack.query import SearchQuerySet, RelatedSearchQuerySet
 from taggit.views import tagged_object_list
@@ -32,6 +33,7 @@ def article_noslug(request, article_id):
     suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
     return HttpResponsePermanentRedirect( django_reverse('article-detail',kwargs={'article_id':article.id, 'article_slug':article.slug} ) + suffix )
 
+@ensure_csrf_cookie
 def article(request, article_id, article_slug = None): 
 # answer_id is to allow #'d links to specific answers
 # slug is to allow specifying in url, but ignored

@@ -43,10 +43,6 @@
 		{% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% admin_media_prefix %}css/rtl.css{% endblock %}" />{% endif %}
 
         {% block extrahead %}
-        <script type="text/javascript">
-            var csrf_token = '{{ csrf_token }}';
-            //document.domain = '{{ default_host }}';
-        </script>
 	    {% endblock %}
 
         {% if not user.is_staff %}
@@ -272,14 +268,47 @@
 
 {% block modals %}{% endblock %}
 
-  <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
-  <!-- Included JS Files (Minified) -->
-  <script src="{{ MEDIA_URL }}foundation/javascripts/foundation.min.js"></script>
-  <!-- Initialize JS Plugins -->
-  <script src="{{ MEDIA_URL }}foundation/javascripts/app.js"></script>
+    <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
+    <!-- Included JS Files (Minified) -->
+    <script src="{{ MEDIA_URL }}foundation/javascripts/foundation.min.js"></script>
+    <!-- Initialize JS Plugins -->
+    <script src="{{ MEDIA_URL }}foundation/javascripts/app.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        // Javascript support enabled, initialise document
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
 
-  <script src="{{ MEDIA_URL }}js/core.js"></script>
-   
+        //document.domain = '{{ default_host }}';
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            crossDomain: false, // obviates need for sameOrigin test
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type)) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+        });
+    </script>
+
 {% block extrajs %}{% endblock %}
 </body>
 </html>
