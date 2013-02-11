@@ -28,8 +28,8 @@
 {% endblock %}
 
 {% block forkme %}
-{% if application.rcs_url|rcs_host == 'github' %}
-    <a href="https://github.com/ables/{{ application.github }}"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:255;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+{% if application.source_url|rcs_host == 'github' %}
+    <a href="{{ application.source_url }}"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:255;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
 {% endif %}
 {% endblock %}
 

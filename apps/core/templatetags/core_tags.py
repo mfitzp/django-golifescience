@@ -183,7 +183,7 @@ def rcs_host(url):
 
     for rcs in rcs_hosts.keys():
         if rcs in url:
-            return "%s" % rcs_hosts[ rcs ]
+            return rcs_hosts[ rcs ]
     return 'this link'
 
 @register.filter
