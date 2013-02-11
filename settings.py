@@ -149,7 +149,7 @@ MIDDLEWARE_CLASSES = (
 
     'django.middleware.common.CommonMiddleware',
 
-	'django.middleware.locale.LocaleMiddleware',						# should be after SessionMiddleware and CacheMiddleware, if used
+	'django.middleware.locale.LocaleMiddleware', # should be after SessionMiddleware and CacheMiddleware, if used
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
     'django.middleware.csrf.CsrfViewMiddleware',

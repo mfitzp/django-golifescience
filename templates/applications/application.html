@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load markup %}
+{% load core_tags %}
 {% load pagination_tags %}
 {% load thumbnail %}
+{% load hitcount_tags %}
 {% load i18n %}
 {% load author_tags %}
 
@@ -9,11 +11,20 @@
 {% block subtitle %}{{ application.tagline }}{% endblock %}
 
 {% block extrajs %}
+{{ block.super }}
 <script type='text/javascript'>
    $(window).load(function() {
        $('#featuredContent').orbit({ fluid: '16x3' });
    });
-</script>
+  $(document).ready(function() {
+  {% get_hit_count_javascript for application %}
+  });
+ </script>
+ <!-- Facebook Opengraph support -->
+ <meta property="og:title" content="{{ application }}"/>
+ {% if method.image %}<meta property="og:image" content="{% thumbnail application.image 128x128 upscale crop %}"/>{% endif %}
+ <meta property="og:description" content="{{ application.description }}"/>
+
 {% endblock %}
 
 {% block forkme %}
@@ -25,7 +36,7 @@
 {% block header_classes %}header-overlay{% endblock %}
 
 {% block imageheader %}
-<div class="imageheader" {% if application.image %}style="background-image:url('{{ application.image.url }}')"{% endif %}></div>
+    {% if application.image %}<img src="{% thumbnail application.image 400x400 upscale crop %}">{% endif %}
 {% endblock %}
 
 {% block content_header %}
@@ -34,22 +45,26 @@
         {{ application.description|markdown }}
     </div>
 </div>
-<div class="row">
-    <div class="twelve columns">
-        <dl id="magellanTopNav" data-magellan-expedition="fixed" class="sub-nav">
+{% endblock %}
 
-          <dt>Background</dt>
-          {% if application.features.count > 0 %}<dd data-magellan-arrival="features"><a href="#features">Key Features</a></dd>{% endif %}
-          <dd data-magellan-arrival="requirements"><a href="#requirements">Requirements</a></dd>
-          <dt>Install</dt>
-          <dd data-magellan-arrival="packages"><a href="#packages">Packages</a></dd>
-          <dd data-magellan-arrival="source"><a href="#source">Source</a></dd>
-          <dt>Meta</dt>
-          <dd data-magellan-arrival="publications"><a href="#publications">Publications</a></dd>
-          <dd data-magellan-arrival="contributors"><a href="#contributors">Contributors</a></dd>
-          <dd data-magellan-arrival="license"><a href="#license">License</a></dd>
-        </dl>
-    </div>
+{% block content_nav %}
+<div id="content_nav" class="nav_header twelve columns">
+<div class="row">
+    <dl id="magellanTopNav" data-magellan-expedition="fixed" class="vertical tabs">
+
+      <dt>Navigation</dt>
+      <dt>Background</dt>
+      {% if application.features.count > 0 %}<dd data-magellan-arrival="features"><a href="#features">Key Features</a></dd>{% endif %}
+      <dd data-magellan-arrival="requirements"><a href="#requirements">Requirements</a></dd>
+      <dt>Install</dt>
+      <dd data-magellan-arrival="packages"><a href="#packages">Packages</a></dd>
+      <dd data-magellan-arrival="source"><a href="#source">Source</a></dd>
+      <dt>Meta</dt>
+      <dd data-magellan-arrival="publications"><a href="#publications">Publications</a></dd>
+      <dd data-magellan-arrival="contributors"><a href="#contributors">Contributors</a></dd>
+      <dd data-magellan-arrival="license"><a href="#license">License</a></dd>
+    </dl>
+</div>
 </div>
 {% endblock %}
 
@@ -113,5 +128,55 @@ contributions of code and other resources can be found <a href="https://github.c
 <p><strong>{{ application.name }}</strong> is provided free for any use under the <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a> license. This grants you the right to unrestricted copying, modification and sharing
 of the software, with the proviso that distribution of your own modifications must be under this same license.</p>
 
+{% endblock %}
+
+
+{% block sidebar_right %}
+
+<h6>Actions</h6>
+<ul class="navlist">
+<li><i class="general foundicon-page"></i> <a href="javascript:window.print()">{% trans "Print this page" %}</a></li>
+<li><i class="social foundicon-thumb-up"></i> 
+<a href="#" data-reveal-id="socialModal">Share this protocol</a></li>
+</ul>
+
+    <h6>{% trans "Tags" %}</h6>
+    {% with application.tags.all as tags %}{% with 1 as show_tag_counts %}
+        <div class="row"><div class="twelve columns tags-vertical">
+            {% include "_tags.html" %}
+        </div></div>        
+    {% endwith %}{% endwith %}
+
+
+    <h6>Related Applications</h6>
+<ul class="navlist">
+    {% for result in morelikethis %}
+    {% with result.object as mlt_application %}
+    {% if mlt_application %}
+        <li><a href="{% url 'application' application_slug=mlt_application.slug %}">{{ mlt_application }}</a></li>
+    {% endif %}
+    {% endwith %}
+    {% empty %}
+    <li>None.</li>
+    {% endfor %}
+    </ul>
+
+
+<h6>{% trans "Meta" %}</h6>
+<ul class="navlist">
+<li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=application.created_by subdomain=None %}">{{ application.created_by.get_full_name }}</a></li>
+{% if application.edited_by %}
+<li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=application.edited_by subdomain=None %}">{{ application.edited_by.get_full_name }}</a></li>
+{% endif %}<li><i class="general foundicon-clock"></i> Updated {{ application.updated_at|brieftimesince }} ago.</li>
+</ul>
+
+{% endblock %}
+
+
+{% block modals %}
+<div id="socialModal" class="reveal-modal [expand, xlarge, large, medium, small]">
+  <h2>Share this protocol.</h2>
+  {% with method as object %}{% include "_social.html" %}{% endwith %}
+</div>
 {% endblock %}
 

@@ -54,6 +54,9 @@ class Application(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)   
 
+    created_by = models.ForeignKey(User, related_name='created_methods') # Author originally submitted method
+    edited_by = models.ForeignKey(User, related_name='edited_methods', blank=True, null=True) # Author of latest edit
+
     authors = generic.GenericRelation(Author)
     references = generic.GenericRelation(Reference)
 

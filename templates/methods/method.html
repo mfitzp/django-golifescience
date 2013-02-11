@@ -31,7 +31,7 @@
 {% block header_classes %}header-overlay{% endblock %}
 
 {% block imageheader %}
-<div class="imageheader" {% if method.image %}style="background-image:url('{{ method.image.url }}')"{% endif %}></div>
+    {% if method.image %}<img src="{% thumbnail method.image 400x400 %}">{% endif %}
 {% endblock %}
 
 {% block content_header %}
@@ -40,9 +40,13 @@
         <p>{{ method.description }}</p>
     </div>
 </div>
+{% endblock %}
+
+{% block content_nav %}
+<div id="content_nav" class="twelve columns">
 <div class="row">
-    <div class="twelve columns">
-        <dl id="magellanTopNav" data-magellan-expedition="fixed" class="sub-nav">
+        <dl id="magellanTopNav" data-magellan-expedition="fixed" class=" tabs pill">
+          <dt>Navigation</dt>
           <dt>Prepare</dt>
           <dd data-magellan-arrival="background"><a href="#background">Background</a></dd>
           <dd data-magellan-arrival="requirements"><a href="#requirements">Requirements</a></dd>
@@ -55,6 +59,7 @@
     </div>
 </div>
 {% endblock %}
+
 
 {% block content %}
 

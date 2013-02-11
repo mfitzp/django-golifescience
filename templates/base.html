@@ -75,7 +75,6 @@
     <!-- Basic Needs -->
     <nav class="top-bar">
       <ul>
-
         <li class="name"><h1><a href="/">{% colorname site.name %}</h1></li>
         <li class="toggle-topbar"><a href="#"></a></li>
       </ul>
@@ -126,32 +125,59 @@
 
 </div>
 
+
+
+<div class="row">
+<div class="twelve columns">
+<div class="seven columns">
+      <div class="header {% block header_classes %}{% endblock %}">
+          <div class="row">
+            <div class="twelve columns header-content">
+                <h1 itemprop="name">{% usemacro title %}</h1>
+                <h4>{% block subtitle %}{{ site.slogan }}{% endblock %}</h4>
+            </div>
+          </div>
+      </div>
+
+    <div class="content-header">
+    {% block content_header %}
+    {% endblock %}
+    </div>
+
+    <div class="body"><a name="top"></a>
+      <div class="row">
+        <div class="twelve columns">
+            {% block content %}
+            {% endblock %}
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<div class="five columns sidebar">
+
 {% block imageheader %}{% endblock %}
 
-  <div class="header {% block header_classes %}{% endblock %}">
-      <div class="row">
-        <div class="twelve columns header-content">
-            <h1 itemprop="name">{% usemacro title %}</h1>
-            <h4>{% block subtitle %}{{ site.slogan }}{% endblock %}</h4>
-        </div>
-        </div>
-  </div>
+{% block sidebar_right %}
+{% endblock %}
+</div><!-- five -->
 
-<div class="content-header">
-{% block content_header %}
-{% endblock %}
-</div>
+
+</div><!-- twelve -->
+
+</div><!-- row -->
+
+
+
+
+
+
+
+
+
+
  
-<div class="body"><a name="top"></a>
-{% block layout %}
-  <div class="row">
-    <div class="twelve columns">
-        {% block content %}
-        {% endblock %}
-    </div>
-  </div>
-{% endblock %}
-</div>
 
   <div class="footer">
       <div class="row footer-top">
