@@ -1,13 +1,13 @@
 
 
-<a href="http://www.facebook.com/sharer.php?u=http://{{ request.get_host }}{{ object.get_absolute_url|urlencode }}&amp;t={{ object|urlencode }}"  class="fc-webicon twitter large">Facebook</a>
+<a href="http://www.facebook.com/sharer.php?u=http://{{ object.get_absolute_url|urlencode }}&amp;t={{ object|urlencode }}"  class="fc-webicon twitter large">Facebook</a>
 
-<a href="http://twitter.com/share?url=http://{{ request.get_host }}{{ object.get_absolute_url|urlencode }}&amp;text={{ object|urlencode }}" class="fc-webicon facebook large">Twitter</a>
+<a href="http://twitter.com/share?url=http://{{ object.get_absolute_url|urlencode }}&amp;text={{ object|urlencode }}" class="fc-webicon facebook large">Twitter</a>
 
-<a href="https://plus.google.com/share?url=http://{{ request.get_host }}{{ object.get_absolute_url|urlencode }}" class="fc-webicon googleplus large">Google+</a>
+<a href="https://plus.google.com/share?url=http://{{ object.get_absolute_url|urlencode }}" class="fc-webicon googleplus large">Google+</a>
 
-<a href="https://plus.google.com/share?url=http://{{ request.get_host }}{{ object.get_absolute_url|urlencode }}" class="fc-webicon stumbleupon large">Stumbleupon</a>
+<a href="https://plus.google.com/share?url=http://{{ object.get_absolute_url|urlencode }}" class="fc-webicon stumbleupon large">Stumbleupon</a>
 
-<a href="mailto:?subject=Share link&body=http://{{ request.get_host }}{{ object.get_absolute_url|urlencode }}" class="fc-webicon mail large">Email</a>
+<a href="mailto:?subject=Share link&body=http://{{ object.get_absolute_url|urlencode }}" class="fc-webicon mail large">Email</a>
 
 
