@@ -31,7 +31,7 @@
 {% block header_classes %}header-overlay{% endblock %}
 
 {% block imageheader %}
-    {% if method.image %}<img src="{% thumbnail method.image 400x400 %}">{% endif %}
+    {% if application.image %}<img src="{% thumbnail application.image 400x400 upscale crop %}">{% endif %}
 {% endblock %}
 
 {% block content_header %}
