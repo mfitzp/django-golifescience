@@ -8,6 +8,7 @@ import markdown
 from methods.models import *
 #from questions.models import *
 from blog.models import *
+from applications.models import *
 
 # This is fecking ugly because of the variations in model structure/naming (name vs. titlel; content vs. description)
 # would be lovely to get a consistent interface (at least) to all of this
