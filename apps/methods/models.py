@@ -47,6 +47,7 @@ class Method(models.Model):
 
     notes = models.TextField(blank = True)
 
+    url = models.URLField('URL', blank = True)
     license = LicenseField(required=False)
 
     # Materials: TODO: Improve this with linked models to db of materials;

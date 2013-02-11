@@ -90,15 +90,16 @@
 {% endif %}
 
 
+<!--
 <h3 data-magellan-destination="requirements">Requirements</h3>
 
 
 <h3 data-magellan-destination="downloads">Downloads</h3>
 
-<p>Latest versions of {{ application.name }} are available below packaged for Windows, Mac and Linux where appropriate. Cross-platform packages may also be available for some software. Note that new releases are made available to <a href="">Installable partners</a> for 4 weeks prior to general release.</p>
+ <p>Latest versions of {{ application.name }} are available below packaged for Windows, Mac and Linux where appropriate. Cross-platform packages may also be available for some software. Note that new releases are made available to <a href="">Installable partners</a> for 4 weeks prior to general release.</p> -->
 
 
-<h5 data-magellan-destination="packages">Packages</h5>
+<h5 data-magellan-destination="packages">Packages</h5> -->
 
 
 
@@ -114,14 +115,13 @@ Here's a direct link to the <a href="http://github.com/ables/{{ application.gith
     <p>No publications yet. Don't forget to <a href="{% url 'contact' None %}">let us know</a> if you use <strong>{{ application.name }}</strong> in your published work. We'll feature you here!</p>
 {% endfor %}
 
-
+{% if application.authors %}
 <h3 data-magellan-destination="contributors">Contributors</h3>
 <p>The following individuals and associated organisations have made significant contributions towards the development of <strong>{{ application.name }}</strong>. Complete listings of all
 contributions of code and other resources can be found <a href="https://github.com/ables/{{ application.github }}">via github</a>.</p>
 
-    {% if application.authors %}
-        <p class="author_list">{% author_list application.authors.all %}</p>
-    {% endif %}
+    <p class="author_list">{% author_list application.authors.all %}</p>
+{% endif %}
 
 {% if application.license %}
 <h3 data-magellan-destination="licensing">Licensing</h3>
