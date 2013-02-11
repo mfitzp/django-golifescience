@@ -17,6 +17,7 @@ from easy_thumbnails.fields import ThumbnailerImageField
 from autoslug.fields import AutoSlugField
 from django.contrib.contenttypes import generic
 from subdomains.utils import reverse
+from licenses.fields import LicenseField
 # Methodmint
 from references.models import Reference
 from authors.models import Author
@@ -45,6 +46,8 @@ class Method(models.Model):
     tags = TaggableManager() #through=TaggedMethod)
 
     notes = models.TextField(blank = True)
+
+    license = LicenseField(required=False)
 
     # Materials: TODO: Improve this with linked models to db of materials;
     # this is a temporary botch until then/parsing is possible.

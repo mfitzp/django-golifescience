@@ -191,6 +191,7 @@ INSTALLED_APPS = (
     'subdomains',
     'registration',
     'postman',
+    'licenses',
 # installables
     'core',
     'ajax',

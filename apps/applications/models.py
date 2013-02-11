@@ -19,6 +19,7 @@ from autoslug.fields import AutoSlugField
 from taggit.models import Tag
 from taggit.managers import TaggableManager
 from subdomains.utils import reverse
+from licenses.fields import LicenseField
 # Methodmint
 from references.models import Reference
 from authors.models import Author
@@ -50,13 +51,15 @@ class Application(models.Model):
     icon = ThumbnailerImageField('Icon', max_length=255, upload_to=application_file_path, blank=True)    
     image = ThumbnailerImageField('Image', max_length=255, upload_to=application_file_path, blank=True)    
 
+    license = LicenseField(required=False)
+
     objects = models.Manager()  
 
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)   
 
-    created_by = models.ForeignKey(User, related_name='created_methods') # Author originally submitted method
-    edited_by = models.ForeignKey(User, related_name='edited_methods', blank=True, null=True) # Author of latest edit
+    created_by = models.ForeignKey(User, related_name='created_applications') # Author originally submitted method
+    edited_by = models.ForeignKey(User, related_name='edited_applications', blank=True, null=True) # Author of latest edit
 
     authors = generic.GenericRelation(Author)
     references = generic.GenericRelation(Reference)

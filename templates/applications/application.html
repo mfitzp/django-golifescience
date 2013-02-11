@@ -123,9 +123,10 @@ contributions of code and other resources can be found <a href="https://github.c
         <p class="author_list">{% author_list application.authors.all %}</p>
     {% endif %}
 
+{% if application.license %}
 <h3 data-magellan-destination="licensing">Licensing</h3>
-<p><strong>{{ application.name }}</strong> is provided free for any use under the <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a> license. This grants you the right to unrestricted copying, modification and sharing
-of the software, with the proviso that distribution of your own modifications must be under this same license.</p>
+<p><strong>{{ application.name }}</strong> is provided under the <a href="{{ application.license.url }}">{{ application.license.name }}</a>. {{ application.license.description }}</p>
+{% endif %}
 
 {% endblock %}
 
