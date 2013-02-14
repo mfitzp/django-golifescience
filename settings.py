@@ -252,8 +252,11 @@ HAYSTACK_CONNECTIONS = {
 AUTH_PROFILE_MODULE = "profiles.userprofile"
 COMMENTS_APP = 'comments'
 
+ACCOUNT_ACTIVATION_DAYS = 30
+
 REDIRECT_FIELD_NAME = 'next'
 FORCE_LOWERCASE_TAGS = True
+
 
 # Email settings: user/pass combination is stored in local settings for security
 EMAIL_HOST = 'smtp.webfaction.com'
