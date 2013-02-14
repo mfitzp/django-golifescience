@@ -27,34 +27,26 @@ to submit your own protocols to the world <a href="{% url 'contact' %}">contact 
 {% for user in staff %}
 {% with user.get_profile as profile %}
 
-<div class="staff">
+<div class="listing">
 
-
-    <div class="staff-image">{% avatar user 100 %}</div>
-
-        <div class="staff-detail">
-                <div class="staff-name"><a href="{% url 'user-profile' username=user.username %}">{{ profile.fullname }}</a></div>
-                <div class="staff-description">
-            {{ profile.about }}
+    <div class="row">
+        <div class="three columns right">
+            {% avatar user 100 %}
         </div>
-
-        <div class="staff-meta">
-
-    <div class="staff-image">{% avatar user 100 %}</div>
-
-        <div class="staff-detail">
-                <div class="staff-name"><a href="{% url 'user-profile' username=user.username  %}">{{ profile.fullname }}</a></div>
-                <div class="staff-description">
-            {{ profile.about }}
-        </div>
-
-        <div class="staff-meta">
+        <div class="nine columns"><h5><a href="{% url 'user-profile' username=user.username %}">{{ profile.fullname }}</a></h5>
+    <p>{{ profile.about }}</p>
+    </div>    
+    </div>
+    <div class="row listing-metadata">
+        <div class="nine columns offset-by-three ">
+            <p>
             {% if profile.city or profile.country %}
             <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}{% else %}{% trans "Unknown" %}{% endif %}</a>
             {% endif %}
+            </p>
         </div>
-	</div>
-</div>
+    </div>
+
 {% endwith %}
 {% endfor %}
 
