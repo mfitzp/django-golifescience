@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load thumbnail %}
 {% load core_tags %}
-
+{% load avatar_tags %}
 
 {% block title %}About Us{% endblock %}
 {% block subtitle %}Open Source solutions for scientific progress{% endblock %}
@@ -22,10 +22,49 @@ to submit your own protocols to the world <a href="{% url 'contact' %}">contact 
 ( Photos of you ) -->
 
 
+<h5>Who Are We</h5>
+
+{% for user in staff %}
+{% with user.get_profile as profile %}
+
+<div class="staff">
+
+
+    <div class="staff-image">{% avatar user 100 %}</div>
+
+        <div class="staff-detail">
+                <div class="staff-name"><a href="{% url user-profile user %}">{{ profile.fullname }}</a></div>
+                <div class="staff-description">
+            {{ profile.about }}
+        </div>
+
+        <div class="staff-meta">
+
+    <div class="staff-image">{% avatar user 100 %}</div>
+
+        <div class="staff-detail">
+                <div class="staff-name"><a href="{% url user-profile user %}">{{ profile.fullname }}</a></div>
+                <div class="staff-description">
+            {{ profile.about }}
+        </div>
+
+        <div class="staff-meta">
+            {% if profile.city or profile.country %}
+            <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}$
+            {% else %}{% trans "Unknown" %}{% endif %}
+        </div>
+	</div>
+</div>
+{% endwith %}
+{% endfor %}
+
+        
+        
 <h5>Acknowledgements</h5>
 <p>
 
 </p>
+
 
 <h5>More Questions?</h5>
 <p>We've answered many of our <a href="{% url 'faq' %}">frequently asked questions</a> or you can <a href="{% url 'contact' %}">contact us directly</a>.</p>

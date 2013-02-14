@@ -147,3 +147,10 @@ def objects_tagged(request, slug, Model, **kwargs):
     return tagged_object_list(request, slug, qs, **kwargs)
 
 
+def about(request):
+        context = {
+            'staff': User.objects.filter(is_staff=True).order_by('-is_superuser','last_name'),
+        }
+
+	return render_to_response('about.html', context, context_instance=RequestContext(request))
+
