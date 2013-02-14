@@ -41,9 +41,10 @@ to submit your own protocols to the world <a href="{% url 'contact' %}">contact 
         <div class="nice columns offset-by-three ">
             <p>
             {% if profile.city or profile.country %}
-                <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{% if profile.city %} {{ profile.city }}
-                {% endif %}{% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
-                {% else %}{% trans "Unknown" %}{% endif %}</a>            
+                <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">
+                {% if profile.city %} {{ profile.city }}{% endif %}
+                {% if profile.country %}{{ profile.country }}{% else %}{% trans "Unknown" %}{% endif %}
+                </a>            
             {% endif %}
             </p>
         </div>
