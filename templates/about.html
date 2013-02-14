@@ -35,7 +35,7 @@ to submit your own protocols to the world <a href="{% url 'contact' %}">contact 
         </div>
         <div class="nine columns"><!-- <h5><a href="{% url 'user-profile' username=user.username %}">{{ profile.get_full_name  }}</a></h5> -->
             <blockquote>{{ profile.about }}
-            <cite>{{ profile.get_full_name }}</cite></blockquote>
+            <cite><a href="{% url 'user-profile' username=user.username %}">{{ profile.get_full_name }}</a></cite></blockquote>
 
         </div>    
     </div>
