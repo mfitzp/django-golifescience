@@ -33,7 +33,7 @@ to submit your own protocols to the world <a href="{% url 'contact' %}">contact 
     <div class="staff-image">{% avatar user 100 %}</div>
 
         <div class="staff-detail">
-                <div class="staff-name"><a href="{% url user-profile user %}">{{ profile.fullname }}</a></div>
+                <div class="staff-name"><a href="{% url 'user-profile' user %}">{{ profile.fullname }}</a></div>
                 <div class="staff-description">
             {{ profile.about }}
         </div>
@@ -43,7 +43,7 @@ to submit your own protocols to the world <a href="{% url 'contact' %}">contact 
     <div class="staff-image">{% avatar user 100 %}</div>
 
         <div class="staff-detail">
-                <div class="staff-name"><a href="{% url user-profile user %}">{{ profile.fullname }}</a></div>
+                <div class="staff-name"><a href="{% url 'user-profile' user %}">{{ profile.fullname }}</a></div>
                 <div class="staff-description">
             {{ profile.about }}
         </div>
