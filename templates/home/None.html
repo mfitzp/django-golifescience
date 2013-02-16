@@ -36,7 +36,7 @@
                 {% endif %} {% endif %} {% endif %}      
             </h4>
             <p class="author_list">{% author_list object.authors.all %}</p>
-            <p class="about">{{ object.description|truncatewords:50|markdown }}</p>
+            <p class="about">{{ object.description|truncatewords:25|markdown }}</p>
         </div>
     </div>
 {% endfor %}
