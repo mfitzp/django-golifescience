@@ -22,23 +22,6 @@ to submit your own protocols to the world <a href="{% url 'contact' %}">contact 
 ( Photos of you ) -->
 
 
-
-<!--   
-<h5>Acknowledgements</h5>
-<p>
-
-</p>
--->
-
-<h5>More Questions?</h5>
-<p>We've answered many of our <a href="{% url 'faq' %}">frequently asked questions</a> or you can <a href="{% url 'contact' %}">contact us directly</a>.</p>
-
-
-
-{% endblock %}
-
-{% block sidebar_right %}
-
 <h5>Who We Are</h5>
 
 {% for user in staff %}
@@ -47,10 +30,10 @@ to submit your own protocols to the world <a href="{% url 'contact' %}">contact 
 <div class="listing">
 
     <div class="row">
-        <div class="four columns right">
+        <div class="three columns right">
             {% avatar user 96 %}
         </div>
-        <div class="eight columns"><!-- <h5><a href="{% url 'user-profile' username=user.username %}">{{ profile.get_full_name  }}</a></h5> -->
+        <div class="nine columns"><!-- <h5><a href="{% url 'user-profile' username=user.username %}">{{ profile.get_full_name  }}</a></h5> -->
             <blockquote>{{ profile.about }}
             <cite><a href="{% url 'user-profile' username=user.username %}">{{ profile.get_full_name }}</a></cite></blockquote>
 
@@ -76,5 +59,17 @@ to submit your own protocols to the world <a href="{% url 'contact' %}">contact 
 {% endfor %}
 
         
+<!--   
+<h5>Acknowledgements</h5>
+<p>
+
+</p>
+-->
+
+<h5>More Questions?</h5>
+<p>We've answered many of our <a href="{% url 'faq' %}">frequently asked questions</a> or you can <a href="{% url 'contact' %}">contact us directly</a>.</p>
+
+
 
 {% endblock %}
+
