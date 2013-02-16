@@ -52,7 +52,7 @@ def home(request):
         # Get featured tags for site based on the root tagmeta fields
         tags = Tag.objects.exclude(meta__tag_id=None).filter(meta__parent=None).order_by('?') # remove the meta__parent none restriction to get more variation
 
-        for tag in tags[]:
+        for tag in tags:
            # tag = tagm.tag
             items = []
             for ct in content_types[ request.subdomain ]:
@@ -65,8 +65,8 @@ def home(request):
                         }
 
                 allsections.append( section )
-                if len(allsections) == 5:
-                    break # Exit the for tag for loop
+                if len(allsections)==5:
+                    break
 
         cache.set('allsections', allsections ) 
 
