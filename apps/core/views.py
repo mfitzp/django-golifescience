@@ -38,7 +38,7 @@ def home(request):
     sections = list()
     
     # Change content for different subdomains
-    contenttypes = {
+    content_types = {
         None: [Method, Application, Article],
         'do': [Method],
         'install': [Application]
@@ -55,11 +55,10 @@ def home(request):
         for tag in tags[:5]:
            # tag = tagm.tag
             items = []
-            for ct in content_types:
-                items.extend( list( content_types[request.subdomain].objects.filter(tags__slug=tag.slug).exclude(image='').order_by('?')[:5] ) ) #.filter(is_featured=True)
+            for ct in content_types[ request.subdomain]:
+                items.extend( list( ct.objects.filter(tags__slug=tag.slug).exclude(image='').order_by('?')[:5] ) ) #.filter(is_featured=True)
 
             if len(items) > 0:
-                section = { 
                     'tag': tag,
                     'items': items,
                         }
