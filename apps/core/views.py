@@ -55,10 +55,11 @@ def home(request):
         for tag in tags[:5]:
            # tag = tagm.tag
             items = []
-            for ct in content_types[ request.subdomain]:
+            for ct in content_types[ request.subdomain ]:
                 items.extend( list( ct.objects.filter(tags__slug=tag.slug).exclude(image='').order_by('?')[:5] ) ) #.filter(is_featured=True)
 
             if len(items) > 0:
+                section = {
                     'tag': tag,
                     'items': items,
                         }
