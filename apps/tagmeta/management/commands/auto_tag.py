@@ -16,7 +16,7 @@ from methods.models import Method
 
 class Command(BaseCommand):
     args = "url"
-    help = "Update tag trees, settings parent tags on items tagged with children)"
+    help = "Auto tag based on descriptions matching tag string"
 
     option_list = BaseCommand.option_list + (
         make_option('-s', '--search', action='store', dest='search',

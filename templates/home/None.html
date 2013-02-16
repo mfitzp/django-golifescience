@@ -49,16 +49,19 @@
         <h6>{{ section.tag|capfirst }}</h6>
         <div class="row">
 
-            {% for method in section.items|slice:":4" %}
+            {% for object in section.items|slice:":4" %}
                 {% if forloop.first %} 
                     <div class="three columns">
-                        <img src="{% thumbnail method.image 160x120 upscale crop %}" class="span2 home-section-image-{% cycle 'left' 'right' %}">
+                        <img src="{% thumbnail object.image 160x120 upscale crop %}" class="span2 home-section-image-{% cycle 'left' 'right' %}">
                     </div>
                     <div class="nine columns">
                     <ul class="navlist">
                 {% endif %}
                     <li>
-                        <a href="{% url 'method' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+                        {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
+                        {% if object|classname = 'Article' %}<a href="{% url 'article' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
+                        {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
+                        {% endif %} {% endif %} {% endif %}      
                     </li>
                 {% if forloop.last %} 
                     </ul>
