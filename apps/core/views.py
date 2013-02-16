@@ -46,7 +46,7 @@ def home(request):
         
 
     # Generate tags-based featured items (sticky, standard based on sites)
-    allsections = cache.get('allsections', list() ) 
+    allsections = cache.get('allsections-%s' % request.subdomain, list() ) 
     if not allsections: # No tags
         allsections = list()
         # Get featured tags for site based on the root tagmeta fields
@@ -68,7 +68,7 @@ def home(request):
                 if len(allsections)==5:
                     break
 
-        cache.set('allsections', allsections ) 
+        cache.set('allsections-%s' % request.subdomain, allsections ) 
 
     directory = TagMeta.objects.filter(level__lt=2)
     sections = allsections
