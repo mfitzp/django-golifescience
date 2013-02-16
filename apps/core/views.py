@@ -39,7 +39,7 @@ def home(request):
     
     # Change content for different subdomains
     content_types = {
-        None: [Method, Application, Article],
+        None: [Method, Application], # Article],
         'do': [Method],
         'install': [Application]
     }
