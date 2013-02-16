@@ -34,6 +34,14 @@ def home(request):
    # Build list of 'sections' using site tags & featured methods [TODO: Add 'featured' boolean flag to method model to mark appropriate for front page; or do by vote?]
     # FIXME: Cache the hell out of this
     sections = list()
+    
+    # Change content for different subdomains
+    contenttypes = {
+        None: [Method, Application, Article],
+        'do': [Method],
+        'install': [Application]
+    }
+        
 
     # Generate tags-based featured items (sticky, standard based on sites)
     allsections = cache.get('allsections', list() ) 
@@ -44,11 +52,12 @@ def home(request):
 
         for tag in tags[:5]:
            # tag = tagm.tag
-            items = list( Method.objects.filter(tags__slug=tag.slug).exclude(image='').order_by('?')[:5] ) #.filter(is_featured=True)
-            #items += list( Method.on_site.filter(tags__slug=tag.slug).filter(image='').order_by('?')[:5-len(items)] ) #.filter(is_featured=True)
+            items = []
+            for ct in content_types:
+                items.extend( list( content_types[request.subdomain].objects.filter(tags__slug=tag.slug).exclude(image='').order_by('?')[:5] ) ) #.filter(is_featured=True)
+
             if len(items) > 0:
                 section = { 
-                    'type': 'method',
                     'tag': tag,
                     'items': items,
                         }
