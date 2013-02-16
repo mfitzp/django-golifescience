@@ -32,6 +32,7 @@
                 {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
                 {% if object|classname = 'Article' %}<a href="{% url 'article' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
                 {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
+                {% endif %} {% endif %} {% endif %}      
             </h4>
             <p class="author_list">{% author_list object.authors.all %}</p>
             <p class="about">{{ object.description|truncatewords:50 }}</p>
