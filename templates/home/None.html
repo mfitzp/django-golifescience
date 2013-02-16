@@ -35,7 +35,7 @@
                 {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
                 {% endif %} {% endif %} {% endif %}      
             </h4>
-            <p class="author_list">{% author_list object.authors.all %}</p>
+            {% if object.authors %}<p class="author_list">{% author_list object.authors.all %}</p>{% endif %}
             <p class="about">{{ object.description|truncatewords:25|markdown }}</p>
         </div>
     </div>
