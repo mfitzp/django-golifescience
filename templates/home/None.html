@@ -36,7 +36,7 @@
                 {% endif %} {% endif %} {% endif %}      
             </h4>
             {% if object.authors.count > 0 %}<p class="author_list">{% author_list object.authors.all %}</p>{% endif %}
-            <p class="about">{{ object.description|truncatewords:25|markdown }}</p>
+            <p class="about">{{ object.description|truncatewords:30|markdown }}</p>
         </div>
     </div>
 {% endfor %}
