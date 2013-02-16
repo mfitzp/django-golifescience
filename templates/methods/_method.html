@@ -8,7 +8,7 @@
     <div class="row">
         <div class="three columns right">
         {% if object.image %}
-            <img src="{% thumbnail object.image 205x80 upscale crop %}">
+            <img src="{% thumbnail object.image 100x300 upscale crop %}">
         {% endif %}
         </div>
         <div class="nine columns"><h5><a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}">{{ object }}</a></h5>
