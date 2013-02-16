@@ -5,6 +5,7 @@
 {% load humanize %}
 {% load cache %}
 {% load author_tags %}
+{% load markup %}
 
 {% block title %}{{ site.name }}{% endblock %}
 {% block subtitle %}{{ site.tagline }}{% endblock %}
@@ -35,7 +36,7 @@
                 {% endif %} {% endif %} {% endif %}      
             </h4>
             <p class="author_list">{% author_list object.authors.all %}</p>
-            <p class="about">{{ object.description|truncatewords:50 }}</p>
+            <p class="about">{{ object.description|truncatewords:50|markdown }}</p>
         </div>
     </div>
 {% endfor %}
