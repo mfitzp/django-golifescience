@@ -24,6 +24,8 @@ from django.views.generic.list_detail import object_list
 # External
 from taggit.models import TaggedItem, Tag
 from methods.models import Method
+from applications.models import Application
+from blog.models import Article
 from tagmeta.models import TagMeta
 from taggit.views import tagged_object_list
 # Methodmint
@@ -34,28 +36,39 @@ def home(request):
    # Build list of 'sections' using site tags & featured methods [TODO: Add 'featured' boolean flag to method model to mark appropriate for front page; or do by vote?]
     # FIXME: Cache the hell out of this
     sections = list()
+    
+    # Change content for different subdomains
+    content_types = {
+        None: [Method, Application], # Article],
+        'do': [Method],
+        'install': [Application]
+    }
+        
 
     # Generate tags-based featured items (sticky, standard based on sites)
-    allsections = cache.get('allsections', list() ) 
+    allsections = cache.get('allsections-%s' % request.subdomain, list() ) 
     if not allsections: # No tags
         allsections = list()
         # Get featured tags for site based on the root tagmeta fields
         tags = Tag.objects.exclude(meta__tag_id=None).filter(meta__parent=None).order_by('?') # remove the meta__parent none restriction to get more variation
 
-        for tag in tags[:5]:
+        for tag in tags:
            # tag = tagm.tag
-            items = list( Method.objects.filter(tags__slug=tag.slug).exclude(image='').order_by('?')[:5] ) #.filter(is_featured=True)
-            #items += list( Method.on_site.filter(tags__slug=tag.slug).filter(image='').order_by('?')[:5-len(items)] ) #.filter(is_featured=True)
+            items = []
+            for ct in content_types[ request.subdomain ]:
+                items.extend( list( ct.objects.filter(tags__slug=tag.slug).exclude(image='').order_by('?')[:5] ) ) #.filter(is_featured=True)
+
             if len(items) > 0:
-                section = { 
-                    'type': 'method',
+                section = {
                     'tag': tag,
                     'items': items,
                         }
 
                 allsections.append( section )
+                if len(allsections)==5:
+                    break
 
-        cache.set('allsections', allsections ) 
+        cache.set('allsections-%s' % request.subdomain, allsections ) 
 
     directory = TagMeta.objects.filter(level__lt=2)
     sections = allsections
@@ -146,4 +159,11 @@ def objects_tagged(request, slug, Model, **kwargs):
 
     return tagged_object_list(request, slug, qs, **kwargs)
 
+
+def about(request):
+        context = {
+            'staff': User.objects.filter(is_staff=True).order_by('-is_superuser','last_name'),
+        }
+
+	return render_to_response('about.html', context, context_instance=RequestContext(request))
 

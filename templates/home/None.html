@@ -5,6 +5,7 @@
 {% load humanize %}
 {% load cache %}
 {% load author_tags %}
+{% load markup %}
 
 {% block title %}{{ site.name }}{% endblock %}
 {% block subtitle %}{{ site.tagline }}{% endblock %}
@@ -24,14 +25,18 @@
 
 
 <div id="featuredContent">
-{% for method in topsection.items|slice:":5" %}
+{% for object in topsection.items|slice:":5" %}
     <div>
-        <img src="{% thumbnail method.image 960x480 upscale crop %}">
+        <img src="{% thumbnail object.image 960x480 upscale crop %}">
         <div class="feature-overlay">    
-<!--            <div class="feature-caption-tab object-type object-type-method">Protocol</div> -->
-            <h4><a href="{% url 'method' method_id=method.id method_slug=method.slug subdomain='do'%}">{{ method }}</a></h4>
-            <p class="author_list">{% author_list method.authors.all %}</p>
-            <p class="about">{{ method.description|truncatewords:50 }}</p>
+            <h4>
+                {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
+                {% if object|classname = 'Article' %}<a href="{% url 'article' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
+                {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
+                {% endif %} {% endif %} {% endif %}      
+            </h4>
+            {% if object.authors.count > 0 %}<p class="author_list">{% author_list object.authors.all %}</p>{% endif %}
+            <p class="about">{{ object.description|truncatewords:30|markdown }}</p>
         </div>
     </div>
 {% endfor %}
@@ -44,16 +49,19 @@
         <h6>{{ section.tag|capfirst }}</h6>
         <div class="row">
 
-            {% for method in section.items|slice:":4" %}
+            {% for object in section.items|slice:":4" %}
                 {% if forloop.first %} 
                     <div class="three columns">
-                        <img src="{% thumbnail method.image 160x120 upscale crop %}" class="span2 home-section-image-{% cycle 'left' 'right' %}">
+                        <img src="{% thumbnail object.image 160x120 upscale crop %}" class="span2 home-section-image-{% cycle 'left' 'right' %}">
                     </div>
                     <div class="nine columns">
                     <ul class="navlist">
                 {% endif %}
                     <li>
-                        <a href="{% url 'method' method_id=method.id method_slug=method.slug subdomain='do' %}">{{ method }}</a>
+                        {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
+                        {% if object|classname = 'Article' %}<a href="{% url 'article' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
+                        {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
+                        {% endif %} {% endif %} {% endif %}      
                     </li>
                 {% if forloop.last %} 
                     </ul>

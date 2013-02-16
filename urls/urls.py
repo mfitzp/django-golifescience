@@ -29,7 +29,8 @@ urlpatterns = patterns('',
     # Installables
     url(r'^$', 'core.views.home', name='home'),
 
-    url(r'^about/$', 'django.views.generic.simple.direct_to_template', {'template': 'about.html'}, name='about'),
+    #url(r'^about/$', 'django.views.generic.simple.direct_to_template', {'template': 'about.html'}, name='about'),
+    url(r'^about/$', 'core.views.about', name='about'),
     url(r'^faq/$', 'django.views.generic.simple.direct_to_template', {'template': 'faq.html'}, name='faq'),
     url(r'^contact/$', 'django.views.generic.simple.direct_to_template', {'template': 'contact.html'}, name='contact'),
 

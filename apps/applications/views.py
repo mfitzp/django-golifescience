@@ -13,11 +13,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list_detail import object_list
 from django.views.decorators.csrf import ensure_csrf_cookie
-# Theproject
+# abl.es
 from core.http import Http403  
 from applications.models import *
 # External
 from tagmeta.models import TagMeta
+from haystack.query import SearchQuerySet, RelatedSearchQuerySet
+
 
 # Wrapper provides sorting via GET request url, handling via generic view
 def applications(request, **kwargs):
@@ -65,6 +67,7 @@ def application(request, application_slug):
     context = { 'title': application.name,
                 'application': application,
                 'tagcount_for_model': Application,
+                'morelikethis': SearchQuerySet().more_like_this(application).models(Application)[:5],
               }
 
     return render_to_response('applications/application.html', context, context_instance=RequestContext(request))

@@ -177,7 +177,8 @@
 <li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=method.created_by subdomain=None %}">{{ method.created_by.get_full_name }}</a></li>
 {% if method.edited_by %}
 <li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=method.edited_by subdomain=None %}">{{ method.edited_by.get_full_name }}</a></li>
-{% endif %}<li><i class="general foundicon-clock"></i> Updated {{ method.updated_at|brieftimesince }} ago.</li>
+{% endif %}<li><i class="general foundicon-clock"></i> Updated {{ method.updated_at|brieftimesince }} ago</li>
+{% get_hit_count for method as hit_count %}<li><i class="general foundicon-globe"></i> Viewed {{ hit_count }} time{{ hit_count|pluralize }}</li>
 </ul>
 
 {% endblock %}

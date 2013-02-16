@@ -154,7 +154,7 @@ contributions of code and other resources can be found <a href="{{ application.s
     {% for result in morelikethis %}
     {% with result.object as mlt_application %}
     {% if mlt_application %}
-        <li><a href="{% url 'application' application_slug=mlt_application.slug %}">{{ mlt_application }}</a></li>
+        <li><a href="{% url 'application' application_slug=mlt_application.slug %}">{{ mlt_application }} <i>{{ mlt_application.tagline }}</i></a></li>
     {% endif %}
     {% endwith %}
     {% empty %}
@@ -168,7 +168,8 @@ contributions of code and other resources can be found <a href="{{ application.s
 <li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=application.created_by subdomain=None %}">{{ application.created_by.get_full_name }}</a></li>
 {% if application.edited_by %}
 <li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=application.edited_by subdomain=None %}">{{ application.edited_by.get_full_name }}</a></li>
-{% endif %}<li><i class="general foundicon-clock"></i> Updated {{ application.updated_at|brieftimesince }} ago.</li>
+{% endif %}<li><i class="general foundicon-clock"></i> Updated {{ application.updated_at|brieftimesince }} ago</li>
+{% get_hit_count for application as hit_count %}<li><i class="general foundicon-globe"></i> Viewed {{ hit_count }} time{{ hit_count|pluralize }}</li>
 </ul>
 
 {% endblock %}
