@@ -111,7 +111,7 @@ def method(request, method_id, method_slug = None):
         'total_active':     total_active,
         'total_waiting':    total_waiting,
 
-        'morelikethis':     SearchQuerySet().more_like_this(method).models(Method)[:10],
+        'morelikethis':     SearchQuerySet().more_like_this(method).models(Method)[:5],
 
         'microdata':        True,
 

@@ -67,7 +67,7 @@ def application(request, application_slug):
     context = { 'title': application.name,
                 'application': application,
                 'tagcount_for_model': Application,
-                'morelikethis': SearchQuerySet().more_like_this(application).models(Application)[:10],
+                'morelikethis': SearchQuerySet().more_like_this(application).models(Application)[:5],
               }
 
     return render_to_response('applications/application.html', context, context_instance=RequestContext(request))
