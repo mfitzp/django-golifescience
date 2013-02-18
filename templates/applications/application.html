@@ -117,12 +117,12 @@
 
 {% if application.ohloh %}
 <h3>Statistics <a href="http://ohloh.net/p/{{ application.ohloh.project_id }}"><small><em>by <span class="ohlohO">O</span>hloh</em></small></a></h3>
-<p><strong>{{ application.name }}</strong> currently has {{ application.ohloh.data.user_count }} registered user{{ application.ohloh.data.user_count|pluralize }}. It is developed
+<p><strong>{{ application.name }}</strong> currently has <a href="http://ohloh.net/p/{{ application.ohloh.project_id }}/users">{{ application.ohloh.data.user_count }} registered user{{ application.ohloh.data.user_count|pluralize }}</a>. It is developed
 primarily in 
 {% for language in application.ohloh.data.languages %}
     {% if forloop.last %} and {{ language }}{% else %}{{ language }}, {% endif %}
 
-{% endfor %} languages, with {{ application.ohloh.data.twelve_month_contributor_count }} active contributor{{ application.ohloh.data.twelve_month_contributor_count|pluralize }} in the past year.</p>
+{% endfor %} languages, with <a href="http://ohloh.net/p/{{ application.ohloh.project_id }}/contributors?sort=latest_commit&time_span=12+months">{{ application.ohloh.data.twelve_month_contributor_count }} active contributor{{ application.ohloh.data.twelve_month_contributor_count|pluralize }}</a> in the past year.</p>
 
 {% endif %}
 
