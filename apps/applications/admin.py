@@ -11,11 +11,11 @@ class AuthorInline(generic.GenericTabularInline):
 class ReferenceInline(generic.GenericTabularInline):
     model = Reference
 
-class FeatureInline(generic.GenericTabularInline):
+class FeatureInline(admin.TabularInline):
     model = Feature
 
 
-class OhlohInline(generic.GenericTabularInline):
+class OhlohInline(admin.TabularInline):
     model = Ohloh
 
 
