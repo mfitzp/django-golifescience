@@ -56,7 +56,9 @@ class TagSponsor(models.Model):
 
 class TagSynonym(models.Model):
     def __unicode__(self):
-        return "%s" % (self.tag, self.synonym)
+        return "%s < %s" % (self.tag, self.synonym)
 
-    tag = models.ForeignKey(Tag, related_name='meta', null=True) # If left null; tags matching synonym will be deleted
+    tag = models.ForeignKey(Tag, related_name='synonyms', null=True) # If left null; tags matching synonym will be deleted
     synonym = models.CharField('Synonym', max_length = 50, blank = False)
+
+
