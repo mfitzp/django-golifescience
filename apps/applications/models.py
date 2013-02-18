@@ -50,6 +50,8 @@ class Application(models.Model):
 
     url = models.URLField('URL', blank = True)
     source_url = models.URLField('Source URL (e.g. Github)', blank = True)
+    
+    ohloh = models.OneToOneField(Ohloh, related_name='application', null=True, blank=True)
 
     icon = ThumbnailerImageField('Icon', max_length=255, upload_to=application_file_path, blank=True)    
     image = ThumbnailerImageField('Image', max_length=255, upload_to=application_file_path, blank=True)    
@@ -58,8 +60,8 @@ class Application(models.Model):
 
     objects = models.Manager()  
 
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)   
+    created_at = models.DateTimeField(auto_now_add = True, editable = False)
+    updated_at = models.DateTimeField(auto_now = True, editable = False)   
 
     created_by = models.ForeignKey(User, related_name='created_applications') # Author originally submitted method
     edited_by = models.ForeignKey(User, related_name='edited_applications', blank=True, null=True) # Author of latest edit
@@ -91,8 +93,8 @@ class Release(models.Model):
 
     objects = models.Manager()  
 
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)   
+    created_at = models.DateTimeField(auto_now_add = True, editable = False)
+    updated_at = models.DateTimeField(auto_now = True, editable = False)   
 
 
 
@@ -143,7 +145,7 @@ class Ohloh(models.Model):
         for tag in self.data.tags:
             self.application.tags.add( tag.replace('_','-') ) # replace is due to ohloh style tags being fugyly_as
         
-        self.application.save()    
+        self.application.save()`    
     
     
     # Request data for this project as xml, parse out the data into a local data JSON structure for handling
@@ -184,17 +186,15 @@ class Ohloh(models.Model):
             self.data = data
     
 
-    application = models.OneToOneField(Application, related_name='ohloh')
-
-    ohloh_id = models.CharField('Ohloh ID/project-name', max_length = 50, blank = False)
+    project_id = models.CharField('Ohloh project ID/name', max_length = 50, blank = False)
 
     # data
     data = JSONField(editable=False,blank=True,default=dict())
 
 
-    created_at = models.DateTimeField(auto_now_add = True)
+    created_at = models.DateTimeField(auto_now_add = True, editable = False)
     # Below used to delay requests for data < 1/month or similar
-    updated_at = models.DateTimeField(auto_now = True)   
+    updated_at = models.DateTimeField(auto_now = True, editable = False)   
 
     
 

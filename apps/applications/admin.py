@@ -11,15 +11,22 @@ class AuthorInline(generic.GenericTabularInline):
 class ReferenceInline(generic.GenericTabularInline):
     model = Reference
 
+class FeatureInline(generic.GenericTabularInline):
+    model = Feature
+
+
+class OhlohInline(generic.GenericTabularInline):
+    model = Ohloh
+
 
 class ApplicationAdmin(admin.ModelAdmin):
     inlines = [
         AuthorInline,
         ReferenceInline,
+        OhlohInline,
     ]
 
 admin.site.register(Application, ApplicationAdmin)
 admin.site.register(Release)
-admin.site.register(Feature)
 
 
