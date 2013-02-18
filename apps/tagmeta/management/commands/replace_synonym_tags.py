@@ -32,10 +32,14 @@ class Command(BaseCommand):
             if st.tag != None:
                 print "%s > %s" % (syn, st.tag)
                 # Update tag record for each item; so we're not using the tag anymore
-                try:
-                    TaggedItem.objects.filter(tag=syn).update(tag=st.tag)          
-                except:
-                    pass # It doesn't matter if it fails, due to duplicate key we're deleting it anyway
+                tios = TaggedItem.objects.filter(tag=syn)
+                for tio in tios.all():
+                    tio.tag = st.tag
+                    try:
+                        tio.save()
+                    except:
+                        pass
+
             else:
                 print "Deleting: %s" % (syn)
     
