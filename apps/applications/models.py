@@ -1,5 +1,6 @@
 import os.path
 import datetime
+import urllib, re
 from xml.dom.minidom import parse, parseString
 # Django
 from django.conf import settings
@@ -51,8 +52,6 @@ class Application(models.Model):
     url = models.URLField('URL', blank = True)
     source_url = models.URLField('Source URL (e.g. Github)', blank = True)
     
-    ohloh = models.OneToOneField(Ohloh, related_name='application', null=True, blank=True)
-
     icon = ThumbnailerImageField('Icon', max_length=255, upload_to=application_file_path, blank=True)    
     image = ThumbnailerImageField('Image', max_length=255, upload_to=application_file_path, blank=True)    
 
@@ -137,21 +136,21 @@ class Ohloh(models.Model):
     def update_application_data(self):
     
         if self.application.name == '':
-            self.application.name = self.data.name
+            self.application.name = self.data['name']
 
         if self.application.description == '':
-            self.application.description = self.data.description
+            self.application.description = self.data['description']
     
-        for tag in self.data.tags:
+        for tag in self.data['tags']:
             self.application.tags.add( tag.replace('_','-') ) # replace is due to ohloh style tags being fugyly_as
         
-        self.application.save()`    
+        self.application.save()  
     
     
     # Request data for this project as xml, parse out the data into a local data JSON structure for handling
     def get_updated_data(self):
     
-        f = urllib.urlopen("https://www.ohloh.net/p/%s/?api_key=%s" % ( self.ohloh_id, settings.OHLOH_API_KEY ) )
+        f = urllib.urlopen("https://www.ohloh.net/p/%s.xml?api_key=%s" % ( self.project_id, settings.OHLOH_API_KEY ) )
         # Build DOM for requested data
         dom = parse(f)
         f.close()
@@ -171,21 +170,22 @@ class Ohloh(models.Model):
                 'twelve_month_contributor_count']:
 
                 if dom.getElementsByTagName(tag):
-                    data[ tag ] = dom.getElementsByTagName(tag)[0].childNodes[0].data
+                    data[ tag ] = dom.getElementsByTagName(tag)[0].childNodes[0].data.strip()
 
             # Find multiple tag elements, tags & languages and build lists
 
-            for tag in [
-                'tag',
-                'language',]:
+            for field, tag in [
+                ('tags','tag'),
+                ('languages','language')]:
 
                 if dom.getElementsByTagName(tag):
-                    data[ field ].append( dom.getElementsByTagName(tag)[0].childNodes[0].data )
+                    for el in dom.getElementsByTagName(tag):
+                        data[ field ].append( el.childNodes[0].data.strip() )
 
-
+            # Cleanup data
             self.data = data
     
-
+    application = models.OneToOneField('Application', related_name='ohloh')
     project_id = models.CharField('Ohloh project ID/name', max_length = 50, blank = False)
 
     # data
