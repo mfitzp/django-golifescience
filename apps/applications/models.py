@@ -1,5 +1,6 @@
 import os.path
 import datetime
+from xml.dom.minidom import parse, parseString
 # Django
 from django.conf import settings
 from django.db import models
@@ -20,6 +21,7 @@ from taggit.models import Tag
 from taggit.managers import TaggableManager
 from subdomains.utils import reverse
 from licenses.fields import LicenseField
+from jsonfield.fields import JSONField
 # Methodmint
 from references.models import Reference
 from authors.models import Author
@@ -115,4 +117,84 @@ class Feature(models.Model):
     class Meta:
         order_with_respect_to = 'application'
 
+# Holds ohloh identity, and helper functions for retrieving, parsing and handling OhLoh project metadata
+class Ohloh(models.Model):
+#    def __unicode__(self):
+#        return "
+    
+    # On first save, check if we have an associated application; if not create it and autopopulate
+    # this allows creating applications directly from just their ohloh id
+    def save(self, force_insert=False, force_update=False):
+        if self.pk == None:
+            self.get_updated_data()
+            self.update_application_data()
+    
+        super(Ohloh, self).save(force_insert, force_update)
+
+    # Use ohloh data to autopopulate the parent application where data isn't currently set
+    def update_application_data(self):
+    
+        if self.application.name == '':
+            self.application.name = self.data.name
+
+        if self.application.description == '':
+            self.application.description = self.data.description
+    
+        for tag in self.data.tags:
+            self.application.tags.add( tag.replace('_','-') ) # replace is due to ohloh style tags being fugyly_as
+        
+        self.application.save()    
+    
+    
+    # Request data for this project as xml, parse out the data into a local data JSON structure for handling
+    def get_updated_data(self):
+    
+        f = urllib.urlopen("https://www.ohloh.net/p/%s/?api_key=%s" % ( self.ohloh_id, settings.OHLOH_API_KEY ) )
+        # Build DOM for requested data
+        dom = parse(f)
+        f.close()
+    
+        if dom:
+    
+            data = {
+                'languages':[],
+                'tags':[],
+             }
+    
+            # Iterate over available basic fields and pull them into our model
+            for tag in [
+                'name',
+                'description',
+                'user_count',
+                'twelve_month_contributor_count']:
+
+                if dom.getElementsByTagName(tag):
+                    data[ tag ] = dom.getElementsByTagName(tag)[0].childNodes[0].data
+
+            # Find multiple tag elements, tags & languages and build lists
+
+            for tag in [
+                'tag',
+                'language',]:
+
+                if dom.getElementsByTagName(tag):
+                    data[ field ].append( dom.getElementsByTagName(tag)[0].childNodes[0].data )
+
+
+            self.data = data
+    
+
+    application = models.OneToOneField(Application, related_name='ohloh')
+
+    ohloh_id = models.CharField('Ohloh ID/project-name', max_length = 50, blank = False)
+
+    # data
+    data = JSONField(editable=False,blank=True,default=dict())
+
+
+    created_at = models.DateTimeField(auto_now_add = True)
+    # Below used to delay requests for data < 1/month or similar
+    updated_at = models.DateTimeField(auto_now = True)   
+
+    
 
