@@ -54,3 +54,9 @@ class TagSponsor(models.Model):
     icon = ThumbnailerImageField('Tag icon', max_length=255, upload_to=sponsor_icon_file_path, blank=True, default='')    
     image = ThumbnailerImageField('Tag sponsor image', max_length=255, upload_to=sponsor_file_path, blank=True, default='')    
 
+class TagSynonym(models.Model):
+    def __unicode__(self):
+        return "%s" % (self.tag, self.synonym)
+
+    tag = models.ForeignKey(Tag, related_name='meta', null=True) # If left null; tags matching synonym will be deleted
+    synonym = models.CharField('Synonym', max_length = 50, blank = False)
