@@ -8,7 +8,7 @@
 {% block content %}
 <p>Unfortunately, your activation request failed. Either the code used ({{ activation_key }}) was incorrect, or out of date.</p>
 
-<p>Please check and try again, or <a href="{% url registration_register %}">register again for an account</a>.</p>
+<p>Please check and try again, or <a href="{% url 'registration_register' %}">register again for an account</a>.</p>
 
 
 {% endblock %}
