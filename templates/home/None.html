@@ -16,7 +16,7 @@
 {% block extrajs %}
 <script type='text/javascript'>
    $(window).load(function() {
-       $('#featuredContent').orbit({ fluid: '16x8' });
+       $('#featuredContent').orbit({ fluid: '16x8', directionalNav: false });
    });
 </script>
 {% endblock %}
@@ -29,12 +29,12 @@
     <div>
         <img src="{% thumbnail object.image 960x480 upscale crop %}">
         <div class="feature-overlay">    
-            <h4>
+            <h5>
                 {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
                 {% if object|classname = 'Article' %}<a href="{% url 'article' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
                 {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
                 {% endif %} {% endif %} {% endif %}      
-            </h4>
+            </h5>
             {% if object.authors.count > 0 %}<p class="author_list">{% author_list object.authors.all %}</p>{% endif %}
             <p class="about">{{ object.description|truncatewords:30|markdown }}</p>
         </div>

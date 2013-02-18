@@ -14,7 +14,7 @@
 {{ block.super }}
 <script type='text/javascript'>
    $(window).load(function() {
-       $('#featuredContent').orbit({ fluid: '8x4' });
+       $('#featuredContent').orbit({ fluid: '8x4', directionalNav: false });
    });
   $(document).ready(function() {
   {% get_hit_count_javascript for application %}
