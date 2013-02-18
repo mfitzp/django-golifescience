@@ -58,7 +58,7 @@ class TagSynonym(models.Model):
     def __unicode__(self):
         return "%s < %s" % (self.tag, self.synonym)
 
-    tag = models.ForeignKey(Tag, related_name='synonyms', null=True) # If left null; tags matching synonym will be deleted
+    tag = models.ForeignKey(Tag, related_name='synonyms', blank=True, null=True) # If left null; tags matching synonym will be deleted
     synonym = models.CharField('Synonym', max_length = 50, blank = False)
 
 

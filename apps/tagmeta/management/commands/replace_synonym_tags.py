@@ -22,8 +22,6 @@ class Command(BaseCommand):
         # Get a list of all synonym tags that are a synonym
         synonym_tags = Tag.objects.extra(where=[''' name IN (SELECT `synonym` FROM tagmeta_tagsynonym)'''])
         
-        print synonym_tags.query
-
         # Iterate over the tags and replace the tagging, then delete the tag
         print "Found %s tag(s) to update" % synonym_tags.count()
 
@@ -35,6 +33,9 @@ class Command(BaseCommand):
                 print "%s > %s" % (syn, st.tag)
                 # Update tag record for each item; so we're not using the tag anymore
                 TaggedItem.objects.filter(tag=syn).update(tag=st.tag)          
+            else:
+                print "Deleting: %s" % (syn)
+    
 
             # Delete the tag from the db
             Tag.objects.filter(name=syn).delete()
