@@ -28,19 +28,17 @@ class LatestAllFeed(Feed):
 
         return sorted(results, key=lambda x: x.created_at, reverse=True)
 
+    def build_from(item, l):
+        result = []
+        for attr in l:
+            result.append(getattr(item, attr, ''))
+        return " ".join(result)
+
     def item_title(self, item):
-        if hasattr(item, 'tagline'):
-            return "%s: %s" % (item.name, item.tagline)
-        elif hasattr(item, 'name'):
-            return item.name
-        else:
-            return item.title
+        return self.build_from(item, ['name', 'title', 'tagline'])
 
     def item_description(self, item):
-        if hasattr(item, 'description'):
-            return item.description
-        else:
-            return item.content
+        return self.build_from(item, ['description', 'content')
 
     def item_pubdate(self, item):
         return item.created_at

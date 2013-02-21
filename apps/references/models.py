@@ -41,11 +41,13 @@ class Reference(models.Model):
         self.autopopulate()
         super(Reference, self).save(force_insert, force_update)
 
+
     def et_al(self):
         if self.author:
             al = self.author.split(', ')
             return '%s et al.' % al[0]
 
+    @property
     def tagline(self):
         if self.published:
             return "%s %s (%s)" % (self.et_al(), self.publisher, self.published.year)
