@@ -153,11 +153,11 @@ contributions of code and other resources can be found <a href="{{ application.s
 </ul>
 
     <h6>{% trans "Tags" %}</h6>
-    {% with application.tags.all as tags %}{% with 1 as show_tag_counts %}
-        <div class="row"><div class="twelve columns tags-vertical">
+    {% with application.tags.all as tags %}
+        <div class="row"><div class="twelve columns tags-horizontal">
             {% include "_tags.html" %}
         </div></div>        
-    {% endwith %}{% endwith %}
+    {% endwith %}
 
 
     <h6>Related Applications</h6>
