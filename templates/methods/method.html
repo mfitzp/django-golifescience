@@ -79,7 +79,7 @@
 
         {% for timestamp, step in schedule.items %}
         <div class="step step-thread-{{ step.thread }}" data-magellan-destination="step{{ forloop.counter }}">
-        <div class="step-number">{{ step.order }}</div>
+        <div class="step-number"><div><span>{{ step.order }}</span></div></div>
         {% if step.wait %}
             <div class="step-wait" data-magellan-destination="step{{ forloop.counter }}">Wait for 
                 <span class="thread-dot step-thread-{{ step.thread }}">&bull;</span>
