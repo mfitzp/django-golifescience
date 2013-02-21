@@ -107,7 +107,7 @@ class Reference(models.Model):
 
         # DOI is available for this resource (preferable)
         if self.namespace == 'doi':
-            data = autopopulate.doi(AutoReferenceself.uri)
+            data = autopopulate.doi(self.uri)
 
         # No doi available, attempt lookup of information via ISBN if provided
         elif self.namespace == 'pmid':
