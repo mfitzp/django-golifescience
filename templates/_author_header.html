@@ -9,7 +9,7 @@
 <div class="row author_header">
 <div class="author_header_inner">
 {% avatar author 48 %}
-<p class="about"><a href="{% url 'user-profile' username=method.created_by subdomain=None %}">{{ method.created_by.get_full_name }}</a><br />
+<p class="about"><a href="{% url 'user-profile' username=method.created_by subdomain=None %}">{{ author.get_full_name }}</a><br />
 {% with author.get_profile as profile %}{% if profile.organisation %}{{ profile.organisation }} &bull; {% endif %}{{ profile.country }}{% endwith %}</p>
 </div>
 </div>
