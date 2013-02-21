@@ -38,7 +38,7 @@ class Reference(models.Model):
     # On save, check if reference created/changed & update accordingly
     def save(self, force_insert=False, force_update=False):
         if self.pk == None or if self.uri.endswith('!'):
-            self.uri.trim('!')
+            self.uri = self.uri.trim('!')
             self.getnamespace()
             self.autopopulate()
             
