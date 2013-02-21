@@ -19,8 +19,6 @@ def pubmed(keywords, latest_query=None):
 
     if latest_query == None:
         timeq = ''
-    elif (datetime.datetime.now() - latest_query).days < 7: # Wait at least a week
-        return []
     else:
         timeq = '"last %d days"' % (datetime.datetime.now() - latest_query).days
 
