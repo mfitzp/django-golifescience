@@ -175,12 +175,6 @@ class AutoReference(models.Model):
     def __unicode__(self):
         return "%s %s" % (self.content_object, self.keywords)
 
-    # On save, check if reference created/changed & update accordingly
-    def save(self, force_insert=False, force_update=False):
-        if self.pk == None or self.latest_query_at == None:
-            self.autoref() 
-        super(AutoReference, self).save(force_insert, force_update)
-
     def autoref(self):
         uris = autoref.pubmed(self.keywords, self.latest_query_at)
         # We have some ids create the references
@@ -196,6 +190,8 @@ class AutoReference(models.Model):
                    r.save()
 
         self.latest_query_at = datetime.datetime.now()
+        self.save()
+        return len(uris)
         
 
     keywords = models.CharField(max_length=200, blank=True)
