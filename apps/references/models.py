@@ -183,10 +183,14 @@ class AutoReference(models.Model):
         # We have some ids create the references
         for uri in uris:
             r = Reference(uri=uri, content_object=self.content_object)
-            r.save()
-            if r.published:
-               r.created_at = r.published
-            r.save()
+            try:
+                r.save()
+            except:
+                pass
+            else:
+                if r.published:
+                   r.created_at = r.published
+                r.save()
 
         self.latest_query_at = datetime.datetime.now()
         self.save()
