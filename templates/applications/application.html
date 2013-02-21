@@ -33,6 +33,8 @@
 {% endif %}
 {% endblock %}
 
+{% block author_header %}{% with application.created_by as author %}{% include "_author_header.html" %}{% endwith %}{% endblock %}
+
 {% block imageheader %}
     {% if application.image %}<img src="{% thumbnail application.image 400x400 upscale crop %}">{% endif %}
 {% endblock %}
