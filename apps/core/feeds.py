@@ -64,12 +64,7 @@ class LatestAllFeedTwitter(LatestAllFeed):
 
     def item_title(self, item):
         # Twitter is restricted to 140 characters so do some fancies
-        if hasattr(item, 'tagline'):
-            title = "%s: %s" % (item.name, item.tagline)
-        elif hasattr(item, 'name'):
-            title = item.name
-        else:
-            title = item.title
+        title = self.build_from(item, ['name', 'title', 'tagline'])
 
         hashtags = list()
 
