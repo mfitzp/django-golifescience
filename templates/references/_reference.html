@@ -5,7 +5,7 @@
         <div class="twelve columns">
             <p>
             {{ reference.author }} <a href="{{ reference.url }}">{{ reference.title }}</a> <i>{{ reference.publisher }}</i> {% if reference.published %}({{ reference.published.year }}){% endif %}
-            <p/>
+            <a href="{{ reference.get_absolute_url }}">[+]</a><p/>
         </div>
     </div>
 </div>

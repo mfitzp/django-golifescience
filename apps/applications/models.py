@@ -36,7 +36,7 @@ class Application(models.Model):
         return "%s" % (self.name)
 
     def get_absolute_url(self):
-        return reverse('application',kwargs={'application_slug':str(self.slug)}, subdomain='install')
+        return reverse('application',kwargs={'application_id':str(self.id), 'application_slug':str(self.slug)}, subdomain='install')
 
     def get_absolute_path(self):
         return django_reverse('application',kwargs={'application_slug':str(self.slug)})

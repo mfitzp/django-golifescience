@@ -165,7 +165,7 @@ contributions of code and other resources can be found <a href="{{ application.s
     {% for result in morelikethis %}
     {% with result.object as mlt_application %}
     {% if mlt_application %}
-        <li><a href="{% url 'application' application_slug=mlt_application.slug %}">{{ mlt_application }} <i>{{ mlt_application.tagline }}</i></a></li>
+        <li><a href="{% url 'application' application_id=mlt_application.id application_slug=mlt_application.slug %}">{{ mlt_application }} <i>{{ mlt_application.tagline }}</i></a></li>
     {% endif %}
     {% endwith %}
     {% empty %}

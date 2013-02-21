@@ -11,7 +11,7 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse as django_reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 # Methodmint
@@ -19,8 +19,10 @@ from references import isbn
 from references import autopopulate
 from references import autoref
 #External
+from autoslug.fields import AutoSlugField
 #from picklefield.fields import PickledObjectField, PickledObject
 from jsonfield.fields import JSONField
+from subdomains.utils import reverse
 
 # A reference object, pointing to an external resource via URN or URL
 class Reference(models.Model):
@@ -28,12 +30,28 @@ class Reference(models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('reference',kwargs={'reference_id':str(self.id), 'reference_slug':str(self.slug)}, subdomain=None)
+    def get_absolute_path(self):
+        return django_reverse('reference',kwargs={'reference_id':str(self.id), 'reference_slug':str(self.slug)})
+
     # On save, check if reference created/changed & update accordingly
     def save(self, force_insert=False, force_update=False):
         self.getnamespace()
         self.autopopulate()
         super(Reference, self).save(force_insert, force_update)
 
+    def et_al(self):
+        if self.author:
+            al = self.author.split(', ')
+            return '%s et al.' % al[0]
+
+    def tagline(self):
+        if self.published:
+            return "%s %s (%s)" % (self.et_al(), self.publisher, self.published.year)
+        else:
+            return "%s %s" % (self.et_al(), self.publisher)
+    
 
     # Generate an standard resource URL for this resource object
     # Preference is given to doi, then urn, then direct links
@@ -125,6 +143,7 @@ class Reference(models.Model):
         ('pmid', 'PMID: PubMed Identifier'),
     )
     namespace = models.CharField(max_length=4,choices=NAMESPACE_CHOICES, null = True, blank = True, default=None)
+    slug = AutoSlugField(populate_from='title')
 
     # Information
     title = models.CharField(max_length=200, blank=True)
@@ -136,7 +155,9 @@ class Reference(models.Model):
     meta = JSONField(editable=False,blank=True,default=dict())
 
     created_at = models.DateTimeField(auto_now_add = True, editable = False)
-    created_by = models.ForeignKey(User, null=True, related_name='created_references') # Who added this reference
+    updated_at = models.DateTimeField(auto_now = True, editable = False)   
+    created_by = models.ForeignKey(User, null=True, blank = True, related_name='created_references') # Who added this reference
+
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
@@ -154,7 +175,8 @@ class AutoReference(models.Model):
 
     # On save, check if reference created/changed & update accordingly
     def save(self, force_insert=False, force_update=False):
-        self.autoref()
+        if self.pk == None or self.latest_query_at == None:
+            self.autoref() 
         super(AutoReference, self).save(force_insert, force_update)
 
     def autoref(self):
@@ -162,9 +184,16 @@ class AutoReference(models.Model):
         # We have some ids create the references
         for uri in uris:
             r = Reference(uri=uri, content_object=self.content_object)
-            r.save()
+            try:
+                r.save()
+            except:
+                pass
+            else:   
+                if r.published:
+                   r.created_at = r.published
+                   r.save()
 
-
+        self.latest_query_at = datetime.datetime.now()
         
 
     keywords = models.CharField(max_length=200, blank=True)

@@ -65,8 +65,8 @@ class Method(models.Model):
 
     objects = models.Manager()  
 
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)   
+    created_at = models.DateTimeField(auto_now_add = True, editable = False)
+    updated_at = models.DateTimeField(auto_now = True, editable = False)   
 
 THREAD_CHOICES = ((1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5'))
 

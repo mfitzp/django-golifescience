@@ -34,26 +34,7 @@
     {% if method.image %}<img src="{% thumbnail method.image 400x400 upscale crop %}">{% endif %}
 {% endblock %}
 
-{% block content_about %}{{ method.description|markdown }}{% endblock %}
-
-{% block content_nav %}
-<div id="content_nav" class="twelve columns">
-<div class="row">
-        <dl id="magellanTopNav" data-magellan-expedition="fixed" class=" tabs pill">
-          <dt>Navigation</dt>
-          <dt>Prepare</dt>
-          <dd data-magellan-arrival="background"><a href="#background">Background</a></dd>
-          <dd data-magellan-arrival="requirements"><a href="#requirements">Requirements</a></dd>
-          <dd data-magellan-arrival="warnings"><a href="#warnings">Warnings</a></dd>
-          <dt>Do</dt>
-          <dd data-magellan-arrival="method"><a href="#method">Method</a></dd>
-          <dt>Explore</dt>
-          <dd data-magellan-arrival="warnings"><a href="#publications">Publications</a></dd>
-        </dl>
-    </div>
-</div>
-{% endblock %}
-
+{% block about %}{{ method.description|markdown }}{% endblock %}
 
 {% block content %}
 

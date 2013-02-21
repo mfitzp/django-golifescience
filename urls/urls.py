@@ -43,6 +43,9 @@ urlpatterns = patterns('',
 
     (r'^messages/',  include('postman.urls')),
 
+
+    (r'^references/',  include('references.urls')),
+
     # Search
 #    url(r'^tags/$', 'core.views.tag_search', {
 #                'template':'search/tag_search.html',

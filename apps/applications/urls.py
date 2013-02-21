@@ -19,8 +19,12 @@ urlpatterns = patterns('',
             name='application-list'),
 
 
-    url(r'^(?P<application_slug>\w+)/$', 'applications.views.application', name='application' ),
+    url(r'^(?P<application_id>\d+)/$', 'applications.views.application_noslug', name='application' ),
+    url(r'^(?P<application_slug>\w+)/$', 'applications.views.application_noid', name='application' ),
 
     url(r'^tagged/(?P<slug>[^/]+)/$', 'core.views.objects_tagged', {'Model':Application, 'template_name':'applications/application_list.html',}, name='application-tagged',),
+
+    # this is potentially buggy if the slug is anything listed above, oh dear
+    url(r'^(?P<application_id>\d+)/(?P<application_slug>.+)/$', 'applications.views.application', name='application' ),
 
 )

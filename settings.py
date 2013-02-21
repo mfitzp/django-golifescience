@@ -203,7 +203,7 @@ INSTALLED_APPS = (
     'references',
     'profiles',
     'authors',
-    
+    'references',
 )
  
 

@@ -35,7 +35,7 @@ from tagmeta.models import TagMeta
 def method_noslug(request, method_id):
     method = get_object_or_404(Method, pk=method_id)
     suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
-    return HttpResponsePermanentRedirect( django_reverse('method',kwargs={'method_id':method.id, 'method_slug':method.slug}) + suffix )
+    return HttpResponsePermanentRedirect( method.get_absolute_url() + suffix )
 
 @ensure_csrf_cookie
 def method(request, method_id, method_slug = None):
@@ -270,7 +270,7 @@ def method_list(request, **kwargs):
     kwargs['extra_context'].update( {
         'directory': TagMeta.objects.filter(level__lt=2),
         'sorted_by': sort_by,
-        'tagcount_for_model': Method,
+#        'tagcount_for_model': Method,
          } )
 
     return object_list(request, **kwargs)

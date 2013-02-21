@@ -5,7 +5,7 @@ from django.template import RequestContext, loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.utils.translation import ugettext as _
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator, InvalidPage
@@ -20,6 +20,15 @@ from applications.models import *
 from tagmeta.models import TagMeta
 from haystack.query import SearchQuerySet, RelatedSearchQuerySet
 
+def application_noid(request, application_slug):
+    application = get_object_or_404(Application, slug=application_slug)
+    suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
+    return HttpResponsePermanentRedirect( application.get_absolute_url() + suffix )
+
+def application_noslug(request, application_id):
+    application = get_object_or_404(Application, pk=application_id)
+    suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
+    return HttpResponsePermanentRedirect( application.get_absolute_url() + suffix )
 
 # Wrapper provides sorting via GET request url, handling via generic view
 def applications(request, **kwargs):
@@ -59,9 +68,9 @@ def applications(request, **kwargs):
 
 # Wrapper provides sorting via GET request url, handling via generic view
 @ensure_csrf_cookie
-def application(request, application_slug):
+def application(request, application_id, application_slug = None):
     
-    application = get_object_or_404(Application, slug=application_slug)
+    application = get_object_or_404(Application, pk=application_id)
 
 
     context = { 'title': application.name,

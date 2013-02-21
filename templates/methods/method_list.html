@@ -18,7 +18,7 @@
 {% block subtitle %}{% trans "Explore our catalogue of protocols" %}{% endblock %}
 
 
-{% block content_header %}
+{% block about %}
    {% if tag %} 
    {% if tagmeta.description %}
     <div class="row">
@@ -37,6 +37,8 @@
     </div>
     {% endif %}
     {% endif %}
+{% endblock %}
+{% block controls %}
     <div class="row">
         <div class="twelve columns">
             <dl class="sub-nav">
