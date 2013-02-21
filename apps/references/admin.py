@@ -8,3 +8,4 @@ class ReferenceAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Reference, ReferenceAdmin)
+

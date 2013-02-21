@@ -4,7 +4,7 @@ from django.contrib.contenttypes import generic
 
 # Methodmint
 from methods.models import *
-from references.models import Reference
+from references.models import Reference, AutoReference
 from authors.models import Author
 
 class StepInline(admin.TabularInline):
@@ -16,6 +16,10 @@ class AuthorInline(generic.GenericTabularInline):
 class ReferenceInline(generic.GenericTabularInline):
     model = Reference
 
+class AutoReferenceInline(generic.GenericTabularInline):
+    model = AutoReference
+    max_num = 1
+    extra = 0
 
 class MethodAdmin(admin.ModelAdmin):
     inlines = [

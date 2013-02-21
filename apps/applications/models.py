@@ -24,7 +24,7 @@ from subdomains.utils import reverse
 from licenses.fields import LicenseField
 from jsonfield.fields import JSONField
 # Methodmint
-from references.models import Reference
+from references.models import Reference, AutoReference
 from authors.models import Author
 
 def application_file_path(instance=None, filename=None):
@@ -67,6 +67,7 @@ class Application(models.Model):
 
     authors = generic.GenericRelation(Author)
     references = generic.GenericRelation(Reference)
+    autoreference = generic.GenericRelation(AutoReference)
 
 # Release class
 class Release(models.Model):
@@ -193,8 +194,8 @@ class Ohloh(models.Model):
 
 
     created_at = models.DateTimeField(auto_now_add = True, editable = False)
-    # Below used to delay requests for data < 1/month or similar
     updated_at = models.DateTimeField(auto_now = True, editable = False)   
-
+    # Below used to delay requests for data < 1/month or similar
+    latest_query_at = models.DateTimeField(editable = False, null=True, blank=False)   
     
 

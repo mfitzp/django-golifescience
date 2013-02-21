@@ -17,6 +17,7 @@ from django.contrib.contenttypes import generic
 # Methodmint
 from references import isbn
 from references import autopopulate
+from references import autoref
 #External
 #from picklefield.fields import PickledObjectField, PickledObject
 from jsonfield.fields import JSONField
@@ -86,7 +87,7 @@ class Reference(models.Model):
 
         # DOI is available for this resource (preferable)
         if self.namespace == 'doi':
-            data = autopopulate.doi(self.uri)
+            data = autopopulate.doi(AutoReferenceself.uri)
 
         # No doi available, attempt lookup of information via ISBN if provided
         elif self.namespace == 'pmid':
@@ -135,12 +136,43 @@ class Reference(models.Model):
     meta = JSONField(editable=False,blank=True,default=dict())
 
     created_at = models.DateTimeField(auto_now_add = True, editable = False)
+    created_by = models.ForeignKey(User, null=True, related_name='created_references') # Who added this reference
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     class Meta:
-        #unique_together = (('namespace', 'uri'),)
+        unique_together = (('namespace','uri','content_type','object_id'),)
         ordering = ['-published']
+
+
+class AutoReference(models.Model):
+
+    def __unicode__(self):
+        return "%s %s" % (self.content_object, self.keywords)
+
+    # On save, check if reference created/changed & update accordingly
+    def save(self, force_insert=False, force_update=False):
+        self.autoref()
+        super(AutoReference, self).save(force_insert, force_update)
+
+    def autoref(self):
+        uris = autoref.pubmed(self.keywords, self.latest_query_at)
+        # We have some ids create the references
+        for uri in uris:
+            r = Reference(uri=uri, content_object=self.content_object)
+            r.save()
+
+
+        
+
+    keywords = models.CharField(max_length=200, blank=True)
+    created_at = models.DateTimeField(auto_now_add = True, editable = False)
+
+    latest_query_at = models.DateTimeField(editable = False, null=True, blank=False)   
+
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
 

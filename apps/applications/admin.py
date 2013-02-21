@@ -1,7 +1,7 @@
 from django.contrib import admin
 # Methodmint
 from applications.models import *
-from references.models import Reference
+from references.models import Reference, AutoReference
 from authors.models import Author
 
 
@@ -10,6 +10,11 @@ class AuthorInline(generic.GenericTabularInline):
 
 class ReferenceInline(generic.GenericTabularInline):
     model = Reference
+
+class AutoReferenceInline(generic.GenericTabularInline):
+    model = AutoReference
+    max_num = 1
+    extra = 1
 
 class FeatureInline(admin.TabularInline):
     model = Feature
@@ -23,6 +28,7 @@ class ApplicationAdmin(admin.ModelAdmin):
     inlines = [
         AuthorInline,
         ReferenceInline,
+        AutoReferenceInline,
         OhlohInline,
     ]
 

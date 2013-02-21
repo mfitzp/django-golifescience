@@ -19,7 +19,7 @@ from django.contrib.contenttypes import generic
 from subdomains.utils import reverse
 from licenses.fields import LicenseField
 # Methodmint
-from references.models import Reference
+from references.models import Reference, AutoReference
 from authors.models import Author
 
 
@@ -61,6 +61,7 @@ class Method(models.Model):
 
     authors = generic.GenericRelation(Author)
     references = generic.GenericRelation(Reference)
+    autoreference = generic.GenericRelation(AutoReference)
 
     objects = models.Manager()  
 
