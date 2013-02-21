@@ -10,7 +10,7 @@
 
 {% macro title %}{% block title %}Installables{% endblock %}{% endmacro %}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 	<head>
 		<title>{% block pagetitle %}{% if title %}{{ title }}{% else %}{% usemacro title %}{% endif %}{% endblock %} | {{ site.name }}&trade; {{ site.slogan }}</title>
@@ -71,7 +71,7 @@
     <!-- Basic Needs -->
     <nav class="top-bar">
       <ul>
-        <li class="name"><h1><a href="/">{% colorname site.name %}</h1></li>
+        <li class="name"><h1><a href="/">{% colorname site.name %}</a></h1></li>
         <li class="toggle-topbar"><a href="#"></a></li>
       </ul>
     <section>
@@ -121,28 +121,26 @@
 
 </div>
 
+{% block author_header %}
+{% endblock %}
 
-
-<div class="row">
-<div class="twelve columns">
-<div class="seven columns">
-      <div class="header {% block header_classes %}{% endblock %}">
-          <div class="row">
+<div class="row page">
+<div class="seven columns content">
+          <div class="row header">
             <div class="twelve columns header-content">
                 <h1 itemprop="name">{% usemacro title %}</h1>
                 <h4>{% block subtitle %}{{ site.slogan }}{% endblock %}</h4>
             </div>
           </div>
-      </div>
+          <div class="row header content-about" itemprop="description">
+                <div class="twelve columns">{% block content_about %}{% endblock %}</div>
+          </div>
 
-    <div class="content-header">
-    {% block content_header %}
-    {% endblock %}
-    </div>
+    {% block feature %}{% endblock %}
 
     <div class="body"><a name="top"></a>
       <div class="row">
-        <div class="twelve columns">
+        <div class="twelve columns body_content">
             {% block content %}
             {% endblock %}
         </div>
@@ -158,9 +156,6 @@
 {% block sidebar_right %}
 {% endblock %}
 </div><!-- five -->
-
-
-</div><!-- twelve -->
 
 </div><!-- row -->
 

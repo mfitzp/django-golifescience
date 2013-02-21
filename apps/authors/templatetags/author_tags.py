@@ -48,7 +48,7 @@ def author_list( authors ):
 
         return ', '.join( l_author ) + '<br />' + ', '.join( l_orgs )
     else:
-        return 'None'
+        return 'No known authors'
 
 @register.simple_tag
 def author_et_al( authors ):
@@ -59,5 +59,5 @@ def author_et_al( authors ):
     if authors:
         return '<a href="%s">%s</a> <i>et al</i>' % ( reverse('user-profile',kwargs={'user_id':str(authors[0].user.id)}, subdomain=None), authors[0].user.get_full_name() )
     else:
-        return 'None'
+        return 'No known authors'
 

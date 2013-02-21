@@ -21,9 +21,7 @@
 </script>
 {% endblock %}
 
-{% block content %}
-
-
+{% block feature %}<div class="row featured"><div class="twelve columns">
 <div id="featuredContent">
 {% for object in topsection.items|slice:":5" %}
     <div>
@@ -41,9 +39,11 @@
     </div>
 {% endfor %}
 </div>
+</div></div>
+{% endblock %}
 
-<br />
-    <div class="home-sections"><!-- section tags -->
+{% block content %}
+   <div class="home-sections"><!-- section tags -->
     
     {% for section in sections %}
         <h6>{{ section.tag|capfirst }}</h6>

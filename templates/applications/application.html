@@ -33,13 +33,29 @@
 {% endif %}
 {% endblock %}
 
-{% block header_classes %}header-overlay{% endblock %}
-
 {% block imageheader %}
     {% if application.image %}<img src="{% thumbnail application.image 400x400 upscale crop %}">{% endif %}
 {% endblock %}
 
-{% block content_header %}
+{% block feature %}
+{% if application.features.count > 0 %}
+<div class="row featured"><div class="twelve columns">
+<div id="featuredContent">
+{% for feature in application.features.all %}
+    <div>
+        <img src="{% thumbnail feature.image 960x480 upscale crop %}">
+        <div class="feature-overlay">    
+            <h5>{{ feature.title }}</h5><p>{{ feature.description|markdown }}</p>
+        </div>
+    </div>
+{% endfor %}
+</div></div></div>
+{% endif %}
+
+{% endblock %}
+
+
+{% block content_about %}
 <div class="row">
     <div class="twelve columns" itemprop="description">
         {{ application.description|markdown }}
@@ -69,25 +85,7 @@
 {% endblock %}
 
 {% block content %}
-{% if application.features.count > 0 %}
-<h3 data-magellan-destination="features">{% trans "Key Features" %}</h3>
 
-<div id="featuredContent">
-{% for feature in application.features.all %}
-    <div class="feature">
-      <div class="row">
-        {% if not forloop.counter|divisibleby:2 %}
-            <div class="four columns"><img src="{% thumbnail feature.image 500x200 %}"></div>
-        {% endif %}
-        <div class="eight columns"><h5>{{ feature.title }}</h5><p>{{ feature.description|markdown }}</p></div>
-        {% if forloop.counter|divisibleby:2 %}
-            <div class="four columns"><img src="{% thumbnail feature.image 500x200 %}"></div>
-        {% endif %}
-      </div>
-    </div>
-{% endfor %}
-</div>
-{% endif %}
 
 
 <!--

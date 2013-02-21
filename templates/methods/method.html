@@ -5,6 +5,7 @@
 {% load hitcount_tags %}
 {% load markup %}
 {% load author_tags %}
+{% load avatar_tags %}
 
 {% block extrajs %}
     {{ block.super }}
@@ -19,6 +20,7 @@
      <meta property="og:description" content="{{ method.description }}"/>
 {% endblock %}
 
+{% block author_header %}{% with method.created_by as author %}{% include "_author_header.html" %}{% endwith %}{% endblock %}
 
 
 {% block title %}{{ method }}{% endblock %}
@@ -28,19 +30,11 @@
     {% endif %}
 {% endblock %}
 
-{% block header_classes %}header-overlay{% endblock %}
-
 {% block imageheader %}
     {% if method.image %}<img src="{% thumbnail method.image 400x400 upscale crop %}">{% endif %}
 {% endblock %}
 
-{% block content_header %}
-<div class="row">
-    <div class="twelve columns"  itemprop="description">
-        <p>{{ method.description }}</p>
-    </div>
-</div>
-{% endblock %}
+{% block content_about %}{{ method.description|markdown }}{% endblock %}
 
 {% block content_nav %}
 <div id="content_nav" class="twelve columns">
@@ -67,7 +61,8 @@
 <h3 data-magellan-destination="background">{% trans "Background" %}</h3>
     <p>{{ method.notes|markdown:"safe,tables" }}</p>
 {% endif %}
-
+<!-- </div></div>
+<div class="row"><div class="twelve columns"> -->
     {% if method.materials %}
 <h3 data-magellan-destination="requirements">Requirements</h3>
     <ul class="disc">
@@ -80,11 +75,11 @@
 <a name="method"></a>
 <h3 data-magellan-destination="method">{% trans "Method" %}</h3>
 
-    <div id="method-container" itemprop="recipeInstructions">
+    <div id="method-container" itemprop="recipeInstructions" class="fullwidth">
 
         {% for timestamp, step in schedule.items %}
         <div class="step step-thread-{{ step.thread }}" data-magellan-destination="step{{ forloop.counter }}">
-
+        <div class="step-number">{{ step.order }}</div>
         {% if step.wait %}
             <div class="step-wait" data-magellan-destination="step{{ forloop.counter }}">Wait for 
                 <span class="thread-dot step-thread-{{ step.thread }}">&bull;</span>
@@ -94,8 +89,8 @@
         {% else %}
         <div class="step-content">
         <div class="row">
-            <div class="one columns step-number">{{ step.order }}</div>
-            <div class="eleven columns">
+
+            <div class="twelve columns">
                 {{ step.content|markdown:"safe,tables,codehilite" }}
             </div>
         </div></div>
@@ -151,11 +146,11 @@
 </ul>
 
     <h6>{% trans "Tags" %}</h6>
-    {% with method.tags.all as tags %}{% with 1 as show_tag_counts %}
-        <div class="row"><div class="twelve columns tags-vertical">
+    {% with method.tags.all as tags %}
+        <div class="row"><div class="twelve columns tags-horizontal">
             {% include "_tags.html" %}
         </div></div>        
-    {% endwith %}{% endwith %}
+{% endwith %}
 
 
     <h6>Related Protocols</h6>
