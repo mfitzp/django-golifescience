@@ -38,7 +38,7 @@ class LatestAllFeed(Feed):
         return self.build_from(item, ['name', 'title', 'tagline'])
 
     def item_description(self, item):
-        return self.build_from(item, ['description', 'content')
+        return self.build_from(item, ['description', 'content'])
 
     def item_pubdate(self, item):
         return item.created_at
