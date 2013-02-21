@@ -68,20 +68,23 @@ class LatestAllFeedTwitter(LatestAllFeed):
 
         hashtags = list()
 
-        # Now get tags off the item; only those with root metadata (important tags) and add to beginning of list
-        # Optionally supports >1 root metatag (could happen)
-        tags = item.tags.exclude(meta__tag_id=None).filter(meta__parent=None).order_by('?')[:3]
-        if tags:
-            for tag in tags:
-                hashtags.append( tag.slug.replace('-', '') ) # Use slug to remove most funky stuff, then - since hashtags tend to be bunched
+        if hasattr(item, 'tags'):
+            # Now get tags off the item; only those with root metadata (important tags) and add to beginning of list
+            # Optionally supports >1 root metatag (could happen)
+            tags = item.tags.exclude(meta__tag_id=None).filter(meta__parent=None).order_by('?')[:3]
+            if tags:
+                for tag in tags:
+                    hashtags.append( tag.slug.replace('-', '') ) # Use slug to remove most funky stuff, then - since hashtags tend to be bunched
 
-        hashtags = filter(None, hashtags)
-        hashtags = ['#' + x for x in hashtags[:3] ] # Limit to 3 tags total
-        hashtagstr = ' ' + ' '.join( hashtags )
+            hashtags = filter(None, hashtags)
+            hashtags = ['#' + x for x in hashtags[:3] ] # Limit to 3 tags total
+            hashtagstr = ' ' + ' '.join( hashtags )
 
-        # Trim the title down to meet the 140 char limit and return the joined content
-        title = title[:140- ( len(hashtagstr) + 13 )]  # Magic 13 = bitly url length
-        return title + hashtagstr 
+            # Trim the title down to meet the 140 char limit and return the joined content
+            title = title[:140- ( len(hashtagstr) + 13 )]  # Magic 13 = bitly url length
+            return title + hashtagstr 
+        else:
+            return title
 
 
     def item_description(self, item):
