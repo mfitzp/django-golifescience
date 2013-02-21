@@ -19,8 +19,10 @@ def pubmed(keywords, latest_query=None):
 
     if latest_query == None:
         timeq = ''
+    elif (datetime.datetime.now() - latest_query).days < 7: # Wait at least a week
+        return []
     else:
-        timeq = '"last %d days"' % (datetime.now() - latest_query).days
+        timeq = '"last %d days"' % (datetime.datetime.now() - latest_query).days
 
     f = urllib.urlopen("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=%s %s" % (keywordq, timeq))
     # Build DOM for requested data
