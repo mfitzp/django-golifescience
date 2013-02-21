@@ -28,7 +28,7 @@ class LatestAllFeed(Feed):
 
         return sorted(results, key=lambda x: x.created_at, reverse=True)
 
-    def build_from(item, l):
+    def build_from(self, item, l):
         result = []
         for attr in l:
             result.append(getattr(item, attr, ''))
