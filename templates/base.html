@@ -204,7 +204,7 @@
         <h6>Latest updates</h6>
         <ul class="navlist">
         {% for object in top5s.latest %}
-            <li><span class="label radius label-{{ object|classname|lower }}">{{ object.created_at|verybrieftimesince }}</span>&nbsp; <a href="{{ object.get_absolute_url }}">{{ object }} <i>{{ object.tagline }}</i></a></li>
+            <li><span class="label radius label-{{ object|classname|lower }}">{{ object.updated_at|verybrieftimesince }}</span>&nbsp; <a href="{{ object.get_absolute_url }}">{{ object }} <i>{{ object.tagline }}</i></a></li>
         {% endfor %}
         </ul>
     </div>
