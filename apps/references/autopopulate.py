@@ -1,5 +1,6 @@
 import os.path
-import datetime, string
+import string
+from datetime import datetime
 import urllib, re
 from xml.dom.minidom import parse, parseString
 # Django
@@ -99,13 +100,13 @@ def pmid(uri):
     data = { 'fields': {} , 'meta': {} }
 
     if xml:
-        m = re.search('Name="EPubDate" Type="Date">(\d*?)\s', xml, re.S)
+        m = re.search('Name="EPubDate" Type="Date">(\d.*?)<', xml, re.S)
         if m:
-            data['fields']['published'] = datetime.strptime(m.group(1),'%Y %b %d')
+            data['fields']['published'] = datetime.strptime(m.group(1).strip(),'%Y %b %d')
         else:
-            m = re.search('Name="PubDate" Type="Date">(\d*?)\s', xml, re.S)
+            m = re.search('Name="PubDate" Type="Date">(\d*?)<', xml, re.S)
             if m:
-                data['fields']['published'] = datetime.strptime('%s Jan 01' % m.group(1),'%Y %b %d') # year only
+                data['fields']['published'] = datetime.strptime('%s Jan 01' % m.group(1).strip(),'%Y %b %d') # year only
 
         m = re.search('Name="Source" Type="String">(.*?)<', xml, re.S)
         if m:

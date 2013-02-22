@@ -1,6 +1,7 @@
 import os.path
-import datetime, string
+import string
 import urllib, re
+from datetime import datetime
 from xml.dom.minidom import parse, parseString
 # Django
 from django.core import serializers
@@ -20,7 +21,7 @@ def pubmed(keywords, latest_query=None):
     if latest_query == None:
         timeq = ''
     else:
-        timeq = '"last %d days"' % (datetime.datetime.now() - latest_query).days
+        timeq = '"last %d days"' % (datetime.now() - latest_query).days
 
     f = urllib.urlopen("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=%s %s" % (keywordq, timeq))
     # Build DOM for requested data
