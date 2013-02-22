@@ -99,9 +99,13 @@ def pmid(uri):
     data = { 'fields': {} , 'meta': {} }
 
     if xml:
-        m = re.search('Name="PubDate" Type="Date">(\d*?)\s', xml, re.S)
+        m = re.search('Name="EPubDate" Type="Date">(\d*?)\s', xml, re.S)
         if m:
-            data['fields']['published'] = m.group(1) + '-1-1'
+            data['fields']['published'] = datetime.strptime(m.group(1),'%Y %b %d')
+        else:
+            m = re.search('Name="PubDate" Type="Date">(\d*?)\s', xml, re.S)
+            if m:
+                data['fields']['published'] = datetime.strptime('%s Jan 01' % m.group(1),'%Y %b %d') # year only
 
         m = re.search('Name="Source" Type="String">(.*?)<', xml, re.S)
         if m:

@@ -190,6 +190,7 @@ class AutoReference(models.Model):
             else:
                 if r.published:
                    r.created_at = r.published
+                   r.updated_at = r.published
                 r.save()
 
         self.latest_query_at = datetime.datetime.now()
