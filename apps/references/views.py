@@ -37,7 +37,7 @@ def references(request, **kwargs):
     if 'sort' in request.GET:
         sort_by = request.GET['sort']
     else:
-        sort_by = 'views'
+        sort_by = 'latest'
 
     if sort_by == 'latest':
         q = q.order_by('-created_at')
