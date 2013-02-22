@@ -100,13 +100,17 @@ def pmid(uri):
     data = { 'fields': {} , 'meta': {} }
 
     if xml:
+        # Pubmed is horribly inconsistent with dates the following matching anything starting with a number, following by anything
         m = re.search('Name="EPubDate" Type="Date">(\d.*?)<', xml, re.S)
+        if not m:
+            m = re.search('Name="PubDate" Type="Date">(\d.*?)<', xml, re.S) # try alternative
+
         if m:
-            data['fields']['published'] = datetime.strptime(m.group(1).strip(),'%Y %b %d')
-        else:
-            m = re.search('Name="PubDate" Type="Date">(\d*?)<', xml, re.S)
-            if m:
-                data['fields']['published'] = datetime.strptime('%s Jan 01' % m.group(1).strip(),'%Y %b %d') # year only
+            datestr = m.group(1).strip() # strip trailing bits
+            datebits = datestr.split(' ') #split on whitespace; we may have 1->3 items
+            dummybits = ['Jan','01'] # Dummy date
+            datebits.extend( dummybits[ len(datebits)-1: ] )
+            data['fields']['published'] = datetime.strptime( ' '.join(datebits),'%Y %b %d')
 
         m = re.search('Name="Source" Type="String">(.*?)<', xml, re.S)
         if m:
