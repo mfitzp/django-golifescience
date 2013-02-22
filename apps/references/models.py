@@ -189,9 +189,8 @@ class AutoReference(models.Model):
                 pass
             else:
                 if r.published:
-                   r.created_at = r.published
-                   r.updated_at = r.published
-                r.save()
+                    r.created_at = r.published
+                    r.save()
 
         self.latest_query_at = datetime.datetime.now()
         self.save()
