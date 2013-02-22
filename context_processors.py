@@ -41,7 +41,7 @@ def top5s( context ):
                         Article.objects.order_by('-created_at')[:5],
                         Method.objects.order_by('-created_at')[:5],
                         Reference.objects.order_by('-created_at')[:5],
-                    ),  key=lambda x: x.updated_at, reverse=True)[:5], 
+                    ),  key=lambda x: x.created_at, reverse=True)[:5], 
 
             'views': sorted( itertools.chain( 
                         Application.objects.extra(
