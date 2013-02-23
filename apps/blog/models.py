@@ -26,7 +26,8 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('article',kwargs={'article_id':str(self.id)}, subdomain=None)
+        return reverse('article',kwargs={'article_id':str(self.id),'article_slug':str(self.slug)}, 
+subdomain=None)
 
     def get_absolute_path(self):
         return django_reverse('article',kwargs={'article_id':str(self.id)})
