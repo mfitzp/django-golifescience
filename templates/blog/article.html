@@ -5,6 +5,20 @@
 {% load markup %}
 {% load hitcount_tags %}
 
+{% block extrajs %}
+    {{ block.super }}
+     <script> 
+      $(document).ready(function() {
+      {% get_hit_count_javascript for method %}
+      });
+     </script>
+     <!-- Facebook Opengraph support -->
+     <meta property="og:title" content="{{ article }}"/>
+     <meta property="og:description" content="{{ article.content }}"/>
+{% endblock %}
+
+
+
 {% block title %}{{ article }}{% endblock %}
 
 
