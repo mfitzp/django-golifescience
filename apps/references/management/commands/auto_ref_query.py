@@ -17,11 +17,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         
-        # Get latest 5
-        ars = AutoReference.objects.exclude( 
-latest_query_at__gt=datetime.datetime.now() - datetime.timedelta(days=3) 
-).order_by('-latest_query_at')[:5]
-        
+        # Get latest 5 min 1 day
+        ars = AutoReference.objects.exclude( latest_query_at__gt=datetime.datetime.now() - datetime.timedelta(days=1) ).order_by('-latest_query_at')[:5]
+ 
         for ar in ars:
             print "Autoref: %s" % ar
             x = ar.autoref()
