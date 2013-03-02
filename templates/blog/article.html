@@ -44,10 +44,10 @@
 
     <h6>Meta</h6>
 <ul>
-<li>Posted by <a href="{ % url 'user-profile' username=article.author % }">{{ article.author.get_full_name }}</a>
+<li>Posted by <a href="{ % url 'user-profile' username=article.created_by % }">{{ article.created_by.get_full_name }}</a>
 {{ article.created_at|brieftimesince }} ago.</li>
-{% if article.latest_editor %}<li>
-    Latest edit by <a href="{ % url 'user-profile' username=article.latest_editor % }">{{ article.latest_editor.get_full_name }}</a>
+{% if article.edited_by %}<li>
+    Latest edit by <a href="{ % url 'user-profile' username=article.edited_by % }">{{ article.edited_by.get_full_name }}</a>
     {{ article.updated_at|brieftimesince }} ago.</li>
 {% endif %}
 <li>Viewed {% get_hit_count for article %} times.</li>
