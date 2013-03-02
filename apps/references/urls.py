@@ -19,7 +19,7 @@ urlpatterns = patterns('',
             name='reference-list'),
 
     url(r'^(?P<reference_id>\d+)/(?P<reference_slug>.+)/$', 'references.views.reference', name='reference' ),
-    url(r'^(?P<reference_id>\d+)/$', 'references.views.reference', name='reference_noslug' ),
+    url(r'^(?P<reference_id>\d+)/$', 'references.views.reference_noslug', name='reference' ),
     url(r'^(?P<reference_slug>\w+)/$', 'references.views.reference', name='reference' ),
 
 
