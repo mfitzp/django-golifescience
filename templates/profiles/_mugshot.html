@@ -5,7 +5,7 @@
 
 {% with user.get_profile as profile %}
 <div class="mugshot {% if is_mini_mugshot %}mugshot-mini {% endif %}">
-    <div class="mugshot-image"><a href="{% url 'user-profile' user %}" title="{{ profile.fullname }}">{% if is_mini_mugshot %}{% avatar user 40 %}{% else %}{% avatar user 50 %}{% endif %}</a></div>
+    <div class="mugshot-image"><a href="{% url 'user-profile' username=user.username subdomain=None %}" title="{{ profile.fullname }}">{% if is_mini_mugshot %}{% avatar user 40 %}{% else %}{% avatar user 50 %}{% endif %}</a></div>
     {% if user.reputation.reputation > 0 or profile.is_online %}
     <div class="mugshot-reputation {% if profile.is_online %}mugshot-online{% endif %}" title="{% if profile.is_online %}Online now!{% else %}Last seen {{ profile.usp.last_active|timesince }} ago{% endif %}">
         <span class="number">{{ user.reputation.reputation }}</span>

@@ -19,6 +19,44 @@
        $('#featuredContent').orbit({ fluid: '16x8', directionalNav: false });
    });
 </script>
+
+<script>
+    var latest_stream_timestamp={{ latest_stream_timestamp }};
+
+    $(function() {
+
+        setInterval( "get_updated_stream('activityfeed')", 300000  ); /* 10 minutes 600000; 5 minutes 300000*/
+
+    })
+
+    function get_updated_stream(streamid){
+        stream = $('#' + streamid)
+        $.getJSON('{% url "ajax-stream-updated" %}', { timestamp:latest_stream_timestamp},
+               function(data) {
+                    /* Iterate and add the new elements to the stream div */   
+                    var length = data.items.length; 
+                    while(length--){
+                        stream.prepend( data.items[length] );
+                        $(stream).find(':first').slideDown(600);
+                        $(stream).find(':first').effect("highlight", {}, 2000);
+                    }
+                    
+                    latest_stream_timestamp=data.timestamp
+                    $("abbr.timeago").timeago();
+               }
+          )
+    return false;
+    }
+
+    function show_summarised(summaryp){
+        /* We do this via the p, then hide from the parent, so the enclosed area (including all the added items) is not a hotspot for clicking */
+        summary = $(summaryp).parent()
+        $(summary).children('p').hide();
+        $(summary).find('li.activity-item').slideDown(600);
+    }
+
+</script>
+
 {% endblock %}
 
 {% block feature %}<div class="row featured"><div class="twelve columns">
@@ -43,6 +81,30 @@
 {% endblock %}
 
 {% block content %}
+<div class="home-stream">
+  {% if stream %}
+   <ul class="activityfeed" id="activityfeed">
+       {% for action in stream|slice:":25" %}
+            {% if action.target %}
+                {% include "actstream/_action.html" %}
+            {% else %}
+                {% if action.is_summary %}
+                    {% with action as summary %}{% include "actstream/_action_summary.html" %}{% endwith %}
+                {% endif %}
+            {% endif %}
+         {% endfor %}
+    </ul>
+{% endif %}
+</div>
+
+{% endblock %}
+
+
+{% block sidebar_right %}
+
+    <h6>Browse</h6>
+    {% include "_directory.html" %}
+
    <div class="home-sections"><!-- section tags -->
     
     {% for section in sections %}
@@ -75,13 +137,6 @@
     </div>       
 
 
-{% endblock %}
-
-
-{% block sidebar_right %}
-
-    <h6>Browse</h6>
-    {% include "_directory.html" %}
 
 {% endblock %}
 

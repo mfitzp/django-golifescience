@@ -192,6 +192,7 @@ INSTALLED_APPS = (
     'registration',
     'postman',
     'licenses',
+    'actstream',
 # installables
     'core',
     'ajax',
@@ -248,6 +249,25 @@ HAYSTACK_CONNECTIONS = {
 #        'EXCLUDED_INDEXES': ['thirdpartyapp.search_indexes.BarIndex'],
     },
 }
+
+ACTSTREAM_ACTION_MODELS = (
+    'auth.User',
+#    'auth.AnonymousUser',
+    'applications.Application',
+    'methods.Method',
+    'references.Reference',
+#    'questions.Question',
+#    'questions.Answer',
+#    'discuss.Forum',
+#    'discuss.Thread',
+#    'discuss.Post',
+#    'badges.Badge',
+#    'badges.BadgeToUser',
+#    'sites.Site',
+    'blog.Article',
+#    'comments.MPTTComment',
+#    'comments.Comment',
+)
 
 AUTH_PROFILE_MODULE = "profiles.userprofile"
 COMMENTS_APP = 'comments'

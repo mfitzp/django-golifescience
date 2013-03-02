@@ -74,7 +74,7 @@ def actstream_build(latest_stream_time = datetime.datetime(1900,1,1)):
 
     for item in stream_tmp:
         # Slightly horrid. Poor mister database
-        if item.target and item.actor.usersiteprofile_set.filter(site=site):
+        if item.target and item.actor:
 
             if not actstream_action_equivalent(item, previous_item):
                 if summary:
@@ -91,7 +91,10 @@ def actstream_build(latest_stream_time = datetime.datetime(1900,1,1)):
     if summary:
         stream.append( {'is_summary':True, 'actions': summary} )
 
-    return stream
+    if len(stream) == 0:
+        return ([],0)
+    else:
+        return (stream, int(stream[0].timestamp.strftime("%s")) )
 
 # Render stream into ajax list for sending
 def actstream_render_ajax():

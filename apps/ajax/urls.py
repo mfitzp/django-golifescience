@@ -8,4 +8,9 @@ urlpatterns = patterns('',
     url(r'^hit/$',
     	        'hitcount.views.update_hit_count_ajax',
     	        name='hitcount_update_ajax'),
+
+    url(r'^stream-updated/$',
+    	        'ajax.views.stream_updated', 
+    	        name='ajax-stream-updated'),
+
 )

@@ -29,7 +29,7 @@ from blog.models import Article
 from tagmeta.models import TagMeta
 from taggit.views import tagged_object_list
 # Methodmint
-
+from core.utils import actstream_build
 
 def home(request):
  
@@ -82,12 +82,22 @@ def home(request):
     for section in allsections:
         topsection['items'].append( choice(section['items']) )
 
+
+    (stream, latest_stream_timestamp) = cache.get('activity_stream', (None,0) ) 
+
+    if stream == None:
+        (stream, latest_stream_timestamp) = actstream_build()
+        cache.set('activity_stream', (stream, latest_stream_timestamp) ) 
+
+
     context = {
         'topsection': topsection,
         'sections': sections,
 
         'directory':directory,
 
+        'stream': stream,
+        'latest_stream_timestamp': latest_stream_timestamp,
         # Latest/viewed/voted
         #'top': top,
     }

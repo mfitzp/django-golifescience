@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load core_tags %}
+{% load avatar_tags %}
+{% load countries_tags %}
+{% load hitcount_tags %}
+
+
+<li class="activity-summary"><p onclick="show_summarised(this);">and {{ summary.actions|length }} similar item{{ summary.actions|length|pluralize }}</p>
+<ul>
+{% for action in summary.actions %}
+    {% with 1 as is_hidden %}{% include "actstream/_action.html" %}{% endwith %}
+{% endfor %}
+</ul></li>
