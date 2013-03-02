@@ -63,7 +63,7 @@ def references(request, **kwargs):
 
 # Wrapper provides sorting via GET request url, handling via generic view
 @ensure_csrf_cookie
-def reference(request, reference_id, reference_slug=None):
+def reference(request, reference_slug, reference_id=None):
     
     reference = get_object_or_404(Reference, pk=reference_id)
 
