@@ -19,6 +19,7 @@ from taggit.managers import TaggableManager
 from autoslug.fields import AutoSlugField
 from subdomains.utils import reverse
 # Methodmint
+from core.actions import object_saved
 
 # Blog article
 class Article(models.Model):
@@ -38,8 +39,8 @@ class Article(models.Model):
     content = models.TextField(blank = True)
     tags = TaggableManager() #through=TaggedArticle)
 
-    author = models.ForeignKey(User, related_name='authored_articles') # Author originally submitted article
-    latest_editor = models.ForeignKey(User, related_name='edited_articles', blank=True, null=True) # Author of current version/sets
+    created_by = models.ForeignKey(User, related_name='authored_articles') # Author originally submitted article
+    edited_by = models.ForeignKey(User, related_name='edited_articles', blank=True, null=True) # Author of current version/sets
 
     objects = models.Manager()  
 
@@ -48,5 +49,9 @@ class Article(models.Model):
 
     class Meta:
         ordering = ['created_at']
+
+
+# Action Stream
+post_save.connect(object_saved, sender=Article)
 
 

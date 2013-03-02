@@ -23,6 +23,7 @@ from autoslug.fields import AutoSlugField
 #from picklefield.fields import PickledObjectField, PickledObject
 from jsonfield.fields import JSONField
 from subdomains.utils import reverse
+from core.actions import object_saved
 
 # A reference object, pointing to an external resource via URN or URL
 class Reference(models.Model):
@@ -205,4 +206,9 @@ class AutoReference(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+
+# Action Stream
+post_save.connect(object_saved, sender=Reference)
+
 

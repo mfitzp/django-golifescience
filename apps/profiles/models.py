@@ -11,10 +11,13 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
+from django.contrib.auth.signals import user_logged_in
+from django.dispatch import receiver
 # Externals
 from countries.models import Country
 from easy_thumbnails.fields import ThumbnailerImageField
 #from subdomains.utils import reverse
+from actstream import action
 
 def avatar_file_path(instance=None, filename=None):
     return os.path.join('avatar', str(instance.user.username), filename)
@@ -89,8 +92,7 @@ class UserProfile(models.Model):
 
 
 
-from django.contrib.auth.signals import user_logged_in
-from django.dispatch import receiver
+
 
 # LOGIN SIGNAL, create Profile objects
 def create_profile(sender, **kw):
@@ -98,9 +100,9 @@ def create_profile(sender, **kw):
     if kw["created"]:
        up = UserProfile(user=user)
        up.save()
+       action.send(user, verb='joined', action_object=user, target=user)
 
 post_save.connect(create_profile, sender=User)
-
 
 
 

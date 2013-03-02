@@ -26,6 +26,7 @@ from jsonfield.fields import JSONField
 # Methodmint
 from references.models import Reference, AutoReference
 from authors.models import Author
+from core.actions import object_saved
 
 def application_file_path(instance=None, filename=None):
     return os.path.join('application', str(instance.id), filename)
@@ -198,4 +199,8 @@ class Ohloh(models.Model):
     # Below used to delay requests for data < 1/month or similar
     latest_query_at = models.DateTimeField(editable = False, null=True, blank=False)   
     
+
+# Action Stream
+post_save.connect(object_saved, sender=Application)
+
 

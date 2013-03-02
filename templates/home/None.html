@@ -31,7 +31,7 @@
 
     function get_updated_stream(streamid){
         stream = $('#' + streamid)
-        $.getJSON('{% url "ajax-stream-updated" %}', { timestamp:latest_stream_timestamp},
+        $.getJSON('{% url "ajax-stream-updated" subdomain=None %}', { timestamp:latest_stream_timestamp},
                function(data) {
                     /* Iterate and add the new elements to the stream div */   
                     var length = data.items.length; 

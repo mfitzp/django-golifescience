@@ -21,7 +21,7 @@ from licenses.fields import LicenseField
 # Methodmint
 from references.models import Reference, AutoReference
 from authors.models import Author
-
+from core.actions import object_saved
 
 def method_file_path(instance=None, filename=None):
     return os.path.join('method', str(instance.id), filename)
@@ -142,6 +142,8 @@ class Step(models.Model):
 #        order_with_respect_to = 'method'    
 
 
+# Action Stream
+post_save.connect(object_saved, sender=Method)
 
 
 
