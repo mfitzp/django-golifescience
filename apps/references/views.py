@@ -37,7 +37,7 @@ def references(request, **kwargs):
     if 'sort' in request.GET:
         sort_by = request.GET['sort']
     else:
-        sort_by = 'views'
+        sort_by = 'latest'
 
     if sort_by == 'latest':
         q = q.order_by('-created_at')
@@ -63,7 +63,7 @@ def references(request, **kwargs):
 
 # Wrapper provides sorting via GET request url, handling via generic view
 @ensure_csrf_cookie
-def reference(request, reference_id, reference_slug=None):
+def reference(request, reference_slug, reference_id=None):
     
     reference = get_object_or_404(Reference, pk=reference_id)
 

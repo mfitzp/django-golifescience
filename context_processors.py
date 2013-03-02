@@ -37,11 +37,11 @@ def top5s( context ):
         # Top N methods
         top5s = {
              'latest': sorted( itertools.chain(
-                        Application.objects.order_by('-updated_at')[:5],
-                        Article.objects.order_by('-updated_at')[:5],
-                        Method.objects.order_by('-updated_at')[:5],
-                        Reference.objects.order_by('-updated_at')[:5],
-                    ),  key=lambda x: x.updated_at, reverse=True)[:5], 
+                        Application.objects.order_by('-created_at')[:5],
+                        Article.objects.order_by('-created_at')[:5],
+                        Method.objects.order_by('-created_at')[:5],
+                        Reference.objects.order_by('-created_at')[:5],
+                    ),  key=lambda x: x.created_at, reverse=True)[:5], 
 
             'views': sorted( itertools.chain( 
                         Application.objects.extra(
@@ -64,19 +64,19 @@ def top5s( context ):
 
             'trending': sorted( itertools.chain( 
                             Application.objects.extra(
-                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > (NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + 
+                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > (NOW() - INTERVAL 1 DAY) AND t.content_type_id=' + 
                                     str(ContentType.objects.get_for_model(Application).id) + ' AND t.object_pk=applications_application.id GROUP BY t.id',}
                                 ,).order_by('-hit_count')[:5],
                             Article.objects.extra(
-                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > (NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + 
+                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > (NOW() - INTERVAL 1 DAY) AND t.content_type_id=' + 
                                     str(ContentType.objects.get_for_model(Article).id) + ' AND t.object_pk=blog_article.id GROUP BY t.id',}
                                 ,).order_by('-hit_count')[:5],
                             Method.objects.extra(
-                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > (NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + 
+                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > (NOW() - INTERVAL 1 DAY) AND t.content_type_id=' + 
                                     str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id GROUP BY t.id',}
                                 ,).order_by('-hit_count')[:5],
                             Reference.objects.extra(
-                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > (NOW() - INTERVAL 1 WEEK) AND t.content_type_id=' + 
+                            select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > (NOW() - INTERVAL 1 DAY) AND t.content_type_id=' + 
                                     str(ContentType.objects.get_for_model(Reference).id) + ' AND t.object_pk=references_reference.id GROUP BY t.id',}
                                 ,).order_by('-hit_count')[:5],
                     ),  key=lambda x: x.hit_count, reverse=True)[:5], 

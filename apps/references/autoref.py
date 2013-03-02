@@ -16,13 +16,14 @@ def pubmed(keywords, latest_query=None):
     # then build a string for the datetime since last update
 
     keywordl = keywords.split(',')
-    keywordq = '[TW] '.join(keywordl) + '[TW]' # produce[TW] this[TW] string[TW]
+    keywordq = '(' + '[TW] '.join(keywordl) + '[TW])' # produce[TW] this[TW] string[TW]
 
     if latest_query == None:
         timeq = ''
     else:
-        timeq = '"last %d days"' % (datetime.now() - latest_query).days
+        timeq = ' AND ("%s"[EPDAT] : "3000"[EPDAT])' % latest_query.strftime("%Y/%m/%d")
 
+    print "Querying pubmed with: %s %s" % (keywordq, timeq)
     f = urllib.urlopen("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=%s %s" % (keywordq, timeq))
     # Build DOM for requested data
     dom = parse(f)

@@ -40,7 +40,7 @@ class Application(models.Model):
         return reverse('application',kwargs={'application_id':str(self.id), 'application_slug':str(self.slug)}, subdomain='install')
 
     def get_absolute_path(self):
-        return django_reverse('application',kwargs={'application_slug':str(self.slug)})
+        return django_reverse('application', kwargs={'application_id':str(self.id), 'application_slug':str(self.slug)})
 
     # Fields
     name = models.CharField('Name', max_length = 50, blank = False)

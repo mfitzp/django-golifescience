@@ -31,7 +31,7 @@ from forms import *
 def article_noslug(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     suffix = request.get_full_path().split('/')[-1] # Required to keep ? and # segments
-    return HttpResponsePermanentRedirect( django_reverse('article-detail',kwargs={'article_id':article.id, 'article_slug':article.slug} ) + suffix )
+    return HttpResponsePermanentRedirect( article.get_absolute_url() + suffix )
 
 @ensure_csrf_cookie
 def article(request, article_id, article_slug = None): 
