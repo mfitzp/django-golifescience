@@ -21,7 +21,7 @@ def pubmed(keywords, latest_query=None):
     if latest_query == None:
         timeq = ''
     else:
-        timeq = ' AND ("%s"[Date - Epub] : "3000"[Date - Epub])' % latest_query.strftime("%Y/%m/%d")
+        timeq = ' AND ("%s"[EPDAT] : "3000"[EPDAT])' % latest_query.strftime("%Y/%m/%d")
 
     print "Querying pubmed with: %s %s" % (keywordq, timeq)
     f = urllib.urlopen("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=%s %s" % (keywordq, timeq))
