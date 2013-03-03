@@ -13,7 +13,7 @@
         {% else %}
             {{ action.target }}
         {% endif %}
-        <i>{{ action.target.tagline }}</i>
+        {% if action.target.tagline %}<i>{{ action.target.tagline }}</i>{% endif %}
         </a>
         </div>
     <div class="activity-content">
