@@ -54,7 +54,7 @@ class UserProfileSitemap(Sitemap):
 
 class PublicationSitemap(Sitemap):
     changefreq = "monthly"
-    priority = 1
+    priority = 0.5
     limit = 1000
 
     def items(self):
