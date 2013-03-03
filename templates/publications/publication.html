@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load core_tags %}
+{% load pagination_tags %}
+{% load thumbnail %}
+{% load hitcount_tags %}
+{% load i18n %}
+{% load author_tags %}
+
+{% block title %}{{ publication }}{% endblock %}
+{% block subtitle %}{{ publication.author }}{% endblock %}
+
+{% block extrajs %}
+{{ block.super }}
+<script type='text/javascript'>
+   $(window).load(function() {
+       $('#featuredContent').orbit({ fluid: '8x4', directionalNav: false });
+   });
+  $(document).ready(function() {
+  {% get_hit_count_javascript for publication %}
+  });
+ </script>
+ <!-- Facebook Opengraph support -->
+ <meta property="og:title" content="{{ publication }}"/>
+ {% if method.image %}<meta property="og:image" content="{% thumbnail publication.image 128x128 upscale crop %}"/>{% endif %}
+ <meta property="og:description" content="{{ publication.description }}"/>
+
+{% endblock %}
+
+{% block author_header %}{% if publication.created_by %}{% with publication.created_by as author %}{% include "_author_header.html" %}{% endwith %}{% endif %}{% endblock %}
+
+{% block content %}
+
+
+<p><i>{{ publication.publisher }}</i> {% if publication.published %}({{ publication.published.year }}){% endif %} <a href="{{ publication.url }}">{{ publication.namespace }}:{{ publication.uri }}</a></p>
+
+<h3>{% trans "Related Resources" %}</h3>
+This paper is referenced by the following resources on this site:
+<ul>
+{% for reference in publication.references.all %}
+    {% with reference.content_object as object %}
+        <li><a href="{{ object.get_absolute_url }}">{{ object.name }} <i>{{object.tagline }}</i></a></li>
+    {% endwith %}
+{% empty %}
+<li>None</li>
+{% endfor %}
+
+</ul>
+
+{% endblock %}
+
+
+{% block sidebar_right %}
+
+<h6>Actions</h6>
+<ul class="navlist">
+{% if publication.url %}<li><i class="general foundicon-website"></i> <a href="{{ publication.url }}">{% trans "Go to Homepage" %}</a></li>{% endif %}
+<li><i class="general foundicon-page"></i> <a href="javascript:window.print()">{% trans "Print this page" %}</a></li>
+<li><i class="social foundicon-thumb-up"></i> 
+<a href="#" data-reveal-id="socialModal">Share this publication</a></li>
+</ul>
+
+    <h6>{% trans "Tags" %}</h6>
+    {% with publication.tags.all as tags %}
+        <div class="row"><div class="twelve columns tags-horizontal">
+            {% include "_tags.html" %}
+        </div></div>        
+    {% endwith %}
+
+
+    <h6>Related References</h6>
+<ul class="navlist">
+    {% for result in morelikethis %}
+    {% with result.object as mlt_publication %}
+    {% if mlt_publication %}
+        <li><a href="{% url 'publication' publication_id=mlt_publication.id publication_slug=mlt_publication.slug %}">{{ mlt_publication }} <i>{{ mlt_publication.tagline }}</i></a></li>
+    {% endif %}
+    {% endwith %}
+    {% empty %}
+    <li>None.</li>
+    {% endfor %}
+    </ul>
+
+
+<h6>{% trans "Meta" %}</h6>
+<ul class="navlist">
+<li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=publication.created_by subdomain=None %}">{{ publication.created_by.get_full_name }}</a></li>
+{% if publication.edited_by %}
+<li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=publication.edited_by subdomain=None %}">{{ publication.edited_by.get_full_name }}</a></li>
+{% endif %}<li><i class="general foundicon-clock"></i> Updated {{ publication.updated_at|brieftimesince }} ago</li>
+{% get_hit_count for publication as hit_count %}<li><i class="general foundicon-globe"></i> Viewed {{ hit_count }} time{{ hit_count|pluralize }}</li>
+</ul>
+
+{% endblock %}
+
+
+{% block modals %}
+<div id="socialModal" class="reveal-modal [expand, xlarge, large, medium, small]">
+  <h2>Share this publication.</h2>
+  {% with publication as object %}{% include "_social.html" %}{% endwith %}
+</div>
+{% endblock %}
+
