@@ -22,7 +22,7 @@ class Command(BaseCommand):
  
         for ar in ars:
             print "Autoref: %s" % ar
-            x = ar.autoref()
+            x = ar.autoref() # Assign to Able
             print "- added %d new references" % x
 
 

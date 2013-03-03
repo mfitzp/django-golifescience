@@ -162,7 +162,7 @@ class Reference(models.Model):
 
     created_at = models.DateTimeField(auto_now_add = True, editable = False)
     updated_at = models.DateTimeField(auto_now = True, editable = False)   
-    created_by = models.ForeignKey(User, null=True, blank = True, related_name='created_references') # Who added this reference
+    created_by = models.ForeignKey(User, null=False, blank = True, related_name='created_references') # Who added this reference
 
 
     content_type = models.ForeignKey(ContentType)
@@ -179,11 +179,14 @@ class AutoReference(models.Model):
     def __unicode__(self):
         return "%s %s" % (self.content_object, self.keywords)
 
-    def autoref(self):
+    def autoref(self, user=False):
+        if user == False: # Assign to able
+                user = User.objects.get(pk=0)
+
         uris = autoref.pubmed(self.keywords, self.latest_query_at)
         # We have some ids create the references
         for uri in uris:
-            r = Reference(uri=uri, content_object=self.content_object)
+            r = Reference(uri=uri, content_object=self.content_object, created_by=user)
             try:
                 r.save()
             except:
