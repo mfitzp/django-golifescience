@@ -36,7 +36,8 @@ def pubmed(keywords, latest_query=None):
             for item in dom.getElementsByTagName('Id'):
                 uris.append( 'pmid:%d' % int( item.childNodes[0].data ) )
 
-            uris = uris[:25] # Limit max number of subsequent requests; we will continue from the oldest found anyway
-                
+            # Limit max number of subsequent requests;
+            # we will continue from the oldest found next time
+            uris = uris[-25:] 
 
     return uris
