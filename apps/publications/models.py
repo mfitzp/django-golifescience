@@ -23,7 +23,7 @@ from autoslug.fields import AutoSlugField
 #from picklefield.fields import PickledObjectField, PickledObject
 from jsonfield.fields import JSONField
 from subdomains.utils import reverse
-from core.actions import object_saved
+from core.actions import object_created
 
 # A reference object, pointing to an external resource via URN or URL
 class Reference(models.Model):
@@ -49,7 +49,7 @@ class Reference(models.Model):
     @property
     def tagline(self):
         if self.publication:
-            return self.publication.tagline()
+            return self.publication.tagline
 
     def url(self):
         if self.publication:
@@ -172,6 +172,7 @@ class Publication(models.Model):
             al = self.author.split(', ')
             return '%s et al.' % al[0]
 
+    @property
     def tagline(self):
         if self.published:
             return "%s %s (%s)" % (self.et_al(), self.publisher, self.published.year)
@@ -240,6 +241,7 @@ class Publication(models.Model):
     created_at = models.DateTimeField(auto_now_add = True, editable = False)
     updated_at = models.DateTimeField(auto_now = True, editable = False)   
     created_by = models.ForeignKey(User, related_name='created_publications') # Who added this publication
+    edited_by = models.ForeignKey(User, related_name='edited_publications') # Who added this publication
 
     class Meta:
         #unique_together = (('pmid','doi','isbn')) # Ideally, we want all fields to be unique *but* allow blanks
@@ -252,23 +254,46 @@ class AutoReference(models.Model):
         return "%s %s" % (self.content_object, self.keywords)
 
     def autoref(self, user=False):
+
         if user == False: # Assign to Miss Baker if not specified
                 user = User.objects.get(username='missbaker')
 
         uris = autoref.pubmed(self.keywords, self.latest_query_at)
-        # We have some ids create the references
-        for uri in uris:
-            r = Reference(uri=uri, namespace='pmid', content_object=self.content_object, created_by=user)
-            try:
-                r.save()
-            except:
-                pass
-            else:
-                if r.published:
-                    r.created_at = r.published
-                    r.save()
 
-        self.latest_query_at = datetime.datetime.now()
+        if self.latest_query_at:
+            latest_query_at = self.latest_query_at
+        else:
+            latest_query_at = datetime.datetime(1900, 1, 1, 00, 00, 00)
+
+        # We have some ids create the references
+        # If we're referencing an object on-site, build refs (auto-links)
+        # else create publications
+        if self.content_object:
+            for uri in uris:
+                # Try and 
+                r = Reference(uri=uri, namespace='pmid', created_by=user, content_object=self.content_object)
+                try:
+                    r.save()
+                except:
+                    pass
+
+                if r.publication and r.publication.published:
+                    latest_query_at = max( r.publication.published, latest_query_at )
+
+        else:
+            for uri in uris:
+                p = Publication(pmid=uri, created_by=user)
+                try:
+                    p.save()
+                except:
+                    pass
+
+                latest_query_at = max( p.published, latest_query_at )
+
+        if latest_query_at:
+            self.latest_query_at = latest_query_at + datetime.timedelta(days=1) # Add a day to move it forward
+        else:
+            self.latest_query_at = datetime.datetime.now()
         self.save()
         return len(uris)
         
@@ -278,12 +303,12 @@ class AutoReference(models.Model):
 
     latest_query_at = models.DateTimeField(editable = False, null=True, blank=False)   
 
-    content_type = models.ForeignKey(ContentType) #, null=True, blank=True)
-    object_id = models.PositiveIntegerField() #null) #=True, blank=True)
+    content_type = models.ForeignKey(ContentType, null=True, blank=True)
+    object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
 
 # Action Stream
-post_save.connect(object_saved, sender=Publication)
+post_save.connect(object_created, sender=Publication)
 
 

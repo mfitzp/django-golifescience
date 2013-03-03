@@ -30,3 +30,9 @@ def object_saved(sender, instance, created, **kwargs):
         if instance.edited_by != None:
             action.send(instance.edited_by, verb='edited', action_object=instance, target=instance)      
 
+# Saving of method object
+def object_created(sender, instance, created, **kwargs):
+    # Check if creating or editing
+    if created:
+        action.send(instance.created_by, verb='added', action_object=instance, target=instance)
+
