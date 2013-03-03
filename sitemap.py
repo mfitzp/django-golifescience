@@ -4,6 +4,7 @@ from blog.models import Article
 from applications.models import Application
 from methods.models import Method
 from profiles.models import UserProfile
+from publications.models import Publication
 
 
 class MethodSitemap(Sitemap):
@@ -50,4 +51,15 @@ class UserProfileSitemap(Sitemap):
 
     def lastmod(self, obj):
         return obj.user.last_login
+
+class PublicationSitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 1
+    limit = 1000
+
+    def items(self):
+        return Publication.objects.all()
+
+    def location(self, obj):
+        return obj.get_absolute_path()
 

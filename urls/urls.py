@@ -18,6 +18,7 @@ sitemaps = {
     'articles': ArticleSitemap,
     # Users
     'profiles': UserProfileSitemap, 
+    'publications': PublicationSitemap,
 }
 
 
