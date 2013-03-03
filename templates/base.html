@@ -92,7 +92,7 @@
 
         <li><a href="{% url 'method-list' subdomain='do' %}">Protocols</a></li>
 
-        <li><a href="{% url 'reference-list' subdomain=None %}">Papers</a></li>
+        <li><a href="{% url 'publication-list' subdomain=None %}">Papers</a></li>
 
 		{% if user.get_profile %}
         {% postman_unread as unread_count %}

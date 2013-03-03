@@ -9,6 +9,7 @@ from methods.models import *
 #from questions.models import *
 from blog.models import *
 from applications.models import *
+from publications.models import *
 
 # This is fecking ugly because of the variations in model structure/naming (name vs. titlel; content vs. description)
 # would be lovely to get a consistent interface (at least) to all of this
@@ -23,7 +24,7 @@ class LatestAllFeed(Feed):
             Method.objects.order_by('-created_at')[:20],
             Article.objects.order_by('-created_at')[:20],
             Application.objects.order_by('-created_at')[:20],
-            Reference.objects.order_by('-created_at')[:20],
+            Publication.objects.order_by('-created_at')[:20],
         ) 
 
         return sorted(results, key=lambda x: x.created_at, reverse=True)

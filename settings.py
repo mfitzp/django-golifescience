@@ -201,10 +201,9 @@ INSTALLED_APPS = (
     'blog',
     'methods',
     'tagmeta', 
-    'references',
+    'publications',
     'profiles',
     'authors',
-    'references',
 )
  
 
@@ -255,7 +254,7 @@ ACTSTREAM_ACTION_MODELS = (
 #    'auth.AnonymousUser',
     'applications.Application',
     'methods.Method',
-    'references.Reference',
+    'publications.Publication',
 #    'questions.Question',
 #    'questions.Answer',
 #    'discuss.Forum',

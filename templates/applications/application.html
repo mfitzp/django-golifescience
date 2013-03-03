@@ -110,7 +110,7 @@
 
 <h3 data-magellan-destination="publications">{% trans "Publications" %}</h3>
 {% for reference in application.references.all %}
-    {% include "references/_reference.html" %}
+    {% with reference.publication as publication %}{% include "publications/_publication.html" %}{% endwith %}
 {% empty %}
     <p>No publications yet. Don't forget to <a href="{% url 'contact' None %}">let us know</a> if you use <strong>{{ application.name }}</strong> in your published work. We'll feature you here!</p>
 {% endfor %}

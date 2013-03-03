@@ -10,8 +10,6 @@ from django.contrib.sites.models import Site
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 # methodmint
-from references.models import AutoReference
-
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (

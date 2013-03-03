@@ -11,7 +11,7 @@ from django.contrib.contenttypes.models import ContentType
 from applications.models import Application
 from blog.models import Article
 from methods.models import Method
-from references.models import Reference
+from publications.models import Publication
 
 def languages( context ):
 	return { 'LANGUAGES': settings.LANGUAGES, 'LANGUAGE_CODE': context.LANGUAGE_CODE }
@@ -40,7 +40,7 @@ def top5s( context ):
                         Application.objects.order_by('-created_at')[:5],
                         Article.objects.order_by('-created_at')[:5],
                         Method.objects.order_by('-created_at')[:5],
-                        Reference.objects.order_by('-created_at')[:5],
+                        Publication.objects.order_by('-created_at')[:5],
                     ),  key=lambda x: x.created_at, reverse=True)[:5], 
 
             'views': sorted( itertools.chain( 
@@ -56,9 +56,9 @@ def top5s( context ):
                         select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + 
                                 str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id',}
                             ,).order_by('-hit_count')[:5],
-                        Reference.objects.extra(
+                        Publication.objects.extra(
                         select={ 'hit_count': 'SELECT hits FROM hitcount_hit_count AS t WHERE t.content_type_id=' + 
-                                str(ContentType.objects.get_for_model(Reference).id) + ' AND t.object_pk=references_reference.id',}
+                                str(ContentType.objects.get_for_model(Publication).id) + ' AND t.object_pk=publications_publication.id',}
                             ,).order_by('-hit_count')[:5],
                     ),  key=lambda x: x.hit_count, reverse=True)[:5], 
 
@@ -75,9 +75,9 @@ def top5s( context ):
                             select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > (NOW() - INTERVAL 1 DAY) AND t.content_type_id=' + 
                                     str(ContentType.objects.get_for_model(Method).id) + ' AND t.object_pk=methods_method.id GROUP BY t.id',}
                                 ,).order_by('-hit_count')[:5],
-                            Reference.objects.extra(
+                            Publication.objects.extra(
                             select={ 'hit_count': 'SELECT COUNT(*) AS recent_hits FROM hitcount_hit_count AS t INNER JOIN hitcount_hit AS h ON h.hitcount_id = t.id WHERE h.created > (NOW() - INTERVAL 1 DAY) AND t.content_type_id=' + 
-                                    str(ContentType.objects.get_for_model(Reference).id) + ' AND t.object_pk=references_reference.id GROUP BY t.id',}
+                                    str(ContentType.objects.get_for_model(Publication).id) + ' AND t.object_pk=publications_publication.id GROUP BY t.id',}
                                 ,).order_by('-hit_count')[:5],
                     ),  key=lambda x: x.hit_count, reverse=True)[:5], 
         }

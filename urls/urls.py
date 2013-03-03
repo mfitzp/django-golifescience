@@ -44,7 +44,7 @@ urlpatterns = patterns('',
     (r'^messages/',  include('postman.urls')),
 
 
-    (r'^references/',  include('references.urls')),
+    (r'^publications/',  include('publications.urls')),
 
     # Search
 #    url(r'^tags/$', 'core.views.tag_search', {

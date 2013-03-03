@@ -24,7 +24,7 @@ from subdomains.utils import reverse
 from licenses.fields import LicenseField
 from jsonfield.fields import JSONField
 # Methodmint
-from references.models import Reference, AutoReference
+from publications.models import Reference, AutoReference
 from authors.models import Author
 from core.actions import object_saved
 
