@@ -23,9 +23,6 @@ from core.utils import actstream_build
 # External
 from actstream.models import Action
 
-
-
-
 # Update the homepage stream of actions
 def stream_updated(request):
 

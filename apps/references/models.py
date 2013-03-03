@@ -206,8 +206,8 @@ class AutoReference(models.Model):
 
     latest_query_at = models.DateTimeField(editable = False, null=True, blank=False)   
 
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
+    content_type = models.ForeignKey(ContentType) #, null=True, blank=True)
+    object_id = models.PositiveIntegerField() #null) #=True, blank=True)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
 
