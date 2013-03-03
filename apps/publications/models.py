@@ -263,7 +263,7 @@ class AutoReference(models.Model):
         if self.latest_query_at:
             latest_query_at = self.latest_query_at.date()
         else:
-            latest_query_at = datetime.datetime(1900, 1, 1, 00, 00, 00)
+            latest_query_at = datetime.date(1900, 1, 1)
 
         publications_added = []
         # We have some ids create the references
