@@ -35,6 +35,8 @@ subdomain=None)
 
 
     title = models.CharField('Title', max_length = 80, blank = False)
+    tagline = models.CharField('Tagline', max_length = 200, blank = False)
+
     slug = AutoSlugField(populate_from='title')
 
     content = models.TextField(blank = True)
