@@ -110,7 +110,7 @@ def pmid(uri):
             datebits = datestr.split(' ') #split on whitespace; we may have 1->3 items
             dummybits = ['Jan','01'] # Dummy date
             datebits.extend( dummybits[ len(datebits)-1: ] )
-            data['fields']['published'] = datetime.strptime( ' '.join(datebits),'%Y %b %d')
+            data['fields']['published'] = datetime.strptime( ' '.join(datebits),'%Y %b %d').date()
 
         m = re.search('Name="Source" Type="String">(.*?)<', xml, re.S)
         if m:

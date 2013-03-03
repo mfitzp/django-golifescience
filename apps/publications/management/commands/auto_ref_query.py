@@ -10,7 +10,9 @@ from django.contrib.sites.models import Site
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 # methodmint
-from publications.models import AutoReference
+from publications.models import AutoReference, Publication
+# External
+from actstream.models import Action
 
 class Command(BaseCommand):
     help = "Query services for latest papers on matching autoref topics (gets the longest-since-updated-5)"
@@ -22,7 +24,19 @@ class Command(BaseCommand):
  
         for ar in ars:
             print "Autoref: %s" % ar
-            x = ar.autoref() # Assign to Able
-            print "- added %d new references" % x
+            publications_added = ar.autoref() # Assign to Able
+
+            for p in publications_added:
+                if p.published:
+                    p.created_at = p.published # Update the created date to publication date; stop the flurry
+                    p.save() 
+                    # Clear up the feed
+                    act = Action.objects.get(target_content_type_id=ContentType.objects.get_for_model(Publication), verb='added', target_object_id=p.id )
+                    if act:
+                        act.timestamp = p.published
+                        act.save()
+
+            print "- added %d new references" % len(publications_added)
+            
 
 

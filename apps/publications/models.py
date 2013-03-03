@@ -261,41 +261,39 @@ class AutoReference(models.Model):
         uris = autoref.pubmed(self.keywords, self.latest_query_at)
 
         if self.latest_query_at:
-            latest_query_at = self.latest_query_at
+            latest_query_at = self.latest_query_at.date()
         else:
             latest_query_at = datetime.datetime(1900, 1, 1, 00, 00, 00)
 
+        publications_added = []
         # We have some ids create the references
         # If we're referencing an object on-site, build refs (auto-links)
         # else create publications
-        if self.content_object:
-            for uri in uris:
-                # Try and 
+        for uri in uris:
+            if self.content_object:
                 r = Reference(uri=uri, namespace='pmid', created_by=user, content_object=self.content_object)
                 try:
                     r.save()
                 except:
                     pass
 
-                if r.publication and r.publication.published:
+                if r.publication:
+                    publications_added.append(r.publication)
                     latest_query_at = max( r.publication.published, latest_query_at )
 
-        else:
-            for uri in uris:
+            else:
                 p = Publication(pmid=uri, created_by=user)
                 try:
                     p.save()
                 except:
                     pass
+                else:
+                    publications_added.append(p)
+                    latest_query_at = max( p.published, latest_query_at )
 
-                latest_query_at = max( p.published, latest_query_at )
-
-        if latest_query_at:
-            self.latest_query_at = latest_query_at + datetime.timedelta(days=1) # Add a day to move it forward
-        else:
-            self.latest_query_at = datetime.datetime.now()
+        self.latest_query_at = latest_query_at + datetime.timedelta(days=1) # Add a day to move it forward
         self.save()
-        return len(uris)
+        return publications_added
         
 
     keywords = models.CharField(max_length=200, blank=True)
