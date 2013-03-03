@@ -180,8 +180,8 @@ class AutoReference(models.Model):
         return "%s %s" % (self.content_object, self.keywords)
 
     def autoref(self, user=False):
-        if user == False: # Assign to able
-                user = User.objects.get(pk=0)
+        if user == False: # Assign to Miss Baker if not specified
+                user = User.objects.get(username='missbaker')
 
         uris = autoref.pubmed(self.keywords, self.latest_query_at)
         # We have some ids create the references
