@@ -19,9 +19,9 @@ from django.utils.translation import ugettext as _
 from django.contrib.contenttypes.models import ContentType
 from django.template.loader import render_to_string
 # Methodmint
-# External
 from core.utils import actstream_build
-
+# External
+from actstream.models import Action
 
 
 
