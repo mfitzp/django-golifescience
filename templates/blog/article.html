@@ -23,6 +23,8 @@
 {% block title %}{{ article }}{% endblock %}
 {% block subtitle %}{{ article.tagline }}{% endblock %}
 
+{% block author_header %}{% with article.created_by as author %}{% include "_author_header.html" %}{% endwith %}{% endblock %}
+
 {% block content %}
 <a name="about"></a>
 <p>{{ article.content|markdown:"safe,tables"  }}</p>
