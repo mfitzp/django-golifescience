@@ -32,7 +32,7 @@
                 <div class="discussion-author">
                     {% with node.user.get_profile as profile %} 
                     {% if profile %}
-                        <a href="{% url 'user-profile' username=node.user.username %}" class="discussion-author">{{ profile.fullname }}</a>
+                        <a href="{% url 'user-profile' username=node.user.username subdomain=None %}" class="discussion-author">{{ profile.fullname }}</a>
                         {% if profile.organisation %}{{ profile.organisation }} &bull; {% endif %}
                         {{ profile.country }}
                     {% else %}
