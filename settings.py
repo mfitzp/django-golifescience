@@ -168,11 +168,11 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sitemaps',
-#    'django.contrib.sites',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.markup',
     'django.contrib.messages',
-#    'django.contrib.comments',
+    'django.contrib.comments',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
 #    'django.contrib.signals',
@@ -195,6 +195,7 @@ INSTALLED_APPS = (
     'actstream',
 # installables
     'core',
+    'comments',
     'ajax',
     'testimonials',
     'applications',
@@ -211,12 +212,17 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/accounts/logout/'
 
+COMMENTS_APP = 'comments'
+
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_SECONDS = 600
 CACHE_MIDDLEWARE_KEY_PREFIX = 'middleware_anon_cache_'
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
+# External avatar app setting (storage under /media/avatar)
+# The following paths are dependent on setting correct base MEDIA/MEDIAADMIN urls in localsettings
+AVATAR_DEFAULT_URL = MEDIA_URL + "img/default_avatar.png"
 
 KEY_PREFIX = 'cache_'
 
@@ -234,6 +240,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 	'context_processors.site',
 	'context_processors.top5s',
 )
+
+
+AUTH_PROFILE_MODULE = "profiles.userprofile"
+COMMENTS_APP = 'comments'
 
 
 # Haystack configuration
@@ -264,12 +274,9 @@ ACTSTREAM_ACTION_MODELS = (
 #    'badges.BadgeToUser',
 #    'sites.Site',
     'blog.Article',
-#    'comments.MPTTComment',
-#    'comments.Comment',
+    'comments.MPTTComment',
+    'comments.Comment',
 )
-
-AUTH_PROFILE_MODULE = "profiles.userprofile"
-COMMENTS_APP = 'comments'
 
 ACCOUNT_ACTIVATION_DAYS = 30
 

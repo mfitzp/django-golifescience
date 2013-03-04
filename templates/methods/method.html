@@ -18,6 +18,8 @@
      <meta property="og:title" content="{{ method }}"/>
      {% if method.image %}<meta property="og:image" content="{% thumbnail method.image 128x128 upscale crop %}"/>{% endif %}
      <meta property="og:description" content="{{ method.description }}"/>
+
+    { % include "comments/_ajax_comments.html" % }
 {% endblock %}
 
 {% block author_header %}{% with method.created_by as author %}{% include "_author_header.html" %}{% endwith %}{% endblock %}
@@ -36,7 +38,7 @@
 
 {% block about %}{{ method.description|markdown }}{% endblock %}
 
-{% block content %}
+{% block content %}http://abl.es/
 
 {% if method.notes %}
 <h3 data-magellan-destination="background">{% trans "Background" %}</h3>
@@ -106,10 +108,9 @@
     <p>No publications yet. Don't forget to <a href="{% url 'contact' None %}">let us know</a> if you use <strong>{{ method.name }}</strong> in your published work. We'll feature you here!</p>
 {% endfor %}
 
-<!--
-{% with method as object %}{ % include "comments/_discussion.html" % }{% endwith %} -->
-
 {% endblock %}
+
+{% block discussion %}{% with method as object %}{% include "comments/_discussion.html" %}{% endwith %}{% endblock %}
 
 {% block sidebar_right %}
 

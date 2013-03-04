@@ -15,6 +15,7 @@
      <!-- Facebook Opengraph support -->
      <meta property="og:title" content="{{ article }}"/>
      <meta property="og:description" content="{{ article.content }}"/>
+    {% include "comments/_ajax_comments.html" %}
 {% endblock %}
 
 
@@ -27,6 +28,8 @@
 <p>{{ article.content|markdown:"safe,tables"  }}</p>
 
 {% endblock %}
+
+{% block discussion %}{% with article as object %}{% include "comments/_discussion.html" %}{% endwith %}{% endblock %}
 
 {% block sidebar_right %}
     <h5>Actions</h5>

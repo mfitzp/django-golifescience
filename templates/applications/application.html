@@ -24,7 +24,7 @@
  <meta property="og:title" content="{{ application }}"/>
  {% if method.image %}<meta property="og:image" content="{% thumbnail application.image 128x128 upscale crop %}"/>{% endif %}
  <meta property="og:description" content="{{ application.description }}"/>
-
+    {% include "comments/_ajax_comments.html" %}
 {% endblock %}
 
 {% block forkme %}
@@ -141,6 +141,7 @@ contributions of code and other resources can be found <a href="{{ application.s
 
 {% endblock %}
 
+{% block discussion %}{% with application as object %}{% include "comments/_discussion.html" %}{% endwith %}{% endblock %}
 
 {% block sidebar_right %}
 

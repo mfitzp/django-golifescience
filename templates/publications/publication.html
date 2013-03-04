@@ -25,6 +25,7 @@
  {% if method.image %}<meta property="og:image" content="{% thumbnail publication.image 128x128 upscale crop %}"/>{% endif %}
  <meta property="og:description" content="{{ publication.description }}"/>
 
+    { % include "comments/_ajax_comments.html" % }
 {% endblock %}
 
 {% block author_header %}{% if publication.created_by %}{% with publication.created_by as author %}{% include "_author_header.html" %}{% endwith %}{% endif %}{% endblock %}
@@ -49,6 +50,7 @@ This paper is referenced by the following resources on this site:
 
 {% endblock %}
 
+{% block discussion %}{% with publication as object %}{% include "comments/_discussion.html" %}{% endwith %}{% endblock %}
 
 {% block sidebar_right %}
 

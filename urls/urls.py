@@ -35,7 +35,9 @@ urlpatterns = patterns('',
     url(r'^faq/$', 'django.views.generic.simple.direct_to_template', {'template': 'faq.html'}, name='faq'),
     url(r'^contact/$', 'django.views.generic.simple.direct_to_template', {'template': 'contact.html'}, name='contact'),
 
-    url(r'^partner/$', 'django.views.generic.simple.direct_to_template', {'template': 'partner.html'}, name='partner'),
+    #url(r'^partner/$', 'django.views.generic.simple.direct_to_template', {'template': 'partner.html'}, name='partner'),
+
+    (r'^comments/', include('django.contrib.comments.urls')),
 
     # Applications
     (r'^profiles/',      include('profiles.urls')),
@@ -43,6 +45,7 @@ urlpatterns = patterns('',
     (r'^blog/',      include('blog.urls')),
 
     (r'^messages/',  include('postman.urls')),
+
 
 
     (r'^publications/',  include('publications.urls')),
