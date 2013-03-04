@@ -1,0 +1,72 @@
+{% load comments %}
+{% load i18n %}
+{% load avatar_tags %}
+{% load mptt_tags %}
+{% load markup %}
+{% load countries_tags %}
+
+{% get_comment_list for object as comments %}
+{% get_comment_count for object as comment_count  %}
+
+<div class="row discussion">
+<div class="twelve columns">
+
+<meta itemprop="interactionCount" content="UserComments:{{ comment_count }}">
+<a name="discuss"></a>
+
+<div id="comments-{{ item.id }}" class="discussions">
+
+<h3>Discussions <span class="label label-success">Active</span></h3>
+
+{% if comments %}
+{% recursetree comments %}
+    <div {% if request.REQUEST.c|add:"0" == node.id %}id="newly_posted_comment"{% endif %}>
+    <div style="margin-left: {{ node.get_level }}0px">
+        <div class="discussion {% cycle 'odd' 'even' %} {% if request.REQUEST.c|add:"0" == node.id %}newly_posted_comment{% endif %}">
+            <a name="c{{ node.id }}"></a>
+            <div class="discussion-avatar">{% avatar node.user 32 node.user_name node.user_email %}</div>
+            <div class="discussion-title">{{ node.title }}</div>
+            <div class="discussion-body">{{ node.comment|markdown:"safe,codehilite" }}</div>
+
+            <div class="discussion-meta">
+                <div class="discussion-author">
+                    {% with node.user.get_profile as profile %} 
+                    {% if profile %}
+                        <a href="{% url 'user-profile' username=node.user.username %}" class="discussion-author">{{ profile.fullname }}</a>
+                        {% if profile.organisation %}{{ profile.organisation }} &bull; {% endif %}
+                        {{ profile.country }}
+                    {% else %}
+                        {% if node.user_url %}<a href="{{ node.user_url }}" rel="nofollow">{{ node.user_name }}</a>{% else %}{{ node.user_name }}{% endif %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="discussion-metadata">    
+                &#183; {{ node.submit_date|timesince }} ago
+                &#183; <a href="{{ object.get_absolute_url }}#c{{ node.id }}">#</a>
+                &#183; <a href="#" onclick="$('#comment-form-{{ node.id }}').toggle(); return false">Reply &darr;</a>
+                </div>
+            </div>
+        </div>
+        {% if request.user.is_authenticated %} {% render_comment_form for object %}{% endif %}
+    </div>
+    </div>
+    {# recursion! children of a given comment #}
+    {% if not node.is_leaf_node %}
+        {{ children }}
+    {% endif %}
+{% endrecursetree %}
+
+{% else %}
+<p>No comments yet! Be the first to have your say.</p>
+
+{% endif %}
+{% if request.user.is_authenticated %} 
+    <h5>Add Your Comment</h5>
+    {% render_comment_form for object %}
+{% endif %}
+
+</div>
+
+</div>
+</div>
+

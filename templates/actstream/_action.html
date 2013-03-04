@@ -6,8 +6,8 @@
 {% load markup %}
 
 <li class="activity-item" {% if is_hidden %}style="display:none;"{% endif %}>
-    <div class="activity-title">{% if action.target.get_absolute_url %}<a href="{{ action.target.get_absolute_url }}">
-        {% else %}<a href="{{ action.target_url }}">{% endif %}
+    <div class="activity-title">{% if action.target.get_absolute_url %}<a href="{{ action.target.get_absolute_url }}">{% else %}<a href="{{ action.target_url }}">{% endif %}
+
         {% if action.verb == 'joined' %}
             <a href="{% url 'user-profile' username=action.actor.username subdomain=None %}">{% if action.actor.get_full_name %}{{ action.actor.get_full_name }}{% else %}{{ action.actor }}{% endif %}</a>
         {% else %}

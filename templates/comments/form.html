@@ -1,0 +1,38 @@
+{% load comments i18n %}
+{% load avatar_tags %}
+
+<div class="comment-form" id="comment-form-{{ node.id }}" {% if node.id %}style="display:none;"{% endif %}>
+{% load comments i18n %}
+<form action="{% comment_form_target %}" method="post">{% csrf_token %}
+{% if next %}
+    <input type="hidden" name="next" value="{{ next }}" />
+{% else %}
+    <input type="hidden" name="next" value="{{ request.META.REQUEST_URI }}#c{{node.id}}">
+{% endif %}
+
+    <div style="display:none;">{{ form.honeypot }}</div>
+    {{ form.content_type }}
+    {{ form.object_pk }}
+    {{ form.timestamp }}
+    {{ form.security_hash }}
+
+    {% if not request.user.is_authenticated %}                
+        {{ form.name.label_tag }} {{ form.name }}
+        {{ form.email.label_tag }} {{ form.email }}
+        {{ form.url.label_tag }} {{ form.url }}
+    {% endif %}
+
+    {{ form.title.label_tag }}
+        <input type="text" name="title" id="title_id" value="{% if node.id %}Re: {{ node.title }}{% endif %}" />
+
+    {{ form.comment.label_tag }}{{ form.comment }}
+
+    {% if node.id %}<input type="hidden" name="parent" id="parent_id" value="{{ node.id }}" />{% endif %}
+
+  <p class="submit">
+    <input type="submit" name="post" class="submit-post" value="{% trans "Post" %}" />
+    <input type="submit" name="preview" class="submit-preview" value="{% trans "Preview" %}" />
+  </p>
+</form>
+</div>
+

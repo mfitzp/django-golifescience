@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load avatar_tags %}
+{% load comments %}
+
+{% block title %}{% trans "Preview your comment" %}{% endblock %}
+
+{% block content_title %}
+{% blocktrans count form.errors|length as counter %}Please correct the error below{% plural %}Please correct the errors below{% endblocktrans %}
+{% endblock %}
+
+{% block content %}
+<div id="newly_posted_comment">
+<div class="comment-form" id="comment-form">
+
+    {% if form.errors %}
+
+    {% else %}
+      <blockquote>{{ comment|linebreaks }}</blockquote>
+      <p>
+      {% trans "and" %} <input type="submit" name="submit" class="submit-post" value="{% trans "Post your comment" %}" id="submit" /> {% trans "or make changes" %}:
+      </p>
+    {% endif %}
+
+<form action="{% comment_form_target %}" method="post" id="comment-form-f">{% csrf_token %}
+  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% else %}<input type="hidden" name="next" value="{{ request.META.REQUEST_URI }}#c{{node.id}}">{% endif %}
+    {{ form.object_pk }}
+    {{ form.content_type }}
+    {{ form.timestamp }}
+    {{ form.honeypot }}
+    {{ form.security_hash }}
+    {{ form.parent }}
+
+<div class="comment-form-avatar">{% avatar request.user 24 %}</div>
+    <div class="comment-form-comment">
+        {% if not request.user.is_authenticated %}                
+        <div class="comment-form-info">
+            <table>
+                <tr {% if form.name.errors %}class="errors"{% endif %}><th>{{ form.name.label }}</th><td>{{ form.name }}{{ form.name.errors }}</td></tr>
+                <tr {% if form.email.errors %}class="errors"{% endif %}><th>{{ form.email.label }}</th><td>{{ form.email }}{{ form.email.errors }}</td></tr>
+                <tr {% if form.url.errors %}class="errors"{% endif %}><th>{{ form.url.label }}</th><td>{{ form.url }}</td></tr>
+            </table> 
+        </div>
+        {% endif %}
+        <div class="comment-form-comment-wrap {% if form.comment.errors %}errors{% endif %}" ><textarea id="id_comment" rows="5" cols="50" name="comment" autocomplete="off">{{ form.comment.value }}</textarea>{{ form.comment.errors }}</div>
+        <div class="comment-form-post"><input type="submit" name="preview" class="submit-preview" value="{% trans "Preview" %}" /><input type="submit" name="post" class="submit-post" value="{% trans "Post" %}" /></div>
+    </div>
+</form>
+</div>
+
+
+
+
+{% endblock %}
