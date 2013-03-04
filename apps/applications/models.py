@@ -186,6 +186,7 @@ class Ohloh(models.Model):
 
             # Cleanup data
             self.data = data
+            self.latest_query_at = datetime.datetime.now()
     
     application = models.OneToOneField('Application', related_name='ohloh')
     project_id = models.CharField('Ohloh project ID/name', max_length = 50, blank = False)
