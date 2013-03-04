@@ -63,6 +63,9 @@
 {% if request.user.is_authenticated %} 
     <h5>Add Your Comment</h5>
     {% render_comment_form for object %}
+{% else %}
+<p><a href="{% url 'login' subdomain=None %}" onclick="$('#modal-login').modal('show'); return false;">{% trans "Sign in" %} to add a comment</a>.</p>
+
 {% endif %}
 
 </div>
