@@ -126,7 +126,7 @@ primarily in
 
 {% endif %}
 
-{% if application.authors %}
+{% if application.authors.count > 0  %}
 <h3 data-magellan-destination="contributors">Contributors</h3>
 <p>The following individuals and associated organisations have made significant contributions towards the development of <strong>{{ application.name }}</strong>. Complete listings of all
 contributions of code and other resources can be found <a href="{{ application.source_url }}">via {{ application.source_url|rcs_host }}</a>.</p>
