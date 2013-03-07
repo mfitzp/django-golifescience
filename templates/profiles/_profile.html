@@ -6,7 +6,7 @@
   <div class="stack-item stack-user {% if is_long_profile %}stack-boxout stack-user-about{% endif %}">
         <div class="stack-item-image">{% avatar profile.user 40 %}</div>
         <div class="stack-item-detail">
-            <a href="{% url 'user-profile' username=profile.username subdomain=None %}">{{ profile.fullname }}</a> 
+            <a href="{% url 'user-profile' username=profile.user.username subdomain=None %}">{{ profile.fullname }}</a> 
         </div>
         <div class="stack-item-meta">
             {% if profile.country %}<span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span><br />{% endif %}
