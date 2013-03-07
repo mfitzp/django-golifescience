@@ -128,7 +128,7 @@ def search(request):
         'paginator': paginator,
         'query': query,
         'suggestion': None,
-        'all_objects':UserProfile.objects.filter(user__is_active = True).order_by('-user__reputation__reputation')
+        'all_objects':UserProfile.objects.filter(user__is_active = True) #.order_by('-user__reputation__reputation')
     }
     
     return render_to_response('search/profile_search.html', context, context_instance=RequestContext(request))
