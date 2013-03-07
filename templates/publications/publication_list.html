@@ -42,18 +42,7 @@
     {% endif %}
 {% endblock %}
 
-{% block controls %}
-    <div class="row">
-        <div class="twelve columns">
-            <dl class="sub-nav">
-              <dt>Sort by</dt>
-              <dd {% if sorted_by == 'latest' %}class="active"{% endif %}><a href="?sort=latest">Latest</a></dd>
-              <dd {% if sorted_by == 'views' %}class="active"{% endif %}><a href="?sort=views" >Views</a></dd>
-            </dl>
-        </div>
-    </div>
-
-{% endblock %}
+{% block controls %}{% include "_list_controls.html" %}{% endblock %}
 
 {% block content %}
 

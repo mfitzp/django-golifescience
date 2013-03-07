@@ -1,12 +1,18 @@
 {% load comments %}
+{% load threads %}
 {% load i18n %}
 {% load avatar_tags %}
 {% load mptt_tags %}
 {% load markup %}
 {% load countries_tags %}
 
-{% get_comment_list for object as comments %}
-{% get_comment_count for object as comment_count  %}
+{% if thread %}
+    {% get_thread_comment_list for object thread as comments %}
+    {% get_thread_comment_count for object thread as comment_count  %}
+{% else %}
+    {% get_comment_list for object as comments %}
+    {% get_comment_count for object as comment_count %}
+{% endif %}
 
 <div class="row discussion">
 <div class="twelve columns">
@@ -14,14 +20,14 @@
 <meta itemprop="interactionCount" content="UserComments:{{ comment_count }}">
 <a name="discuss"></a>
 
+{% if not thread %}<h3 data-magellan-destination="requirements">Discussion</h3>{% endif %}
+
 <div id="comments-{{ item.id }}" class="discussions">
-
-<h3>Discussions <span class="label label-success">Active</span></h3>
-
 {% if comments %}
 {% recursetree comments %}
+    {% if not thread_tree_id_limit or node.tree_id == thread_tree_id_limit %}
     <div {% if request.REQUEST.c|add:"0" == node.id %}id="newly_posted_comment"{% endif %}>
-    <div style="margin-left: {{ node.get_level }}0px">
+    <div style="border-left:{% widthratio node.get_level 1 2 %}px solid #dae0eb;">
         <div class="discussion {% cycle 'odd' 'even' %} {% if request.REQUEST.c|add:"0" == node.id %}newly_posted_comment{% endif %}">
             <a name="c{{ node.id }}"></a>
             <div class="discussion-avatar">{% avatar node.user 32 node.user_name node.user_email %}</div>
@@ -50,6 +56,7 @@
         {% if request.user.is_authenticated %} {% render_comment_form for object %}{% endif %}
     </div>
     </div>
+    {% endif %}
     {# recursion! children of a given comment #}
     {% if not node.is_leaf_node %}
         {{ children }}

@@ -1,4 +1,4 @@
-{% extends "base_with_sidebar_right.html" %}
+{% extends "base.html" %}
 {% load i18n %}
 {% load core_tags %}
 {% load thumbnail %}
@@ -81,9 +81,10 @@
 {% endblock %}
 
 {% block content %}
-<div class="home-stream">
+</div>
+<div class="activityfeed" id="activityfeed">
+   <div class="activity-header"><p>Activity stream</p></div>
   {% if stream %}
-   <ul class="activityfeed" id="activityfeed">
        {% for action in stream|slice:":25" %}
             {% if action.target %}
                 {% include "actstream/_action.html" %}
@@ -93,12 +94,13 @@
                 {% endif %}
             {% endif %}
          {% endfor %}
-    </ul>
 {% endif %}
 </div>
+<div class="row">
+ 
+
 
 {% endblock %}
-
 
 {% block sidebar_right %}
 
@@ -134,7 +136,7 @@
 
         </div>
     {% endfor %}
-    </div>       
+    </div>      
 
 
 

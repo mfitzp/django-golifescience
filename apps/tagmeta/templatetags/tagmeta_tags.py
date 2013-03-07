@@ -125,6 +125,7 @@ class SetDefaultTaggedModel(template.Node):
             None: None,
             'do': Method,
             'install': Application,
+            'debat': Application,
         }
 
         context['tagged_model'] = lookup[subdomain]

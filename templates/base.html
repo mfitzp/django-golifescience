@@ -78,6 +78,7 @@
       <ul class="right">
         <li><a href="{% url 'about' None %}">About</a></li>
         <li><a href="{% url 'blog' None %}">Blog</a></li>
+        <li><a href="{% url 'thread-list' subdomain='debat' %}">Discuss</a></li>
 
         <li class="has-dropdown">
           <a href="{% url 'application-list' subdomain='install' %}">Software</a>
@@ -123,53 +124,41 @@
 
 </div>
 
-{% block author_header %}
-{% endblock %}
+{% block author_header %}{% endblock %}
 
 <div class="row page"  id="bigc">
 <div class="seven columns content">
-          <div class="row header">
-            <div class="twelve columns header-content">
-                <h1 itemprop="name">{% usemacro title %}</h1>
-                <h4>{% block subtitle %}{{ site.slogan }}{% endblock %}</h4>
-            </div>
-          </div>
-          <div class="row header content-about" itemprop="description">
-                <div class="twelve columns">{% block about %}{% endblock %}</div>
-          </div>
+    <div class="row header">
+        <div class="twelve columns header-content">
+            <h1 itemprop="name">{% usemacro title %}</h1>
+            <h4>{% block subtitle %}{{ site.slogan }}{% endblock %}</h4>
+        </div>
+    </div>
+    <div class="row header content-about" itemprop="description">
+        <div class="twelve columns">{% block about %}{% endblock %}</div>
+    </div>
     {% block feature %}{% endblock %}
     <div class="body"><a name="top"></a>
       <div class="row">
         <div class="twelve columns body_content">
-        {% block controls %}{% endblock %}
-            {% block content %}
-            {% endblock %}
+            {% block controls %}{% endblock %}
+            {% block content %}{% endblock %}
         </div>
       </div>
     </div>
 
 </div>
 
+{% block sidebar_right_extend %}
 <div class="five columns sidebar">
-
 {% block imageheader %}{% endblock %}
-
 {% block sidebar_right %}
 {% endblock %}
 </div><!-- five -->
+{% endblock sidebar_right_extend %}
 
 </div><!-- row -->
 {% block discussion %}{% endblock %}
-
-
-
-
-
-
-
-
-
- 
 
   <div class="footer">
       <div class="row footer-top">

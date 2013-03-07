@@ -104,6 +104,7 @@ SUBDOMAIN_URLCONFS = {
     None: ROOT_URLCONF,
     'install': 'urls.install',
     'do': 'urls.do',
+    'debat': 'urls.debat',
 #    'install': 'urls.install',
 #    'api': 'urls.api',
 }
@@ -111,7 +112,7 @@ SUBDOMAIN_URLCONFS = {
 SUBDOMAIN_SITES = {
     None: {
             'name': '*ables',
-            'tagline':'Open access. Open source.',
+            'tagline':'Open access. Open source. Open Science',
           },
     'install': {
             'name': 'Installables',
@@ -120,6 +121,10 @@ SUBDOMAIN_SITES = {
     'do': {
             'name': 'Doables',
             'tagline':'Open access scientific protocols',
+          },
+    'debat': {
+            'name': 'Debatables',
+            'tagline':'Discuss the state of Open Science',
           },
 }
 

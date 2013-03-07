@@ -5,42 +5,55 @@
 {% load hitcount_tags %}
 {% load markup %}
 
-<li class="activity-item" {% if is_hidden %}style="display:none;"{% endif %}>
-    <div class="activity-title">{% if action.target.get_absolute_url %}<a href="{{ action.target.get_absolute_url }}">{% else %}<a href="{{ action.target_url }}">{% endif %}
 
-        {% if action.verb == 'joined' %}
-            <a href="{% url 'user-profile' username=action.actor.username subdomain=None %}">{% if action.actor.get_full_name %}{{ action.actor.get_full_name }}{% else %}{{ action.actor }}{% endif %}</a>
-        {% else %}
-            {{ action.target }}
-        {% endif %}
-        {% if action.target.tagline %}<i>{{ action.target.tagline }}</i>{% endif %}
-        </a>
-        </div>
-    <div class="activity-content">
-        {{ action.action_object.description|truncatewords:"25"|markdown|striptags }}
-        {{ action.action_object.content|truncatewords:"25"|truncatewords:"25"|markdown|striptags }}
-        {{ action.action_object.comment|truncatewords:"25"|truncatewords:"25"|markdown|striptags }}
-        {% if action.verb == 'joined' %}
-            {% with action.actor.get_profile as profile %}
-            {% if profile.city or profile.country %}
-                <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.city }} {{ profile.state }} {% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
-                &#183; 
+<div class="activity-item" {% if is_hidden %}style="display:none;"{% endif %}>
+<div class="row action-about"><div class="twelve columns"> <a href="{{ action.actor.get_absolute_url }}">{{ action.actor.get_full_name }}</a> {{ action.verb }}</div></div>
+<div class="row action-main" {% if is_hidden %}style="display:none;"{% endif %}>
+    <div class="twelve columns">
+
+        <div class="activity-action">
+            <div class="activity-action-user">
+            {% if action.actor.get_profile %}
+                {% with action.actor as user %}{% with 1 as is_mini_mugshot %}{% include "profiles/_mugshot.html" %}{% endwith %}{% endwith %}
             {% endif %}
-            {{ profile.about }} 
-            {% endwith %}
-        {% endif %}
-        &nbsp;
-    </div>
-
-    <div class="activity-action">
-        <div class="activity-action-user">
-        {% if action.actor.get_profile %}
-            {% with action.actor as user %}{% with 1 as is_mini_mugshot %}{% include "profiles/_mugshot.html" %}{% endwith %}{% endwith %}
-        {% endif %}
+            </div>
         </div>
-        <div class="activity-action-verb action-{{ action.verb }}">{{ action.verb|upper }}</div>
+
+        <div class="activity-content">
+            <div class="activity-title">
+                {% if action.target.get_absolute_url %}<a href="{{ action.target.get_absolute_url }}">{% else %}<a href="{{ action.target_url }}">{% endif %}
+
+                {% if action.verb == 'joined' %}
+                    <a href="{% url 'user-profile' username=action.actor.username subdomain=None %}">{% if action.actor.get_full_name %}{{ action.actor.get_full_name }}{% else %}{{ action.actor }}{% endif %}</a>
+                {% else %}
+                    {{ action.target }}
+                {% endif %}
+                {% if action.target.tagline %}<i>{{ action.target.tagline }}</i>{% endif %}
+                </a>
+            </div>
+       
+             <div class="activity-body">
+                <p>
+                {{ action.action_object.description|truncatewords:"25"|markdown|striptags }}
+                {{ action.action_object.content|truncatewords:"25"|truncatewords:"25"|markdown|striptags }}
+                {{ action.action_object.comment|truncatewords:"25"|truncatewords:"25"|markdown|striptags }}
+                {% if action.verb == 'joined' %}
+                    {% with action.actor.get_profile as profile %}
+                    {% if profile.city or profile.country %}
+                        <a href="http://maps.google.com/maps?q={{ profile.city|urlencode }},{{ profile.country|urlencode }}&amp;t=h" target="_blank">{{ profile.city }} {{ profile.state }} {% if profile.country %} <span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span></a>{% endif %}
+                        &#183; 
+                    {% endif %}
+                    {{ profile.about }} 
+                    {% endwith %}
+                {% endif %}
+                </p>
+            </div>
+
+            <div class="activity-meta">{% timesinceauto action.timestamp %}</div>
+
+        </div>
+
     </div>
 
-    <div class="activity-meta">{% timesinceauto action.timestamp %}</div>
-
- </li>
+</div>
+</div>

@@ -26,6 +26,7 @@ from taggit.models import TaggedItem, Tag
 from methods.models import Method
 from applications.models import Application
 from blog.models import Article
+from comments.models import MPTTComment
 from tagmeta.models import TagMeta
 from taggit.views import tagged_object_list
 # Methodmint
@@ -41,7 +42,8 @@ def home(request):
     content_types = {
         None: [Method, Application], # Article],
         'do': [Method],
-        'install': [Application]
+        'install': [Application],
+        'debat': [Method, Application],
     }
         
 

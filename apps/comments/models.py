@@ -19,13 +19,50 @@ from django.contrib.auth.models import AnonymousUser
 # Methodmint
 # Externals
 from mptt.models import MPTTModel, TreeForeignKey
+from autoslug.fields import AutoSlugField
 
+
+class CommentThreadManager(models.Manager):
+    def get_query_set(self):
+        return super(CommentThreadManager, self).get_query_set().filter(parent=None)
 
 class MPTTComment(MPTTModel, Comment):
+
+    def __unicode__(self):
+        return "%s" % (self.name)
+
+    def get_absolute_url(self):
+        return reverse('thread',kwargs={'thread_id':str(self.id), 'thread_slug':str(self.slug)}, subdomain='debat')
+
+    def get_absolute_path(self):
+        return django_reverse('thread', kwargs={'thread_id':str(self.id), 'thread_slug':str(self.slug)})
+
+
     """ Threaded comments - Add support for the parent comment store and MPTT traversal"""
     # a link to comment that is being replied, if one exists
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
     title = models.CharField('Title', max_length = 50, blank = False)
+
+    threads = CommentThreadManager() # Return threads (root comments on all objects; then allow browsing into the 'thread view'
+
+    slug = AutoSlugField(populate_from='title')    
+
+    # Helper functions to maintain similarity with own functions
+    @property
+    def created_at(self):
+        return self.submit_date
+
+    @property
+    def created_by(self):
+        return self.user
+
+    @property
+    def updated_at(self):
+        return self.submit_date
+
+    def reply_count(self):
+        return MPTTComment.objects.filter(tree_id=self.tree_id).count() -1
+
 
     class MPTTMeta:
         # comments on one level will be ordered by date of creation
