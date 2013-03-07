@@ -11,11 +11,6 @@
         <div class="stack-item-meta">
             {% if profile.country %}<span class="country" style="background-image:url('{{ profile.country_id|iso_flag }}')">{{ profile.country }}</span><br />{% endif %}
 
-            <span class="reputation" title="{{ profile.user.reputation.reputation }} reputation awarded">{{ profile.user.reputation.reputation }}</span>
-            {% with profile.user as u %}
-	            {% include "badges/badges_display.html" %}
-            {% endwith %}
-
             after {{ profile.user.date_joined|brieftimesince }}
 
         </div>
