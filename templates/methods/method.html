@@ -82,14 +82,14 @@
 
         {% if step.image %}
         <div class="row">
-        <div class="eleven columns offset-by-one">
+        <div class="twelve columns>
           <a href="{{ MEDIA_URL }}{{ step.image }}" class="imagezoom step-image"><img src="{% thumbnail step.image 660x250 upscale crop %}"></a>
         </div></div>
         {% endif %}
 
         {% if step.tip %}
         <div class="row">
-        <div class="eleven columns offset-by-one"><div class="step-tip">
+        <div class="twelve columns"><div class="step-tip">
             <i class="general foundicon-idea"></i>
             {{ step.tip|markdown:"safe,tables,codehilite" }}   
         </div></div></div>

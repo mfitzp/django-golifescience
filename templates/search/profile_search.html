@@ -1,18 +1,17 @@
-{% extends "base_wide.html" %}
+{% extends "base.html" %}
 {% load i18n %}
 {% load avatar_tags %}
 {% load core_tags %}
 {% load thumbnail %}
 {% load countries_tags %}
 {% load cache %}
-{% load bootstrap_toolkit %}
 
 {% block content_title%}{% trans "People" %}{% endblock %}
 
 {% block content %}
 
     <form method="get" action="." class="well form-inline">
-        {{ form|as_bootstrap:"inline" }}
+        {{ form.as_table }}
         <button type="submit" class="btn">Search</button>
     </form>
 
