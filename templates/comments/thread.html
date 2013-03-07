@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load core_tags %}
+{% load pagination_tags %}
+{% load thumbnail %}
+{% load hitcount_tags %}
+{% load i18n %}
+{% load author_tags %}
+
+{% block title %}{{ thread.title }}{% endblock %}
+
+{% block extrajs %}
+{{ block.super }}
+<script type='text/javascript'>
+  $(document).ready(function() {
+  {% get_hit_count_javascript for thread %}
+  });
+ </script>
+{% include "comments/_ajax_comments.html" %}
+{% endblock %}
+
+{% block author_header %}{% with thread.created_by as author %}{% include "_author_header.html" %}{% endwith %}{% endblock %}
+
+{% block about %}
+<div class="row">
+    <div class="twelve columns" itemprop="description">
+        {{ thread.comment|markdown }}
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% include "comments/_discussion.html" %}
+{% endblock %}
+
+{% block sidebar_right %}
+
+<h6>Actions</h6>
+<ul class="navlist">
+{% if thread.url %}<li><i class="general foundicon-website"></i> <a href="{{ thread.url }}">{% trans "Go to Homepage" %}</a></li>{% endif %}
+<li><i class="general foundicon-page"></i> <a href="javascript:window.print()">{% trans "Print this page" %}</a></li>
+<li><i class="social foundicon-thumb-up"></i> 
+<a href="#" data-reveal-id="socialModal">Share this thread</a></li>
+</ul>
+
+    <h6>{% trans "Tags" %}</h6>
+    {% with thread.tags.all as tags %}
+        <div class="row"><div class="twelve columns tags-horizontal">
+            {% include "_tags.html" %}
+        </div></div>        
+    {% endwith %}
+
+
+    <h6>Related Applications</h6>
+<ul class="navlist">
+    {% for result in morelikethis %}
+    {% with result.object as mlt_thread %}
+    {% if mlt_thread %}
+        <li><a href="{% url 'thread' thread_id=mlt_thread.id thread_slug=mlt_thread.slug %}">{{ mlt_thread }} <i>{{ mlt_thread.tagline }}</i></a></li>
+    {% endif %}
+    {% endwith %}
+    {% empty %}
+    <li>None.</li>
+    {% endfor %}
+    </ul>
+
+
+<h6>{% trans "Meta" %}</h6>
+<ul class="navlist">
+<li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=thread.created_by subdomain=None %}">{{ thread.created_by.get_full_name }}</a></li>
+{% if thread.edited_by %}
+<li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=thread.edited_by subdomain=None %}">{{ thread.edited_by.get_full_name }}</a></li>
+{% endif %}<li><i class="general foundicon-clock"></i> Updated {{ thread.updated_at|brieftimesince }} ago</li>
+{% get_hit_count for thread as hit_count %}<li><i class="general foundicon-globe"></i> Viewed {{ hit_count }} time{{ hit_count|pluralize }}</li>
+</ul>
+
+{% endblock %}
+
+
+{% block modals %}
+<div id="socialModal" class="reveal-modal [expand, xlarge, large, medium, small]">
+  <h2>Share this thread.</h2>
+  {% with thread as object %}{% include "_social.html" %}{% endwith %}
+</div>
+{% endblock %}
+

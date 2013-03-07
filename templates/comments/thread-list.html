@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load core_tags %}
+{% load markup %}
+{% load pagination_tags %}
+{% load tagmeta_tags %}
+{% load thumbnail %}
+{% load i18n %}
+
+
+{% block title %}{{ title }}{% endblock %}   
+
+{% block subtitle %}{% trans "Discuss the state of Open Science" %}{% endblock %}
+
+{% block about %}
+{% endblock%}
+
+{% block controls %}{% endblock %}
+
+{% block content %}
+</div>
+    <div style="margin-top:1em;">
+       {% for thread in threads %}
+            {% include "comments/_thread.html"%}
+       {% endfor %}
+    </div>            
+<div class="row">
+
+{% endblock %}
+
+{% block sidebar_right %}
+
+    {% if directory %}
+        <h6>Browse</h6>
+        {% include "_directory.html" %}
+    {% endif %}
+
+    <h6>Actions</h6>
+    <ul class="navlist">
+        <li><i class="social foundicon-rss"></i> <a href={% url 'method-rss-latest' subdomain='do' %}>{% trans "Follow latest protocols" %}</a></li>
+<!--        <li><i class="social foundicon-rss"></i> <a href={% url 'method-rss-latest'  subdomain='do' %}>{% trans "Updated protocols" %}</a></li> -->
+    </ul>
+
+{% endblock %}
