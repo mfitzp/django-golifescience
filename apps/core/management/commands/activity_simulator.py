@@ -23,9 +23,9 @@ class Command(BaseCommand):
         objs.extend( [Application])
         objs.extend( [Method] * 20 ) # Compensate for relative numbers of each
         
-        print objs
-
         obj = choice(objs).objects.all().order_by('?')[0]
+
+        print "Simulating edit to %s" % obj
 
         obj.updated_at = datetime.datetime.now()
         obj.save()
