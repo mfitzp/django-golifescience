@@ -13,6 +13,7 @@ from django.db.models import Q
 # methodmint
 from applications.models import Application
 from methods.models import Method
+from publications.models import Publication
 # ..
 from core.actions import object_saved
 
@@ -24,7 +25,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         objs = []
         objs.extend( [Application])
-        objs.extend( [Method] * 20 ) # Compensate for relative numbers of each
+        objs.extend( [Publication])
+        objs.extend( [Method] * 10 ) # Compensate for relative numbers of each
 
         actions = [object_saved]
         tfs = [ True, False ]
