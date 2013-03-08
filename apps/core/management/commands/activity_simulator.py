@@ -23,7 +23,7 @@ class Command(BaseCommand):
         objs.extend( [Application])
         objs.extend( [Method] * 20 ) # Compensate for relative numbers of each
         
-        obj = choice(objs).objects.filter(created_by__id__gt=2).order_by('?')[0]
+        obj = choice(objs).objects.all().order_by('?')[0]
 
         print "Simulating edit to %s" % obj
 
