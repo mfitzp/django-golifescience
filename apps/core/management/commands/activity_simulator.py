@@ -29,7 +29,7 @@ class Command(BaseCommand):
         actions = [object_saved]
         tfs = [ True, False ]
 
-        objt = choice(obj)
+        objt = choice(objs)
         action = choice(actions)
         tf = choice(tfs)        
 
