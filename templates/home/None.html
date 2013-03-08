@@ -24,7 +24,8 @@
     var latest_stream_timestamp={{ latest_stream_timestamp }};
 
     $(function() {
-
+        /* Trigger initial fetch */
+        get_updated_stream('activityfeed');
         setInterval( "get_updated_stream('activityfeed')", 300000  ); /* 10 minutes 600000; 5 minutes 300000*/
 
     })
