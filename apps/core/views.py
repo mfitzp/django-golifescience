@@ -60,7 +60,7 @@ def home(request):
                         Article.objects.order_by('-created_at')[:20],
                         Method.objects.order_by('-created_at')[:20],
                         #Publication.objects.order_by('-created_at')[:10],
-                    ),  key=lambda x: x.created_at, reverse=True)[:20]
+                    ),  key=lambda x: x.created_at, reverse=True)[:40]
 
         cache.set('features-%s' % request.subdomain, features ) 
 
