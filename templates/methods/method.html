@@ -19,7 +19,6 @@
      {% if method.image %}<meta property="og:image" content="{% thumbnail method.image 128x128 upscale crop %}"/>{% endif %}
      <meta property="og:description" content="{{ method.description }}"/>
 
-    { % include "comments/_ajax_comments.html" % }
 {% endblock %}
 
 {% block author_header %}{% with method.created_by as author %}{% include "_author_header.html" %}{% endwith %}{% endblock %}

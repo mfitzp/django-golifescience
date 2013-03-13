@@ -1,5 +1,6 @@
 import datetime, collections
 from random import choice
+import itertools
 # Django
 from django.conf import settings
 from django import http
@@ -31,6 +32,10 @@ from tagmeta.models import TagMeta
 from taggit.views import tagged_object_list
 # Methodmint
 from core.utils import actstream_build
+from applications.models import Application
+from blog.models import Article
+from methods.models import Method
+from publications.models import Publication
 
 def home(request):
  
@@ -46,44 +51,20 @@ def home(request):
         'debat': [Method, Application],
     }
         
-
+    features = []
     # Generate tags-based featured items (sticky, standard based on sites)
-    allsections = cache.get('allsections-%s' % request.subdomain, list() ) 
-    if not allsections: # No tags
-        allsections = list()
-        # Get featured tags for site based on the root tagmeta fields
-        tags = Tag.objects.exclude(meta__tag_id=None).filter(meta__parent=None).order_by('?') # remove the meta__parent none restriction to get more variation
+    features = cache.get('features-%s' % request.subdomain, list() ) 
+    if not features: # No tags
+        features = sorted( itertools.chain(
+                        Application.objects.order_by('-created_at')[:20],
+                        Article.objects.order_by('-created_at')[:20],
+                        Method.objects.order_by('-created_at')[:20],
+                        #Publication.objects.order_by('-created_at')[:10],
+                    ),  key=lambda x: x.created_at, reverse=True)[:20]
 
-        for tag in tags:
-           # tag = tagm.tag
-            items = []
-            for ct in content_types[ request.subdomain ]:
-                items.extend( list( ct.objects.filter(tags__slug=tag.slug).exclude(image='').order_by('?')[:5] ) ) #.filter(is_featured=True)
-
-            if len(items) > 0:
-                section = {
-                    'tag': tag,
-                    'items': items,
-                        }
-
-                allsections.append( section )
-                if len(allsections)==5:
-                    break
-
-        cache.set('allsections-%s' % request.subdomain, allsections ) 
+        cache.set('features-%s' % request.subdomain, features ) 
 
     directory = TagMeta.objects.filter(level__lt=2)
-    sections = allsections
-
-    topsection = {
-        'type': 'method',
-        'tag': 'all',
-        'items': list(),
-    }
-
-    for section in allsections:
-        topsection['items'].append( choice(section['items']) )
-
 
     (stream, latest_stream_timestamp) = cache.get('activity_stream', (None,0) ) 
 
@@ -93,8 +74,9 @@ def home(request):
 
 
     context = {
-        'topsection': topsection,
-        'sections': sections,
+        #'topsection': topsection,
+        #'sections': sections,
+        'features': features,
 
         'directory':directory,
 

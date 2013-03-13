@@ -60,29 +60,36 @@
 
 {% endblock %}
 
-{% block feature %}<div class="row featured"><div class="twelve columns">
-<div id="featuredContent">
-{% for object in topsection.items|slice:":5" %}
-    <div>
-        <img src="{% thumbnail object.image 960x480 upscale crop %}">
-        <div class="feature-overlay">    
-            <h5>
-                {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
-                {% if object|classname = 'Article' %}<a href="{% url 'article' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
-                {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
-                {% endif %} {% endif %} {% endif %}      
-            </h5>
-            {% if object.authors.count > 0 %}<p class="author_list">{% author_list object.authors.all %}</p>{% endif %}
-            <p class="about">{{ object.description|truncatewords:30|markdown }}</p>
-        </div>
+{% block content %}
+
+<div class="features">
+
+{% for feature in features %}
+    {% if forloop.counter|divisibleby:2 %}
+    {% else %}
+        <div class="row">        
+    {% endif %}
+        <div class="six columns feature-item">
+            <div class="feature-item-image">
+                <div class="feature-item-type">{{ feature|classname|capfirst }}</div>
+                <a href="{{ feature.get_absolute_url }}"><img src="{% thumbnail feature.image 360x200 upscale crop %}"></a>
+            </div>
+        <h4 class="feature-item-title"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h4>
+        <div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username subdomain=None%}">{{ feature.created_by.get_full_name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
     </div>
+
+    {% if forloop.counter|divisibleby:2 %}
+        </div>
+    {% else %}
+    {% endif %}
 {% endfor %}
+
 </div>
-</div></div>
+
 {% endblock %}
 
-{% block content %}
-</div>
+{% block sidebar_right %}
+
 <div class="activityfeed" id="activityfeed">
    <div class="activity-header"><p>Activity stream</p></div>
   {% if stream %}
@@ -97,49 +104,6 @@
          {% endfor %}
 {% endif %}
 </div>
-<div class="row">
- 
-
-
-{% endblock %}
-
-{% block sidebar_right %}
-
-    <h6>Browse</h6>
-    {% include "_directory.html" %}
-
-   <div class="home-sections"><!-- section tags -->
-    
-    {% for section in sections %}
-        <h6>{{ section.tag|capfirst }}</h6>
-        <div class="row">
-
-            {% for object in section.items|slice:":4" %}
-                {% if forloop.first %} 
-                    <div class="three columns">
-                        <img src="{% thumbnail object.image 160x120 upscale crop %}" class="span2 home-section-image-{% cycle 'left' 'right' %}">
-                    </div>
-                    <div class="nine columns">
-                    <ul class="navlist">
-                {% endif %}
-                    <li>
-                        {% if object|classname = 'Application' %}<a href="{% url 'application' application_slug=object.slug subdomain='install' %}">{{ object }} <i>{{ object.tagline }}</i></a>{% else %}
-                        {% if object|classname = 'Article' %}<a href="{% url 'article' article_id=object.id article_slug=object.slug subdomain=None %}">{{ object }}</a>{% else %}
-                        {% if object|classname = 'Method' %}<a href="{% url 'method' method_id=object.id method_slug=object.slug subdomain='do' %}"">{{ object }}</a>
-                        {% endif %} {% endif %} {% endif %}      
-                    </li>
-                {% if forloop.last %} 
-                    </ul>
-                    </div>
-                {% endif %}
-            {% endfor %}
-
-
-        </div>
-    {% endfor %}
-    </div>      
-
-
 
 {% endblock %}
 
