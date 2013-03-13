@@ -13,6 +13,10 @@ from django.db.models import Q
 # methodmint
 from applications.models import Application
 from methods.models import Method
+from publications.models import Publication
+# ..
+from core.actions import object_saved
+
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
@@ -21,13 +25,18 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         objs = []
         objs.extend( [Application])
-        objs.extend( [Method] * 20 ) # Compensate for relative numbers of each
+        objs.extend( [Publication])
+        objs.extend( [Method] * 10 ) # Compensate for relative numbers of each
+
+        actions = [object_saved]
+        tfs = [ True, False ]
+
+        objt = choice(objs)
+        action = choice(actions)
+        tf = choice(tfs)        
+
+        obj = objt.objects.all().order_by('?')[0]
         
-        obj = choice(objs).objects.filter(created_by__id__gt=2).order_by('?')[0]
-
-        print "Simulating edit to %s" % obj
-
-        obj.updated_at = datetime.datetime.now()
-        obj.save()
-
+        print "Simulating actitivy %s on %s (%s)" % ( action, obj, tf )
+        action( objt, obj, tf)
         
