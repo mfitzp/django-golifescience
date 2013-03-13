@@ -56,9 +56,9 @@ def home(request):
     features = cache.get('features-%s' % request.subdomain, list() ) 
     if not features: # No tags
         features = sorted( itertools.chain(
-                        Application.objects.order_by('-created_at')[:20],
-                        Article.objects.order_by('-created_at')[:20],
-                        Method.objects.order_by('-created_at')[:20],
+                        Application.objects.order_by('-created_at')[:40],
+                        Article.objects.order_by('-created_at')[:40],
+                        Method.objects.order_by('-created_at')[:40],
                         #Publication.objects.order_by('-created_at')[:10],
                     ),  key=lambda x: x.created_at, reverse=True)[:40]
 
