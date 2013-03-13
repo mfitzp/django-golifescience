@@ -177,7 +177,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.markup',
     'django.contrib.messages',
-    'django.contrib.comments',
+#    'django.contrib.comments',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
 #    'django.contrib.signals',
@@ -200,7 +200,7 @@ INSTALLED_APPS = (
     'actstream',
 # installables
     'core',
-    'comments',
+#    'comments',
     'ajax',
     'testimonials',
     'applications',
@@ -279,8 +279,8 @@ ACTSTREAM_ACTION_MODELS = (
 #    'badges.BadgeToUser',
 #    'sites.Site',
     'blog.Article',
-    'comments.MPTTComment',
-    'comments.Comment',
+#    'comments.MPTTComment',
+#    'comments.Comment',
 )
 
 ACCOUNT_ACTIVATION_DAYS = 30

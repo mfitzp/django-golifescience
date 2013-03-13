@@ -8,9 +8,9 @@ sitemaps = {
 urlpatterns = patterns('',
     url(r'^$', 'core.views.home', name='home'),
 
-    (r'^discussions/', include('comments.urls')),
+#    (r'^discussions/', include('comments.urls')),
     (r'^ajax/',      include('ajax.urls')),
-    (r'^comments/', include('django.contrib.comments.urls')),
+#    (r'^comments/', include('django.contrib.comments.urls')),
 
     # Sitemaps
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
