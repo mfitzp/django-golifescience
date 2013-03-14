@@ -21,6 +21,9 @@ from subdomains.utils import reverse
 # Methodmint
 from core.actions import object_saved
 
+def article_file_path(instance=None, filename=None):
+    return os.path.join('article', str(instance.id), filename)
+
 # Blog article
 class Article(models.Model):
     def __unicode__(self):
@@ -38,6 +41,8 @@ subdomain=None)
     tagline = models.CharField('Tagline', max_length = 200, blank = False)
 
     slug = AutoSlugField(populate_from='title')
+
+    image = ThumbnailerImageField(max_length=255, upload_to=article_file_path, blank=True)    
 
     content = models.TextField(blank = True)
     tags = TaggableManager() #through=TaggedArticle)
