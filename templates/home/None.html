@@ -70,9 +70,9 @@
         <div class="row">        
     {% endif %}
         <div class="six columns feature-item">
-            <div class="feature-item-image">
+            <div class="feature-item-image" style="background:url('{% thumbnail feature.image 360x200 upscale crop %}')">
                 <div class="feature-item-type">{{ feature|classname|capfirst }}</div>
-                <a href="{{ feature.get_absolute_url }}"><img src="{% thumbnail feature.image 360x200 upscale crop %}"></a>
+                <a href="{{ feature.get_absolute_url }}"></a>
             </div>
         <h4 class="feature-item-title"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h4>
         <div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username subdomain=None%}">{{ feature.created_by.get_full_name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
