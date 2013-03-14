@@ -59,7 +59,7 @@ def home(request):
                         Application.objects.order_by('-created_at')[:40],
                         Article.objects.order_by('-created_at')[:40],
                         Method.objects.order_by('-created_at')[:40],
-                        #Publication.objects.order_by('-created_at')[:10],
+                        Publication.objects.order_by('-created_at')[:10],
                     ),  key=lambda x: x.created_at, reverse=True)[:40]
 
         cache.set('features-%s' % request.subdomain, features ) 
