@@ -18,6 +18,7 @@ from taggit.models import Tag
 from taggit.managers import TaggableManager
 from autoslug.fields import AutoSlugField
 from subdomains.utils import reverse
+from easy_thumbnails.fields import ThumbnailerImageField
 # Methodmint
 from core.actions import object_saved
 
@@ -30,8 +31,7 @@ class Article(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('article',kwargs={'article_id':str(self.id),'article_slug':str(self.slug)}, 
-subdomain=None)
+        return reverse('article',kwargs={'article_id':str(self.id),'article_slug':str(self.slug)}, subdomain=None)
 
     def get_absolute_path(self):
         return django_reverse('article',kwargs={'article_id':str(self.id)})
