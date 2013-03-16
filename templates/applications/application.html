@@ -22,7 +22,7 @@
  </script>
  <!-- Facebook Opengraph support -->
  <meta property="og:title" content="{{ application }}"/>
- {% if method.image %}<meta property="og:image" content="{% thumbnail application.image 128x128 upscale crop %}"/>{% endif %}
+ {% if application.image %}<meta property="og:image" content="{% thumbnail application.image 128x128 upscale crop %}"/>{% endif %}
  <meta property="og:description" content="{{ application.description }}"/>
 
 {% endblock %}

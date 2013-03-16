@@ -14,6 +14,7 @@
      </script>
      <!-- Facebook Opengraph support -->
      <meta property="og:title" content="{{ article }}"/>
+     {% if article.image %}<meta property="og:image" content="{% thumbnail article.image 128x128 upscale crop %}"/>{% endif %}
      <meta property="og:description" content="{{ article.content }}"/>
 {% endblock %}
 
