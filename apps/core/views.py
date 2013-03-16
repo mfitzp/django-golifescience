@@ -53,7 +53,7 @@ def home(request):
         
     features = []
     # Generate tags-based featured items (sticky, standard based on sites)
-    features = cache.get('features-%s' % request.subdomain, list() ) 
+    features = cache.get('features', list() ) 
     if not features: # No tags
         features = sorted( itertools.chain(
                         Application.objects.order_by('-created_at')[:40],
@@ -62,7 +62,7 @@ def home(request):
                         Publication.objects.order_by('-created_at')[:10],
                     ),  key=lambda x: x.created_at, reverse=True)[:40]
 
-        cache.set('features-%s' % request.subdomain, features ) 
+        cache.set('features', features ) 
 
     directory = TagMeta.objects.filter(level__lt=2)
 

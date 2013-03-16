@@ -25,8 +25,8 @@ def modelglobals( context ):
 def site( context ):
     return {
         'default_host': settings.DEFAULT_HOST,
-        'site': settings.SUBDOMAIN_SITES[ context.subdomain ],
-        'all_sites': settings.SUBDOMAIN_SITES,
+#        'site': settings.SUBDOMAIN_SITES[ context.subdomain ],
+#        'all_sites': settings.SUBDOMAIN_SITES,
     }
 
 def top5s( context ):
