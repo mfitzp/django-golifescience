@@ -23,10 +23,10 @@
         <meta name="description" content="Open Source scientific, research and educational software.">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,300italic,300,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 
-        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}foundation/stylesheets/foundation.min.css" />
+        <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}foundation/css/foundation.min.css" />
         <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}foundation/webicons/fc-webicons.css" />
 
-        <script src="{{ MEDIA_URL }}foundation/javascripts/modernizr.foundation.js"></script>
+        <script src="{{ MEDIA_URL }}foundation/js/vendor/custom.modernizr.js"></script>
 
 		<!-- Base CSS --><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
         <!-- Subdomain CSS --><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/subdomains/{{ request.subdomain }}.css" />
@@ -235,15 +235,15 @@
 
 {% block modals %}{% endblock %}
 
-    <script src="{{ MEDIA_URL }}foundation/javascripts/jquery.js"></script>
+    <script src="{{ MEDIA_URL }}foundation/js/vendor/jquery.js"></script>
     <!-- Custom JS -->
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
     <script src="{{ MEDIA_URL }}js/core.js"></script>
 
     <!-- Included JS Files (Minified) -->
-    <script src="{{ MEDIA_URL }}foundation/javascripts/foundation.min.js"></script>
+    <script src="{{ MEDIA_URL }}foundation/js/foundation.min.js"></script>
     <!-- Initialize JS Plugins -->
-    <script src="{{ MEDIA_URL }}foundation/javascripts/app.js"></script>
+    <script src="{{ MEDIA_URL }}foundation/js/foundation/foundation.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
         // Javascript support enabled, initialise document
