@@ -291,7 +291,7 @@ class AutoReference(models.Model):
                     publications_added.append(p)
                     latest_query_at = max( p.published, latest_query_at )
 
-        self.latest_query_at = latest_query_at + datetime.timedelta(days=1) # Add a day to move it forward
+        self.latest_query_at = datetime.datetime.now().date() # Update to today
         self.save()
         return publications_added
         
