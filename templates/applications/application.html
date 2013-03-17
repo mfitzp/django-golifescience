@@ -10,6 +10,13 @@
 {% block title %}{{ application }}{% endblock %}
 {% block subtitle %}{{ application.tagline }}{% endblock %}
 
+{% block extrahead %}
+ <!-- Facebook Opengraph support -->
+ <meta property="og:title" content="{{ application }}"/>
+ {% if application.image %}<meta property="og:image" content="{% thumbnail application.image 128x128 upscale crop %}"/>{% endif %}
+ <meta property="og:description" content="{{ application.description }}"/>
+{% endblock %}
+
 {% block extrajs %}
 {{ block.super }}
 <script type='text/javascript'>
@@ -20,11 +27,6 @@
   {% get_hit_count_javascript for application %}
   });
  </script>
- <!-- Facebook Opengraph support -->
- <meta property="og:title" content="{{ application }}"/>
- {% if application.image %}<meta property="og:image" content="{% thumbnail application.image 128x128 upscale crop %}"/>{% endif %}
- <meta property="og:description" content="{{ application.description }}"/>
-
 {% endblock %}
 
 {% block forkme %}

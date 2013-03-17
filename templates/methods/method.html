@@ -7,6 +7,13 @@
 {% load author_tags %}
 {% load avatar_tags %}
 
+{% block extrahead %}
+     <!-- Facebook Opengraph support -->
+     <meta property="og:title" content="{{ method }}"/>
+     {% if method.image %}<meta property="og:image" content="{% thumbnail method.image 128x128 upscale crop %}"/>{% endif %}
+     <meta property="og:description" content="{{ method.description }}"/>
+{% endblock %}
+
 {% block extrajs %}
     {{ block.super }}
      <script> 
@@ -14,11 +21,6 @@
       {% get_hit_count_javascript for method %}
       });
      </script>
-     <!-- Facebook Opengraph support -->
-     <meta property="og:title" content="{{ method }}"/>
-     {% if method.image %}<meta property="og:image" content="{% thumbnail method.image 128x128 upscale crop %}"/>{% endif %}
-     <meta property="og:description" content="{{ method.description }}"/>
-
 {% endblock %}
 
 {% block author_header %}{% with method.created_by as author %}{% include "_author_header.html" %}{% endwith %}{% endblock %}

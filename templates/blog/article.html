@@ -5,6 +5,14 @@
 {% load markup %}
 {% load hitcount_tags %}
 
+
+{% block extrahead %}
+     <!-- Facebook Opengraph support -->
+     <meta property="og:title" content="{{ article }}"/>
+     {% if article.image %}<meta property="og:image" content="{% thumbnail article.image 128x128 upscale crop %}"/>{% endif %}
+     <meta property="og:description" content="{{ article.content }}"/>
+{% endblock %}
+
 {% block extrajs %}
     {{ block.super }}
      <script> 
@@ -12,10 +20,6 @@
       {% get_hit_count_javascript for article %}
       });
      </script>
-     <!-- Facebook Opengraph support -->
-     <meta property="og:title" content="{{ article }}"/>
-     {% if article.image %}<meta property="og:image" content="{% thumbnail article.image 128x128 upscale crop %}"/>{% endif %}
-     <meta property="og:description" content="{{ article.content }}"/>
 {% endblock %}
 
 
@@ -24,6 +28,10 @@
 {% block subtitle %}{{ article.tagline }}{% endblock %}
 
 {% block author_header %}{% with article.created_by as author %}{% include "_author_header.html" %}{% endwith %}{% endblock %}
+
+{% block imageheader %}
+    {% if article.image %}<img src="{% thumbnail article.image 400x400 upscale crop %}">{% endif %}
+{% endblock %}
 
 {% block content %}
 <a name="about"></a>
