@@ -269,7 +269,7 @@ def method_list(request, **kwargs):
     kwargs['extra_context'].update( {
         'directory': TagMeta.objects.filter(level__lt=2),
         'sorted_by': sort_by,
-#        'tagcount_for_model': Method,
+        'tagcount_for_model': Method,
          } )
 
     return object_list(request, **kwargs)
