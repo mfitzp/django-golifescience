@@ -40,7 +40,7 @@ def author_list( authors ):
             else:
                 s_orgs_number = ''
 
-            l_author.append( '<a href="%s">%s</a><sup>%s%s</sup>' % ( reverse('user-profile',kwargs={'user_id':str(author.user.id)}, subdomain=None), author.user.get_full_name(), s_orgs_number, s_author_marker ) )
+            l_author.append( '<a href="%s">%s</a><sup>%s%s</sup>' % ( reverse('user-profile',kwargs={'user_id':str(author.user.id)}), author.user.get_full_name(), s_orgs_number, s_author_marker ) )
 
         # Add the numbers after the names
         for n, org in enumerate(l_orgs):
@@ -58,7 +58,7 @@ def author_et_al( authors ):
             Output an abbreviated list of authors in full with markers for equal contribution   
     """
     if authors:
-        return '<a href="%s">%s</a> <i>et al</i>' % ( reverse('user-profile',kwargs={'user_id':str(authors[0].user.id)}, subdomain=None), authors[0].user.get_full_name() )
+        return '<a href="%s">%s</a> <i>et al</i>' % ( reverse('user-profile',kwargs={'user_id':str(authors[0].user.id)}), authors[0].user.get_full_name() )
     else:
         return 'No known authors'
 
