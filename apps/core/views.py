@@ -145,6 +145,7 @@ def objects_tagged(request, slug, Model, **kwargs):
         kwargs['extra_context'].update( {
             'directory': tagmeta.get_descendants(),
             'tagmeta': tagmeta,
+            'tagcount_for_model':Model,
         } )
 
     return tagged_object_list(request, slug, qs, **kwargs)
