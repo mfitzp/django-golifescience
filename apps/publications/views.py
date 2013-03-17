@@ -55,7 +55,7 @@ def publications(request, **kwargs):
     kwargs['extra_context'].update( {
         'directory': TagMeta.objects.filter(level__lt=2),
         'sorted_by': sort_by,
-#        'tagcount_for_model': Application,
+        'tagcount_for_model': Publication,
          } )
 
     return object_list(request, **kwargs)
