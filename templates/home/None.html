@@ -105,6 +105,7 @@
                 <a href="{{ feature.get_absolute_url }}"></a>
             </div>
         <h4 class="feature-item-title"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h4>
+        <div class="feature-item-snippet">{{ feature.tagline }}</div>
         <div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username %}">{{ feature.created_by.get_full_name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
     </div>
 
