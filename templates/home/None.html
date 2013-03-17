@@ -60,11 +60,41 @@
 
 {% endblock %}
 
+{% block header_content %}{% endblock %}
 {% block content %}
 
 <div class="features">
 
-{% for feature in features %}
+<div class="row">        
+{% with features|first as feature %}
+<div class="eight columns feature-item">
+    <div class="feature-item-image feature-item-image-large content-type-{{ feature|classname|lower }}" style="{% if feature.image %}background:url('{% thumbnail feature.image 360x200 upscale crop %}'){% endif %}">
+        <div class="feature-item-type label-{{ feature|classname|lower }}">{{ feature|classname|capfirst }}</div>
+        <a href="{{ feature.get_absolute_url }}"></a>
+    </div>
+<h4 class="feature-item-title"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h4>
+<div class="feature-item-snippet">{{ feature.tagline }}</div>
+<div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username %}">{{ feature.created_by.get_full_name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
+</div>
+{% endwith %}
+<div class="four columns"><div class="row">
+{% for feature in features|slice:"1:3" %}
+<div class="twelve columns feature-item">
+    <div class="feature-item-image feature-item-image-small content-type-{{ feature|classname|lower }}" style="{% if feature.image %}background:url('{% thumbnail feature.image 300x270 upscale crop %}'){% endif %}">
+        <div class="feature-item-type label-{{ feature|classname|lower }}">{{ feature|classname|capfirst }}</div>
+        <a href="{{ feature.get_absolute_url }}"></a>
+    </div>
+<h4 class="feature-item-title feature-item-title-small"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h4>
+<div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username %}">{{ feature.created_by.get_full_name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
+</div>
+{% endfor %}
+</div></div>
+
+</div>
+
+
+
+{% for feature in features|slice:"1:" %}
     {% if forloop.counter|divisibleby:2 %}
     {% else %}
         <div class="row">        

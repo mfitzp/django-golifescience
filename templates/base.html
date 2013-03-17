@@ -132,6 +132,7 @@
 <div class="row page"  id="bigc">
 {% block author_header %}{% endblock %}
 <div class="eight columns content">
+    {% block header_content %}
     <div class="row header">
         <div class="twelve columns header-content">
             <h1 itemprop="name">{% usemacro title %}</h1>
@@ -141,6 +142,7 @@
     <div class="row header content-about" itemprop="description">
         <div class="twelve columns">{% block about %}{% endblock %}</div>
     </div>
+    {% endblock %}
     {% block feature %}{% endblock %}
     <div class="body"><a name="top"></a>
       <div class="row">

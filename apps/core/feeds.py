@@ -119,6 +119,7 @@ class CommentsWxrFeed(ContribCommentsWxrFeed,LatestAllFeed):
                 content_type = ctype,
                 object_pk    = r.id,
             ).count()
+
             if c > 0:
                 results_with_comments.append( r ) 
 

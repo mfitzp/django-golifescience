@@ -55,7 +55,7 @@ def home(request):
                         Article.objects.order_by('-created_at')[:40],
                         Method.objects.order_by('-created_at')[:40],
                         Publication.objects.order_by('-created_at')[:10],
-                    ),  key=lambda x: x.created_at, reverse=True)[:40]
+                    ),  key=lambda x: x.created_at, reverse=True)[:39]
 
         cache.set('features', features ) 
 
