@@ -8,7 +8,7 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse as django_reverse
+from django.core.urlresolvers import reverse as reverse
 # Externals
 from taggit.models import Tag
 from taggit.managers import TaggableManager
@@ -16,7 +16,6 @@ from durationfield.db.models.fields.duration import DurationField
 from easy_thumbnails.fields import ThumbnailerImageField
 from autoslug.fields import AutoSlugField
 from django.contrib.contenttypes import generic
-from subdomains.utils import reverse
 from licenses.fields import LicenseField
 # Methodmint
 from publications.models import Reference, AutoReference
@@ -35,9 +34,9 @@ class Method(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)}, subdomain='do')
+        return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
     def get_absolute_path(self):
-        return django_reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
+        return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
 
     # Information
     name = models.CharField('Name', max_length = 50, blank = False)

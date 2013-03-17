@@ -38,7 +38,7 @@
                 <div class="discussion-author">
                     {% with node.user.get_profile as profile %} 
                     {% if profile %}
-                        <a href="{% url 'user-profile' username=node.user.username subdomain=None %}" class="discussion-author">{{ profile.fullname }}</a>
+                        <a href="{% url 'user-profile' username=node.user.username %}" class="discussion-author">{{ profile.fullname }}</a>
                         {% if profile.organisation %}{{ profile.organisation }} &bull; {% endif %}
                         {{ profile.country }}
                     {% else %}
@@ -71,7 +71,7 @@
     <h5>Add Your Comment</h5>
     {% render_comment_form for object %}
 {% else %}
-<p><a href="{% url 'login' subdomain=None %}" onclick="$('#modal-login').modal('show'); return false;">{% trans "Sign in" %} to add a comment</a>.</p>
+<p><a href="{% url 'login' %}" onclick="$('#modal-login').modal('show'); return false;">{% trans "Sign in" %} to add a comment</a>.</p>
 
 {% endif %}
 

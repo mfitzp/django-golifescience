@@ -64,9 +64,9 @@
     <h6>Meta</h6>
 
 <ul class="navlist">
-<li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=article.created_by subdomain=None %}">{{ article.created_by.get_full_name }}</a></li>
+<li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=article.created_by %}">{{ article.created_by.get_full_name }}</a></li>
 {% if article.edited_by %}
-<li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=article.edited_by subdomain=None %}">{{ article.edited_by.get_full_name }}</a></li>
+<li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=article.edited_by %}">{{ article.edited_by.get_full_name }}</a></li>
 {% endif %}<li><i class="general foundicon-clock"></i> Updated {{ article.updated_at|brieftimesince }} ago</li>
 {% get_hit_count for article as hit_count %}<li><i class="general foundicon-globe"></i> Viewed {{ hit_count }} time{{ hit_count|pluralize }}</li>
 </ul>

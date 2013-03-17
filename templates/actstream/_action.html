@@ -24,7 +24,7 @@
                 {% if action.target.get_absolute_url %}<a href="{{ action.target.get_absolute_url }}">{% else %}<a href="{{ action.target_url }}">{% endif %}
 
                 {% if action.verb == 'joined' %}
-                    <a href="{% url 'user-profile' username=action.actor.username subdomain=None %}">{% if action.actor.get_full_name %}{{ action.actor.get_full_name }}{% else %}{{ action.actor }}{% endif %}</a>
+                    <a href="{% url 'user-profile' username=action.actor.username %}">{% if action.actor.get_full_name %}{{ action.actor.get_full_name }}{% else %}{{ action.actor }}{% endif %}</a>
                 {% else %}
                     {{ action.target }}
                 {% endif %}

@@ -14,13 +14,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.contenttypes import generic
-from django.core.urlresolvers import reverse as django_reverse
+from django.core.urlresolvers import reverse as reverse
 # External
 from easy_thumbnails.fields import ThumbnailerImageField
 from autoslug.fields import AutoSlugField
 from taggit.models import Tag
 from taggit.managers import TaggableManager
-from subdomains.utils import reverse
 from licenses.fields import LicenseField
 from jsonfield.fields import JSONField
 # Methodmint
@@ -37,10 +36,10 @@ class Application(models.Model):
         return "%s" % (self.name)
 
     def get_absolute_url(self):
-        return reverse('application',kwargs={'application_id':str(self.id), 'application_slug':str(self.slug)}, subdomain='install')
+        return reverse('application',kwargs={'application_id':str(self.id), 'application_slug':str(self.slug)})
 
     def get_absolute_path(self):
-        return django_reverse('application', kwargs={'application_id':str(self.id), 'application_slug':str(self.slug)})
+        return reverse('application', kwargs={'application_id':str(self.id), 'application_slug':str(self.slug)})
 
     # Fields
     name = models.CharField('Name', max_length = 50, blank = False)

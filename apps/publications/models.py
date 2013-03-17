@@ -11,7 +11,7 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse as django_reverse
+from django.core.urlresolvers import reverse as reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 # Methodmint
@@ -22,7 +22,6 @@ from publications import autoref
 from autoslug.fields import AutoSlugField
 #from picklefield.fields import PickledObjectField, PickledObject
 from jsonfield.fields import JSONField
-from subdomains.utils import reverse
 from core.actions import object_created
 
 # A reference object, pointing to an external resource via URN or URL
@@ -156,9 +155,9 @@ class Publication(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('publication',kwargs={'publication_id':str(self.id), 'publication_slug':str(self.slug)}, subdomain=None)
+        return reverse('publication',kwargs={'publication_id':str(self.id), 'publication_slug':str(self.slug)})
     def get_absolute_path(self):
-        return django_reverse('publication',kwargs={'publication_id':str(self.id), 'publication_slug':str(self.slug)})
+        return reverse('publication',kwargs={'publication_id':str(self.id), 'publication_slug':str(self.slug)})
 
     # On save, check if reference created/changed & update accordingly
     def save(self, force_insert=False, force_update=False):

@@ -85,9 +85,9 @@ This paper is referenced by the following resources on this site:
 
 <h6>{% trans "Meta" %}</h6>
 <ul class="navlist">
-<li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=publication.created_by subdomain=None %}">{{ publication.created_by.get_full_name }}</a></li>
+<li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=publication.created_by %}">{{ publication.created_by.get_full_name }}</a></li>
 {% if publication.edited_by %}
-<li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=publication.edited_by subdomain=None %}">{{ publication.edited_by.get_full_name }}</a></li>
+<li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=publication.edited_by %}">{{ publication.edited_by.get_full_name }}</a></li>
 {% endif %}<li><i class="general foundicon-clock"></i> Updated {{ publication.updated_at|brieftimesince }} ago</li>
 {% get_hit_count for publication as hit_count %}<li><i class="general foundicon-globe"></i> Viewed {{ hit_count }} time{{ hit_count|pluralize }}</li>
 </ul>
