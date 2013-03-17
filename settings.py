@@ -170,6 +170,7 @@ INSTALLED_APPS = (
     'postman',
     'licenses',
     'actstream',
+    'disqus',
 # installables
     'core',
 #    'comments',
