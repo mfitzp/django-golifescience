@@ -8,9 +8,10 @@ from django.conf import settings
 from django.template import resolve_variable, NodeList
 from django.utils.hashcompat import md5_constructor
 from django.utils.html import escape
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import AnonymousUser
 # External
-from subdomains.utils import reverse
+
 
 register = template.Library()
 
