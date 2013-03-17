@@ -70,7 +70,7 @@ def publication(request, publication_slug, publication_id=None):
 
     context = { 'title': publication.title,
                 'publication': publication,
-#                'tagcount_for_model': Application,
+                'tagcount_for_model': Publication,
                 'morelikethis': SearchQuerySet().more_like_this(publication).models(Publication)[:5],
               }
 
