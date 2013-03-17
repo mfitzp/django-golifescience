@@ -24,10 +24,6 @@ from django.core.cache import cache
 from django.views.generic.list_detail import object_list
 # External
 from taggit.models import TaggedItem, Tag
-from methods.models import Method
-from applications.models import Application
-from blog.models import Article
-from comments.models import MPTTComment
 from tagmeta.models import TagMeta
 from taggit.views import tagged_object_list
 # Methodmint
