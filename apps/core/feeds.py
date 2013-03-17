@@ -104,12 +104,12 @@ class CommentsWxrFeed(ContribCommentsWxrFeed,LatestAllFeed):
 
     def items(self):    ## Items with comments
         
-        results = itertools.chain(
-            Method.objects.order_by('-created_at')[:20],
-            Article.objects.order_by('-created_at')[:20],
-            Application.objects.order_by('-created_at')[:20],
-            Publication.objects.order_by('-created_at')[:20],
-        ) 
+        results = list( itertools.chain(
+            Method.objects.all(),
+            Article.objects.all(),
+#            Application.objects.order_by('-created_at')[:20],
+#            Publication.objects.order_by('-created_at')[:20],
+        ) )
 
         results_with_comments = []
         for r in results:
