@@ -6,14 +6,12 @@
 {% load postman_tags %}
 {% load tagmeta_tags %}
 
-{% set_default_tagged_model %}
-
 {% macro title %}{% block title %}Installables{% endblock %}{% endmacro %}
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 	<head>
-		<title>{% block pagetitle %}{% if title %}{{ title }}{% else %}{% usemacro title %}{% endif %}{% endblock %} | {{ site.name }}&trade; {{ site.slogan }}</title>
+		<title>{% block pagetitle %}{% if title %}{{ title }}{% else %}{% usemacro title %}{% endif %}{% endblock %} | the Game of Life Science&trade; {{ site.slogan }}</title>
 		<link rel="icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 		<link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
 
@@ -29,7 +27,6 @@
         <script src="{{ MEDIA_URL }}foundation/js/vendor/custom.modernizr.js"></script>
 
 		<!-- Base CSS --><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
-        <!-- Subdomain CSS --><link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/subdomains/{{ request.subdomain }}.css" />
 
         <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/general_foundicons.css" />
         <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/social_foundicons.css" />
@@ -67,7 +64,7 @@
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
 {% block forkme %}{% endblock %}
 
-<div class="notfixed contain-to-grid">
+<div class="notfixed contain-to-grid top-bar-wrapper">
     <!-- Basic Needs -->
     <nav class="top-bar">
       <ul>
@@ -76,24 +73,24 @@
       </ul>
     <section>
       <ul class="right">
-        <li><a href="{% url 'about' None %}">About</a></li>
-        <li><a href="{% url 'blog' None %}">Blog</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'blog' %}">Blog</a></li>
 <!--        <li><a href="{ % url 'thread-list' subdomain='debat' % }">Discuss</a></li> -->
 
         <li class="has-dropdown">
-          <a href="{% url 'application-list' subdomain='install' %}">Software</a>
+          <a href="{% url 'application-list' %}">Software</a>
 
           <ul class="dropdown">
             {% for application in all_applications %}
-                <li><a href="{% url 'application' application_id=application.id application_slug=application.slug subdomain='install' %}">{{ application.name }}</a></li>
+                <li><a href="{% url 'application' application_id=application.id application_slug=application.slug %}">{{ application.name }}</a></li>
             {% endfor %}
           </ul>
 
         </li>
 
-        <li><a href="{% url 'method-list' subdomain='do' %}">Protocols</a></li>
+        <li><a href="{% url 'method-list' %}">Protocols</a></li>
 
-        <li><a href="{% url 'publication-list' subdomain=None %}">Papers</a></li>
+        <li><a href="{% url 'publication-list' %}">Papers</a></li>
 
 		{% if user.get_profile %}
         {% postman_unread as unread_count %}
@@ -102,20 +99,20 @@
                 {% firstof user.first_name user.username %} {% if unread_count %} <span class="label">{{ unread_count }}</span>{% endif %}</a>
 
                  <ul class="dropdown">
-                    <li><a href="{% url 'postman_inbox' subdomain=None %}">{% trans "Inbox" %}</a>  {% if unread_count %} <span class="label">{{ unread_count }}</span>{% endif %}</li>
-                    <li><a href="{% url 'user-profile' user_id=user.id  subdomain=None %}">{% trans "Profile" %}</a></li>
+                    <li><a href="{% url 'postman_inbox' %}">{% trans "Inbox" %}</a>  {% if unread_count %} <span class="label">{{ unread_count }}</span>{% endif %}</li>
+                    <li><a href="{% url 'user-profile' user_id=user.id  %}">{% trans "Profile" %}</a></li>
                     <li class="divider"></li>
-                    <li> <a href="{% url 'logout' subdomain=None %}?next=/">
+                    <li> <a href="{% url 'logout' %}?next=/">
 			        {% trans 'Sign out' %}</a></li>
                 </ul>
 
             </li>
 		{% else %}
-            <li><a href="{% url 'login' subdomain=None %}" onclick="$('#modal-login').modal('show'); return false;">{% trans "Sign in" %}</a></li>
-            <li><a href="{% url 'registration_register' subdomain=None  %}">{% trans "Register" %}</a></li>
+            <li><a href="{% url 'login' %}" onclick="$('#modal-login').modal('show'); return false;">{% trans "Sign in" %}</a></li>
+            <li><a href="{% url 'registration_register' %}">{% trans "Register" %}</a></li>
         {% endif %}
 
-        <li><a href="{% url 'contact' None %}">Contact</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
       </ul>
 
     </section>
@@ -124,9 +121,16 @@
 
 </div>
 
-{% block author_header %}{% endblock %}
+<div class="row logo">
+    <div class="twelve columns">
+        <a href="/"><img src="{{ MEDIA_URL }}/img/tgols-sm.png"></a>
+    </div>
+</div>
+
+
 
 <div class="row page"  id="bigc">
+{% block author_header %}{% endblock %}
 <div class="eight columns content">
     <div class="row header">
         <div class="twelve columns header-content">
@@ -158,6 +162,7 @@
 {% endblock sidebar_right_extend %}
 
 </div><!-- row -->
+
 {% block discussion %}{% endblock %}
 
   <div class="footer">
@@ -165,18 +170,18 @@
         <div class="four columns">
         <h6>Made by abl.es</h6>
         <p>An open science project based in the United Kingdom. We're dedicated to promoting open access, open standards and open source in science.
-         <a href="{% url 'about' None %}">Find out more &rarr;</a></p>
+         <a href="{% url 'about' %}">Find out more &rarr;</a></p>
         </div>
 
         <div class="four columns">
         <h6>Using something you found here?</h6>
-        <p>Let us know and we'll feature you on our site and reference your papers for others to find! <a href="{% url 'contact' None %}">Get in touch &rarr;</a></p>
+        <p>Let us know and we'll feature you on our site and reference your papers for others to find! <a href="{% url 'contact' %}">Get in touch &rarr;</a></p>
         </div>
 
         <div class="four columns">
         <h6>Want to know more?</h6>
             <dl>
-                <dd><i class="general foundicon-idea"></i> <a href="{% url 'faq' None %}">Read the FAQ &rarr;</a></dd>
+                <dd><i class="general foundicon-idea"></i> <a href="{% url 'faq' %}">Read the FAQ &rarr;</a></dd>
                 <dd><i class="social foundicon-twitter"></i> <a href="http://twitter.com/#!/_ables_" target="_blank">Follow us on Twitter &rarr;</a></dd>
                 <!-- <li><i class="social foundicon-facebook"></i> <a href="http://facebook.com/_ables_">Find us on Facebook →</a></li> -->
             </dl>
@@ -226,7 +231,7 @@
         <div class="six columns">Site content &copy;2012-{% now "Y" %} <a href="http://abl.es">abl.es</a> &bull; Licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a> and <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a></div>
         <div class="six columns" style="text-align:right;">
             <a href="{% url 'home' %}">Home</a> &bull;
-            <a href="{% url 'faq' None %}">FAQ</a> &bull;
+            <a href="{% url 'faq' %}">FAQ</a> &bull;
             <a href="#top">Top &uarr;</a>
        <!--     <a href="{ % url 'statistics' None % }">Statistics</a> &bull; -->
         </div>

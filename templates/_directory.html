@@ -5,12 +5,12 @@
 
     {% if directory %}
     
-    {% cache 600 directory directory tagged_model LANGUAGE_CODE %}
+    {% cache 600 directory directory tagcount_for_model LANGUAGE_CODE %}
     <div class="directory">
         {% for node,structure in directory|tree_info %}
 
-            {% if tagged_model %}
-                {% tagged_count for node.tag with tagged_model as tag_count %}
+            {% if tagcount_for_model %}
+                {% tagged_count for node.tag with tagcount_for_model as tag_count %}
             {% else %}
                 {% tagged_count for node.tag as tag_count %}
             {% endif %}

@@ -32,7 +32,7 @@
 
     function get_updated_stream(streamid){
         stream = $('#' + streamid)
-        $.getJSON('{% url "ajax-stream-updated" subdomain=None %}', { timestamp:latest_stream_timestamp},
+        $.getJSON('{% url "ajax-stream-updated" %}', { timestamp:latest_stream_timestamp},
                function(data) {
                     /* Iterate and add the new elements to the stream div */   
                     var length = data.items.length; 
@@ -70,12 +70,12 @@
         <div class="row">        
     {% endif %}
         <div class="six columns feature-item">
-            <div class="feature-item-image content-type-{{ feature|classname|lower }}" style="{% if feature.image %}background:url('{% thumbnail feature.image 360x200 upscale crop %}'){% endif %}">
-                <div class="feature-item-type">{{ feature|classname|capfirst }}</div>
+            <div class="feature-item-image" style="{% if feature.image %}background:url('{% thumbnail feature.image 360x200 upscale crop %}'){% endif %}">
+                <div class="feature-item-type label-{{ feature|classname|lower }}">{{ feature|classname|capfirst }}</div>
                 <a href="{{ feature.get_absolute_url }}"></a>
             </div>
         <h4 class="feature-item-title"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h4>
-        <div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username subdomain=None%}">{{ feature.created_by.get_full_name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
+        <div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username %}">{{ feature.created_by.get_full_name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
     </div>
 
     {% if forloop.counter|divisibleby:2 %}

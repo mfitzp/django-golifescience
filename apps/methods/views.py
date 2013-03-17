@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
-from django.core.urlresolvers import reverse as django_reverse
+from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
@@ -25,7 +25,6 @@ from haystack.query import SearchQuerySet, RelatedSearchQuerySet
 from haystack.forms import SearchForm
 from haystack.views import SearchView
 from taggit.views import tagged_object_list
-from subdomains.utils import reverse
 # Methodmint
 from methods.models import *
 from methods.forms import *
@@ -143,7 +142,7 @@ def method_edit(request, method_id):
             form.save_m2m()
             formset.save()
             messages.add_message(request, messages.SUCCESS, _(u"Saved your changes") )
-            return HttpResponseRedirect( reverse('method-detail',kwargs={'method_id':method.id}, subdomain=None ) )
+            return HttpResponseRedirect( reverse('method-detail',kwargs={'method_id':method.id} ) )
         #else: fall out with formset & errors
 
     else:
@@ -184,7 +183,7 @@ def method_create(request):
             messages.add_message(request, messages.SUCCESS, _(u"You have successfully added ") + method.name )
 
             # Create default protocol for this task; skip through to editing it immediately to add steps/etc.
-            return HttpResponseRedirect(reverse('method-edit', kwargs={'method_id':method.id}, subdomain=None ) + '#tab-method')
+            return HttpResponseRedirect(reverse('method-edit', kwargs={'method_id':method.id} ) + '#tab-method')
     else:
         # Fill in the field with the current user by default
         form = MethodForm(initial={'author': request.user})   
@@ -270,7 +269,7 @@ def method_list(request, **kwargs):
     kwargs['extra_context'].update( {
         'directory': TagMeta.objects.filter(level__lt=2),
         'sorted_by': sort_by,
-#        'tagcount_for_model': Method,
+        'tagcount_for_model': Method,
          } )
 
     return object_list(request, **kwargs)

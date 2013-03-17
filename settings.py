@@ -98,35 +98,7 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'templates'),
 )
 
-ROOT_URLCONF = 'urls.urls'
-
-SUBDOMAIN_URLCONFS = {
-    None: ROOT_URLCONF,
-    'install': 'urls.install',
-    'do': 'urls.do',
-    'debat': 'urls.debat',
-#    'install': 'urls.install',
-#    'api': 'urls.api',
-}
-
-SUBDOMAIN_SITES = {
-    None: {
-            'name': '*ables',
-            'tagline':'Open access. Open source. Open Science',
-          },
-    'install': {
-            'name': 'Installables',
-            'tagline':'Innovative scientific software for research and education',
-          },
-    'do': {
-            'name': 'Doables',
-            'tagline':'Open access scientific protocols',
-          },
-    'debat': {
-            'name': 'Debatables',
-            'tagline':'Discuss the state of Open Science',
-          },
-}
+ROOT_URLCONF = 'urls'
 
 
 #CSRF_COOKIE_DOMAIN = '.abl.es'
@@ -141,7 +113,7 @@ TEMPLATE_LOADERS = (
 )
 
 if 'DJANGO_SETTINGS_MODULE' in os.environ: # We're in a live web session (via wsgi)
-    add_to_builtins('subdomains.templatetags.subdomainurls')
+    add_to_builtins('django.templatetags.future')
 
 MIDDLEWARE_CLASSES = (
 
@@ -163,7 +135,7 @@ MIDDLEWARE_CLASSES = (
     'pagination.middleware.PaginationMiddleware',
     'core.http.Http403Middleware',
 
-    'subdomains.middleware.SubdomainURLRoutingMiddleware',
+#    'subdomains.middleware.SubdomainURLRoutingMiddleware',
 
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
@@ -193,7 +165,7 @@ INSTALLED_APPS = (
     'mptt',
     'hitcount',
     'countries',    
-    'subdomains',
+#    'subdomains',
     'registration',
     'postman',
     'licenses',

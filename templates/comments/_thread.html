@@ -10,8 +10,8 @@
     <div class="twelve columns">
         {% with thread.user as user %}{% with 1 as is_mini_mugshot %}{% include "profiles/_mugshot.html" %}{% endwith %}{% endwith %}
         <div class="thread-comment">
-            <a href="{% url 'user-profile' username=thread.user.username subdomain=None %}" class="discussion-author">{{ thread.user.get_full_name }}</a>
-            started a discussion <h6><a href="{% url 'thread' thread_id=thread.id thread_slug=thread.slug subdomain='debat' %}">{{ thread.title }}</a></h6>
+            <a href="{% url 'user-profile' username=thread.user.username %}" class="discussion-author">{{ thread.user.get_full_name }}</a>
+            started a discussion <h6><a href="{% url 'thread' thread_id=thread.id thread_slug=thread.slug %}">{{ thread.title }}</a></h6>
             <p>{{ thread.comment|markdown:"safe,codehilite" }}</p>
 
         </div>    

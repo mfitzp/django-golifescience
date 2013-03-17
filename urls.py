@@ -15,7 +15,9 @@ handler500 = 'core.views.error500' # Override default handler to pass MEDIA_URL
 sitemaps = {
     # Structure
     # 'tasks': TaskSitemap,
+    'methods': MethodSitemap,
     'articles': ArticleSitemap,
+    'applications': ApplicationSitemap,
     # Users
     'profiles': UserProfileSitemap, 
     'publications': PublicationSitemap,
@@ -43,12 +45,14 @@ urlpatterns = patterns('',
     (r'^profiles/',      include('profiles.urls')),
 
     (r'^blog/',      include('blog.urls')),
+    (r'^methods/',      include('methods.urls')),
+    (r'widgets/wordpress/methods/',  'django.views.generic.simple.direct_to_template', {'template': 'widgets/disabled.html'}),
+    (r'^publications/',  include('publications.urls')),
+    (r'^software/',      include('applications.urls')),
+
 
     (r'^messages/',  include('postman.urls')),
 
-
-
-    (r'^publications/',  include('publications.urls')),
 
     # Search
 #    url(r'^tags/$', 'core.views.tag_search', {

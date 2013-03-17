@@ -112,7 +112,7 @@
 {% for reference in application.references.all %}
     {% with reference.publication as publication %}{% include "publications/_publication.html" %}{% endwith %}
 {% empty %}
-    <p>No publications yet. Don't forget to <a href="{% url 'contact' None %}">let us know</a> if you use <strong>{{ application.name }}</strong> in your published work. We'll feature you here!</p>
+    <p>No publications yet. Don't forget to <a href="{% url 'contact' %}">let us know</a> if you use <strong>{{ application.name }}</strong> in your published work. We'll feature you here!</p>
 {% endfor %}
 
 {% if application.ohloh %}
@@ -177,9 +177,9 @@ contributions of code and other resources can be found <a href="{{ application.s
 
 <h6>{% trans "Meta" %}</h6>
 <ul class="navlist">
-<li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=application.created_by subdomain=None %}">{{ application.created_by.get_full_name }}</a></li>
+<li><i class="social foundicon-torso"></i> Added by <a href="{% url 'user-profile' username=application.created_by %}">{{ application.created_by.get_full_name }}</a></li>
 {% if application.edited_by %}
-<li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=application.edited_by subdomain=None %}">{{ application.edited_by.get_full_name }}</a></li>
+<li><i class="social foundicon-torso"></i> Latest edit by <a href="{% url 'user-profile' username=application.edited_by %}">{{ application.edited_by.get_full_name }}</a></li>
 {% endif %}<li><i class="general foundicon-clock"></i> Updated {{ application.updated_at|brieftimesince }} ago</li>
 {% get_hit_count for application as hit_count %}<li><i class="general foundicon-globe"></i> Viewed {{ hit_count }} time{{ hit_count|pluralize }}</li>
 </ul>
