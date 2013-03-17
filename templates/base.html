@@ -110,7 +110,7 @@
             </li>
 		{% else %}
             <li><a href="{% url 'login' %}" onclick="$('#modal-login').modal('show'); return false;">{% trans "Sign in" %}</a></li>
-            <li><a href="{% url 'registration_register' subdomain=None  %}">{% trans "Register" %}</a></li>
+            <li><a href="{% url 'registration_register' %}">{% trans "Register" %}</a></li>
         {% endif %}
 
         <li><a href="{% url 'contact' %}">Contact</a></li>
