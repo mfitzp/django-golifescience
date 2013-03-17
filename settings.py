@@ -149,7 +149,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.markup',
     'django.contrib.messages',
-#    'django.contrib.comments',
+    'django.contrib.comments',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
 #    'django.contrib.signals',
@@ -190,8 +190,6 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = '/accounts/logout/'
 
-COMMENTS_APP = 'comments'
-
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_SECONDS = 600
 CACHE_MIDDLEWARE_KEY_PREFIX = 'middleware_anon_cache_'
@@ -221,7 +219,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 AUTH_PROFILE_MODULE = "profiles.userprofile"
-COMMENTS_APP = 'comments'
 
 
 # Haystack configuration
