@@ -83,5 +83,12 @@
 
 
 
+{% block modals %}
+<div id="socialModal" class="reveal-modal [expand, xlarge, large, medium, small]">
+  <h2>Share this article.</h2>
+  {% with article as object %}{% include "_social.html" %}{% endwith %}
+</div>
+{% endblock %}
+
 
 
