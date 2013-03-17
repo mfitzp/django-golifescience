@@ -130,6 +130,15 @@
 
 
 <div class="row page"  id="bigc">
+
+{% block alert %}
+<a href="{% url 'contact' %}" class="header-alert">
+    <div class="header-alert-type header-alert-type-notice"><i class="social foundicon-social"></i><span>Announcement</span></div>
+    <p class="header-alert-text">We are looking for life science writers, bloggers and PhD students to write for us. Get in touch!</p>
+</a>
+
+{% endblock %}
+
 {% block author_header %}{% endblock %}
 <div class="eight columns content">
     <div class="row header">
