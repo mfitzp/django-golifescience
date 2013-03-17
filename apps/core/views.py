@@ -15,7 +15,6 @@ from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.contenttypes.models import ContentType
 from django.db.models import Count, Avg
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext as _

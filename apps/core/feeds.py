@@ -94,3 +94,33 @@ class LatestAllFeedTwitter(LatestAllFeed):
     def item_enclosure_url(self, item):
         return '' # Blank out it's twitter
 
+
+
+from disqus.wxr_feed import ContribCommentsWxrFeed
+from django.contrib.comments.models import Comment
+from django.contrib.contenttypes.models import ContentType
+class CommentsWxrFeed(ContribCommentsWxrFeed,LatestAllFeed):
+    link = "/rss/comments/WxR/"
+
+    def items(self):    ## Items with comments
+        
+        results = itertools.chain(
+            Method.objects.order_by('-created_at')[:20],
+            Article.objects.order_by('-created_at')[:20],
+            Application.objects.order_by('-created_at')[:20],
+            Publication.objects.order_by('-created_at')[:20],
+        ) 
+
+        results_with_comments = []
+        for r in results:
+            ctype = ContentType.objects.get_for_model(r)
+            
+            c = Comment.objects.filter(
+                content_type = ctype,
+                object_pk    = r.id,
+            ).count()
+            if c > 0:
+                results_with_comments.append( r ) 
+
+        return results_with_comments
+

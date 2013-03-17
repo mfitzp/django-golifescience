@@ -81,6 +81,9 @@ urlpatterns = patterns('',
     # RSS
     url(r'^rss/latest/$', LatestAllFeed(), name='all-rss-latest'),
     url(r'^rss/latest/twitter/$', LatestAllFeedTwitter(), name='all-rss-latest-twitter'),
+    url(r'^rss/comments/WxR/$', CommentsWxrFeed(), name='all-comments-wxr'),
+
+
 
     #url(r'^welcome/$', 'django.views.generic.simple.direct_to_template', {'template': 'welcome.html'}, name='welcome'),
     
