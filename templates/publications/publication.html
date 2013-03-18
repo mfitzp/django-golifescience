@@ -34,6 +34,8 @@
 
 <p><i>{{ publication.publisher }}</i> {% if publication.published %}({{ publication.published.year }}){% endif %} <a href="{{ publication.url }}">{{ publication.namespace }}:{{ publication.uri }}</a></p>
 
+<p>{{ publication.abstract }}</p>
+
 <h3>{% trans "Related Resources" %}</h3>
 This paper is referenced by the following resources on this site:
 <ul>
