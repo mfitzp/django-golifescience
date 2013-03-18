@@ -131,7 +131,7 @@ def pmid(uri):
 
         # This is horrible; we should use the fetch XML instead of the summary above - but it's formatted differently and missing data.
         f = urllib.urlopen("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&rettype=abstract&retmode=text&id=" + uri)
-        # We get it out as text, split on newlines and pull the abstract assuming it comes out right.
+        # We get it out as text, split on newlines and pull the abstract assuming it comes out right.
         text = f.read()
         f.close()
         fields = text.split('\n\n')
