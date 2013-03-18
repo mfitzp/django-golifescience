@@ -37,8 +37,8 @@ MEDIA_URL_ROOT = ''
 STATIC_URL_ROOT = ''
 ADMIN_MEDIA_URL_ROOT = ''
 
-DEFAULT_HOST = 'abl.es'
-SESSION_COOKIE_DOMAIN = '.abl.es'
+DEFAULT_HOST = 'golifescience.com'
+SESSION_COOKIE_DOMAIN = '.golifescience.com'
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that diffeinstallables/static/admin/css/base.cssr between development and production.
@@ -101,7 +101,7 @@ TEMPLATE_DIRS = (
 ROOT_URLCONF = 'urls'
 
 
-#CSRF_COOKIE_DOMAIN = '.abl.es'
+#CSRF_COOKIE_DOMAIN = 'golifescience.com'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'u2y=71bj-k%-iubxq+gvtwo7__7#b2gr^^4ug)a4*uzy^c7d#m'
@@ -261,9 +261,9 @@ FORCE_LOWERCASE_TAGS = True
 
 # Email settings: user/pass combination is stored in local settings for security
 EMAIL_HOST = 'smtp.webfaction.com'
-EMAIL_SUBJECT_PREFIX ='[abl.es] '
-DEFAULT_FROM_EMAIL = 'noreply@abl.es'
-SERVER_EMAIL = 'noreply@abl.es'
+EMAIL_SUBJECT_PREFIX ='[golifescience.com] '
+DEFAULT_FROM_EMAIL = 'noreply@golifescience.com'
+SERVER_EMAIL = 'noreply@golifescience.com'
 
 # Hit count
 HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 1 }
