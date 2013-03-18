@@ -198,13 +198,13 @@ class Publication(models.Model):
     # Autopopulate fields from the url/uri via webservices or direct request
     def autopopulate(self):
 
-        # DOI is available for this resource (preferable)
-        if self.doi:
-            data = autopopulate.doi(self.doi)
-
-        # No doi available, attempt lookup of information via ISBN if provided
-        elif self.pmid:
+        # If pmid is available
+        if self.pmid:
             data = autopopulate.pmid(self.pmid)
+
+        # DOI is available for this resource (preferable, but limited data)
+        elif self.doi:
+            data = autopopulate.doi(self.doi)
 
         elif self.isbn:
             # AMAZON WEB SERVICES, Google books, etc.
@@ -213,7 +213,7 @@ class Publication(models.Model):
         # DONE. Check we have result data, clear out existing from model & then pull in new
         if data:
             self.title = ''
-            self.description = ''
+            self.abstract = ''
             self.author = ''
             self.publisher = ''
             self.published = None
