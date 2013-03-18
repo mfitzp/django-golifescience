@@ -37,6 +37,7 @@ class Command(BaseCommand):
         for pub in pubs:
             print "Query for - %s" % pub
             pub.autopopulate()
+            pub.save()
             
 
 
