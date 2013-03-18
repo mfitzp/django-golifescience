@@ -45,7 +45,7 @@ This paper is referenced by the following resources on this site:
     {% with reference.content_object as object %}
         {% if object|classname == 'Method' %}{% include "methods/_method.html"%}{% else %}
         {% if object|classname == 'Application' %}{% include "applications/_application.html"%}{% else %}
-        {% endif %}{% endif %}{% endif %}
+        {% endif %}{% endif %}
     {% endwith %}
 {% endfor %}
 </div>
