@@ -17,12 +17,14 @@ class Command(BaseCommand):
 
     option_list = BaseCommand.option_list + (
         make_option('--start',
-            action='store_int',
+            action='store',
+            type='int',
             dest='start_id',
             default=1,
             help='Start from id'),
         make_option('--end',
-            action='store_int',
+            action='store',
+            type='int',
             dest='end_id',
             default=99999999,
             help='End at id'),
