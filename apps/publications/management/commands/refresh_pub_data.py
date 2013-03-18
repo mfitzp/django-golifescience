@@ -35,7 +35,7 @@ class Command(BaseCommand):
         pubs = Publication.objects.exclude(id__lt=options['start_id']).exclude(id__gt=options['end_id']).exclude(pmid=None)
         
         for pub in pubs:
-            print "Query for - %s" % pub
+            print "Query for %d - %s" % (pub.id, pub)
             pub.autopopulate()
             pub.save()
             
