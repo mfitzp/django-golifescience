@@ -32,11 +32,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
     
-        pubs = Publication.objects.filter(id__ge=options['start_id'], id__le=options['end_id'])
+        pubs = Publication.objects.filter(id__ge=options['start_id']).exclude(id__gt=options['end_id'])
         
         for pub in pubs:
-            print "Query for - %s" % ref
-            ref.autopopulate()
+            print "Query for - %s" % pub
+            pub.autopopulate()
             
 
 
