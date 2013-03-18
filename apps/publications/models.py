@@ -172,6 +172,10 @@ class Publication(models.Model):
             return '%s et al.' % al[0]
 
     @property
+    def description(self):
+        return self.abstract
+
+    @property
     def tagline(self):
         if self.published:
             return "%s %s (%s)" % (self.et_al(), self.publisher, self.published.year)
@@ -230,7 +234,7 @@ class Publication(models.Model):
 
     # Information
     title = models.CharField(max_length=200, blank=True)
-    description = models.TextField(blank=True)
+    abstract = models.TextField(blank=True)
     author =  models.CharField(max_length=200, blank=True)
     publisher = models.CharField(max_length=50, blank=True) 
     published = models.DateField(max_length=50, blank=True, null=True) 
@@ -255,7 +259,7 @@ class AutoReference(models.Model):
     def autoref(self, user=False):
 
         if user == False: # Assign to Miss Baker if not specified
-                user = User.objects.get(username='missbaker')
+                user = User.objects.get(username='garco')
 
         uris = autoref.pubmed(self.keywords, self.latest_query_at)
 

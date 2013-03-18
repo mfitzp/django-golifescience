@@ -128,6 +128,16 @@ def pmid(uri):
         if m:
             data['fields']['doi'] = m.group(1)
 
+
+        # This is horrible; we should use the fetch XML instead of the summary above - but it's formatted differently and missing data.
+        f = urllib.urlopen("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&rettype=abstract&retmode=text&id=" + uri)
+        # We get it out as text, split on newlines and pull the abstract assuming it comes out right.
+        text = f.read()
+        f.close()
+        fields = text.split('\n\n')
+        if len(fields) == 7:
+            data['fields']['abstract'] = fields[4]
+
         return data
     else:
         return False
