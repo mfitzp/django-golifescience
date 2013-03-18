@@ -32,7 +32,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
     
-        pubs = Publication.objects.exclude(id__lt=options['start_id']).exclude(id__gt=options['end_id']).exclude(pmid='')
+        pubs = Publication.objects.exclude(id__lt=options['start_id']).exclude(id__gt=options['end_id']).exclude(pmid=None)
         
         for pub in pubs:
             print "Query for - %s" % pub
