@@ -135,8 +135,6 @@ def pmid(uri):
         text = f.read()
         f.close()
         fields = text.split('\n\n')
-        print fields
-        print fields[4]
         if len(fields) == 7:
             data['fields']['abstract'] = fields[4]
 
