@@ -172,6 +172,10 @@ class Publication(models.Model):
             return '%s et al.' % al[0]
 
     @property
+    def description(self):
+        return self.abstract
+
+    @property
     def tagline(self):
         if self.published:
             return "%s %s (%s)" % (self.et_al(), self.publisher, self.published.year)
@@ -194,13 +198,13 @@ class Publication(models.Model):
     # Autopopulate fields from the url/uri via webservices or direct request
     def autopopulate(self):
 
-        # DOI is available for this resource (preferable)
-        if self.doi:
-            data = autopopulate.doi(self.doi)
-
-        # No doi available, attempt lookup of information via ISBN if provided
-        elif self.pmid:
+        # If pmid is available
+        if self.pmid:
             data = autopopulate.pmid(self.pmid)
+
+        # DOI is available for this resource (preferable, but limited data)
+        elif self.doi:
+            data = autopopulate.doi(self.doi)
 
         elif self.isbn:
             # AMAZON WEB SERVICES, Google books, etc.
@@ -209,7 +213,7 @@ class Publication(models.Model):
         # DONE. Check we have result data, clear out existing from model & then pull in new
         if data:
             self.title = ''
-            self.description = ''
+            self.abstract = ''
             self.author = ''
             self.publisher = ''
             self.published = None
@@ -230,7 +234,7 @@ class Publication(models.Model):
 
     # Information
     title = models.CharField(max_length=200, blank=True)
-    description = models.TextField(blank=True)
+    abstract = models.TextField(blank=True)
     author =  models.CharField(max_length=200, blank=True)
     publisher = models.CharField(max_length=50, blank=True) 
     published = models.DateField(max_length=50, blank=True, null=True) 
@@ -255,7 +259,7 @@ class AutoReference(models.Model):
     def autoref(self, user=False):
 
         if user == False: # Assign to Miss Baker if not specified
-                user = User.objects.get(username='missbaker')
+                user = User.objects.get(username='garco')
 
         uris = autoref.pubmed(self.keywords, self.latest_query_at)
 

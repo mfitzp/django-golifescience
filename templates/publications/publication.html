@@ -34,18 +34,22 @@
 
 <p><i>{{ publication.publisher }}</i> {% if publication.published %}({{ publication.published.year }}){% endif %} <a href="{{ publication.url }}">{{ publication.namespace }}:{{ publication.uri }}</a></p>
 
+<p>{{ publication.abstract }}</p>
+
+{% if publication.references %}
 <h3>{% trans "Related Resources" %}</h3>
 This paper is referenced by the following resources on this site:
-<ul>
+
+<div style="margin-top:1em;">
 {% for reference in publication.references.all %}
     {% with reference.content_object as object %}
-        <li><a href="{{ object.get_absolute_url }}">{{ object.name }} <i>{{object.tagline }}</i></a></li>
+        {% if object|classname == 'Method' %}{% include "methods/_method.html"%}{% else %}
+        {% if object|classname == 'Application' %}{% include "applications/_application.html"%}{% else %}
+        {% endif %}{% endif %}
     {% endwith %}
-{% empty %}
-<li>None</li>
 {% endfor %}
-
-</ul>
+</div>
+{% endif %}
 
 {% endblock %}
 
