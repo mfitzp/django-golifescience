@@ -77,19 +77,8 @@
         <li><a href="{% url 'blog' %}">Blog</a></li>
 <!--        <li><a href="{ % url 'thread-list' subdomain='debat' % }">Discuss</a></li> -->
 
-        <li class="has-dropdown">
-          <a href="{% url 'application-list' %}">Software</a>
-
-          <ul class="dropdown">
-            {% for application in all_applications %}
-                <li><a href="{% url 'application' application_id=application.id application_slug=application.slug %}">{{ application.name }}</a></li>
-            {% endfor %}
-          </ul>
-
-        </li>
-
+        <li><a href="{% url 'application-list' %}">Software</a></li>
         <li><a href="{% url 'method-list' %}">Protocols</a></li>
-
         <li><a href="{% url 'publication-list' %}">Papers</a></li>
 
 		{% if user.get_profile %}
