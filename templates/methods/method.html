@@ -46,7 +46,7 @@
     <p>{{ method.notes|markdown:"safe,tables" }}</p>
 {% endif %}
 <!-- </div></div>
-<div class="row"><div class="twelve columns"> -->
+<div class="row"><div class="large-12 columns"> -->
     {% if method.materials %}
 <h3 data-magellan-destination="requirements">Requirements</h3>
     <ul class="disc">
@@ -74,7 +74,7 @@
         <div class="step-content">
         <div class="row">
 
-            <div class="twelve columns">
+            <div class="large-12 columns">
                 {{ step.content|markdown:"safe,tables,codehilite" }}
             </div>
         </div></div>
@@ -83,14 +83,14 @@
 
         {% if step.image %}
         <div class="row">
-        <div class="twelve columns>
+        <div class="large-12 columns>
           <a href="{{ MEDIA_URL }}{{ step.image }}" class="imagezoom step-image"><img src="{% thumbnail step.image 660x250 upscale crop %}"></a>
         </div></div>
         {% endif %}
 
         {% if step.tip %}
         <div class="row">
-        <div class="twelve columns"><div class="step-tip">
+        <div class="large-12 columns"><div class="step-tip">
             <i class="general foundicon-idea"></i>
             {{ step.tip|markdown:"safe,tables,codehilite" }}   
         </div></div></div>
@@ -130,7 +130,7 @@
 
     <h6>{% trans "Tags" %}</h6>
     {% with method.tags.all as tags %}
-        <div class="row"><div class="twelve columns tags-horizontal">
+        <div class="row"><div class="large-12 columns tags-horizontal">
             {% include "_tags.html" %}
         </div></div>        
 {% endwith %}

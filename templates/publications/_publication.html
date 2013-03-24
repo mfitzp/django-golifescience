@@ -2,7 +2,7 @@
 {% load core_tags %}
 <div class="publication">
     <div class="row">
-        <div class="twelve columns">
+        <div class="large-12 columns">
             <p>
             {{ publication.author }} <a href="{{ publication.url }}">{{ publication.title }}</a> <i>{{ publication.publisher }}</i> {% if publication.published %}({{ publication.published.year }}){% endif %}
             <a href="{{ publication.get_absolute_url }}">[+]</a><p/>

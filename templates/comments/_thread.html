@@ -7,7 +7,7 @@
 
     <div class="row">
 
-    <div class="twelve columns">
+    <div class="large-12 columns">
         {% with thread.user as user %}{% with 1 as is_mini_mugshot %}{% include "profiles/_mugshot.html" %}{% endwith %}{% endwith %}
         <div class="thread-comment">
             <a href="{% url 'user-profile' username=thread.user.username %}" class="discussion-author">{{ thread.user.get_full_name }}</a>
@@ -18,13 +18,13 @@
     </div>
     </div>
 
-    <div class="row"><div class="ten columns  offset-by-one">
+    <div class="row"><div class="large-10 columns  offset-by-one">
         <blockquote><a href="{{ thread.content_object.get_absolute_url }}">{{ thread.content_object }} <i>{{ thread.content_object.tagline }}</i></a>
             {{ thread.content_object.content|truncatewords:"25" }}</blockquote>
     </div></div>
 
     <div class="row listing-metadata">
-        <div class="twelve columns">
+        <div class="large-12 columns">
             <p><i class="general foundicon-clock"></i> Posted {{ thread.updated_at|brieftimesince }} ago &bull; {{ thread.reply_count }} replies &bull; Latest reply at ***</p>
         </div>
     </div>

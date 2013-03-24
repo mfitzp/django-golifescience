@@ -43,7 +43,7 @@
 
 {% block feature %}
 {% if application.features.count > 0 %}
-<div class="row featured"><div class="twelve columns">
+<div class="row featured"><div class="large-12 columns">
 <div id="featuredContent">
 {% for feature in application.features.all %}
     <div>
@@ -61,14 +61,14 @@
 
 {% block about %}
 <div class="row">
-    <div class="twelve columns" itemprop="description">
+    <div class="large-12 columns" itemprop="description">
         {{ application.description|markdown }}
     </div>
 </div>
 {% endblock %}
 
 {% block content_nav %}
-<div id="content_nav" class="nav_header twelve columns">
+<div id="content_nav" class="nav_header large-12 columns">
 <div class="row">
     <dl id="magellanTopNav" data-magellan-expedition="fixed" class="vertical tabs">
 
@@ -157,7 +157,7 @@ contributions of code and other resources can be found <a href="{{ application.s
 
     <h6>{% trans "Tags" %}</h6>
     {% with application.tags.all as tags %}
-        <div class="row"><div class="twelve columns tags-horizontal">
+        <div class="row"><div class="large-12 columns tags-horizontal">
             {% include "_tags.html" %}
         </div></div>        
     {% endwith %}

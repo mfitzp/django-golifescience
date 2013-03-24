@@ -23,7 +23,7 @@
 
 {% block about %}
 <div class="row">
-    <div class="twelve columns" itemprop="description">
+    <div class="large-12 columns" itemprop="description">
         {{ thread.comment|markdown }}
     </div>
 </div>
@@ -45,7 +45,7 @@
 
     <h6>{% trans "Tags" %}</h6>
     {% with thread.tags.all as tags %}
-        <div class="row"><div class="twelve columns tags-horizontal">
+        <div class="row"><div class="large-12 columns tags-horizontal">
             {% include "_tags.html" %}
         </div></div>        
     {% endwith %}
