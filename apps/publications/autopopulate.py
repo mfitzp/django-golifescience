@@ -11,7 +11,6 @@ from django.db import models
 def getText(nodelist):
     rc = ""
     for node in nodelist:
-        print node
         if node.nodeType == node.TEXT_NODE:
             rc = rc + node.data
     return rc
