@@ -152,7 +152,7 @@
 </div>
 
 {% block sidebar_right_extend %}
-<div class="four columns sidebar">
+<div class="large-4 columns sidebar">
 {% block imageheader %}{% endblock %}
 {% block sidebar_right %}
 {% endblock %}
@@ -165,18 +165,18 @@
 
   <div class="footer">
       <div class="row footer-top">
-        <div class="four columns">
+        <div class="large-4 columns">
         <h6>Made by abl.es</h6>
         <p>An open science project based in the United Kingdom. We're dedicated to promoting open access, open standards and open source in science.
          <a href="{% url 'about' %}">Find out more &rarr;</a></p>
         </div>
 
-        <div class="four columns">
+        <div class="large-4 columns">
         <h6>Using something you found here?</h6>
         <p>Let us know and we'll feature you on our site and reference your papers for others to find! <a href="{% url 'contact' %}">Get in touch &rarr;</a></p>
         </div>
 
-        <div class="four columns">
+        <div class="large-4 columns">
         <h6>Want to know more?</h6>
             <dl>
                 <dd><i class="general foundicon-idea"></i> <a href="{% url 'faq' %}">Read the FAQ &rarr;</a></dd>
@@ -192,7 +192,7 @@
 <div class="footer-content">
 
     <div class="row">
-    <div class="four columns">
+    <div class="large-4 columns">
         <h6>Latest updates</h6>
         <ul class="navlist">
         {% for object in top5s.latest %}
@@ -201,7 +201,7 @@
         </ul>
     </div>
 
-    <div class="four columns">
+    <div class="large-4 columns">
         <h6>Trending</h6>
         <ul class="navlist">
         {% for object in top5s.trending %}
@@ -210,7 +210,7 @@
         </ul>
     </div>
 
-    <div class="four columns">
+    <div class="large-4 columns">
         <h6>Most viewed</h6>
         <ul class="navlist">
         {% for object in top5s.views %}
@@ -226,15 +226,15 @@
 {% endblock %}
 
       <div class="row footer-bottom">
-        <div class="four columns">Site content &copy;2012-{% now "Y" %} <a href="http://abl.es">abl.es</a> Licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a> and <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a></div>
+        <div class="large-4 columns">Site content &copy;2012-{% now "Y" %} <a href="http://abl.es">abl.es</a> Licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a> and <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a></div>
         
-        <div class="four columns" style="text-align:center;">We're on
+        <div class="large-4 columns" style="text-align:center;">We're on
         <a href="https://twitter.com/golifescience" rel="publisher">Twitter</a>,
         <a href="https://facebook.com/research.abl.es" rel="publisher">Facebook</a> and
         <a href="https://plus.google.com/100813895193053083791" rel="publisher">Google+</a>
         </div>
         
-        <div class="six columns" style="text-align:right;">
+        <div class="large-6 columns" style="text-align:right;">
             <a href="{% url 'home' %}">Home</a> &bull;
             <a href="{% url 'faq' %}">FAQ</a> &bull;
             <a href="#top">Top &uarr;</a>
