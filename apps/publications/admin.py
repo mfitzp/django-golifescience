@@ -3,7 +3,7 @@ from django.contrib import admin
 from publications.models import *
 
 class PublicationAdmin(admin.ModelAdmin):
-    fields = ('pmid','doi','isbn','title', 'description', 'author', 'publisher', 'published','created_by')
+    fields = ('pmid','doi','isbn','title', 'abstract', 'author', 'publisher', 'published','created_by')
     #readonly_fields =('namespace', 'title', 'description', 'author', 'publisher', 'published',)
 
 

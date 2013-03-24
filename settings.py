@@ -166,6 +166,7 @@ INSTALLED_APPS = (
     'hitcount',
     'countries',    
 #    'subdomains',
+#   'djangocalais' We're using the API interface provided by this, but not the models so leave inactive
     'registration',
     'postman',
     'licenses',
