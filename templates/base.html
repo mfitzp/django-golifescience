@@ -111,7 +111,7 @@
 </div>
 
 <div class="row logo">
-    <div class="twelve columns">
+    <div class="large-12 columns">
         <a href="/"><img src="{{ MEDIA_URL }}/img/tgols-color-sm.png"></a>
     </div>
 </div>
@@ -129,20 +129,20 @@
 {% endblock %}
 
 {% block author_header %}{% endblock %}
-<div class="eight columns content">
+<div class="large-8 columns content">
     <div class="row header">
-        <div class="twelve columns header-content">
+        <div class="large-12 columns header-content">
             <h1 itemprop="name">{% usemacro title %}</h1>
             <h4>{% block subtitle %}{{ site.slogan }}{% endblock %}</h4>
         </div>
     </div>
     <div class="row header content-about" itemprop="description">
-        <div class="twelve columns">{% block about %}{% endblock %}</div>
+        <div class="large-12 columns">{% block about %}{% endblock %}</div>
     </div>
     {% block feature %}{% endblock %}
     <div class="body"><a name="top"></a>
       <div class="row">
-        <div class="twelve columns body_content">
+        <div class="large-12 columns body_content">
             {% block controls %}{% endblock %}
             {% block content %}{% endblock %}
         </div>
