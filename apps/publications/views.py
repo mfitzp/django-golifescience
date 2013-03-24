@@ -74,5 +74,8 @@ def publication(request, publication_slug, publication_id=None):
                 'morelikethis': SearchQuerySet().more_like_this(publication).models(Publication)[:5],
               }
 
+    #from tagmeta.autotag import opencalais
+    #opencalais(publication)
+
     return render_to_response('publications/publication.html', context, context_instance=RequestContext(request))
 

@@ -22,7 +22,7 @@ from taggit.models import Tag
 from taggit.managers import TaggableManager
 from licenses.fields import LicenseField
 from jsonfield.fields import JSONField
-# Methodmint
+# Methodmind
 from publications.models import Reference, AutoReference
 from authors.models import Author
 from core.actions import object_saved

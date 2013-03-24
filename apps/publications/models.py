@@ -18,12 +18,14 @@ from django.contrib.contenttypes import generic
 from publications import isbn
 from publications import autopopulate
 from publications import autoref
+from core.actions import object_created
 #External
 from autoslug.fields import AutoSlugField
 #from picklefield.fields import PickledObjectField, PickledObject
 from jsonfield.fields import JSONField
-from core.actions import object_created
-
+from taggit.models import Tag
+from taggit.managers import TaggableManager
+    
 # A reference object, pointing to an external resource via URN or URL
 class Reference(models.Model):
     
@@ -224,6 +226,11 @@ class Publication(models.Model):
             # Store meta (picklefield)
             self.meta = data['meta']
 
+            # if data['tags']
+            if 'tags' in data:
+                for tag in data['tags']:
+                    self.tags.add(tag)
+
 
     # Global identifiers (any one will do; pmid > doi > isbn
     pmid = models.CharField('PMID', max_length = 255, blank = True, null=True, unique=True)
@@ -240,6 +247,9 @@ class Publication(models.Model):
     published = models.DateField(max_length=50, blank=True, null=True) 
     # meta
     meta = JSONField(editable=False,blank=True,default=dict())
+
+    # tag    
+    tags = TaggableManager()
 
     created_at = models.DateTimeField(auto_now_add = True, editable = False)
     updated_at = models.DateTimeField(auto_now = True, editable = False)   

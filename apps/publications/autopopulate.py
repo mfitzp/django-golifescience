@@ -8,6 +8,14 @@ from django.core import serializers
 from django.conf import settings
 from django.db import models
 
+def getText(nodelist):
+    rc = ""
+    for node in nodelist:
+        print node
+        if node.nodeType == node.TEXT_NODE:
+            rc = rc + node.data
+    return rc
+
 # Wrapper for service specific (below) because may want to switch out/rearrange priority
 def isbn(uri):
 
@@ -97,7 +105,7 @@ def pmid(uri):
     xml = f.read()
     f.close()
 
-    data = { 'fields': {} , 'meta': {} }
+    data = { 'fields': {} , 'meta': {}, 'tags': [] }
 
     if xml:
         # Pubmed is horribly inconsistent with dates the following matching anything starting with a number, following by anything
@@ -130,13 +138,22 @@ def pmid(uri):
 
 
         # This is horrible; we should use the fetch XML instead of the summary above - but it's formatted differently and missing data.
-        f = urllib.urlopen("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&rettype=abstract&retmode=text&id=" + uri)
-        # We get it out as text, split on newlines and pull the abstract assuming it comes out right.
-        text = f.read()
+        f = urllib.urlopen("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&rettype=abstract&retmode=xml&id=" + uri)
+        # We get it out as xml; pull out the abstract and the tags
+        dom = parse(f)
         f.close()
-        fields = text.split('\n\n')
-        if len(fields) == 7:
-            data['fields']['abstract'] = fields[4]
+
+
+        data['fields']['abstract'] = ''
+        for node in dom.getElementsByTagName('AbstractText'):
+            data['fields']['abstract'] += getText(node.childNodes) + '\n'
+
+
+        for node in dom.getElementsByTagName('DescriptorName'):
+            data['tags'].append( getText(node.childNodes) )
+
+        for node in dom.getElementsByTagName('QualifierName'):
+            data['tags'].append( getText(node.childNodes) )
 
         return data
     else:
