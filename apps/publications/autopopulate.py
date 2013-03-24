@@ -7,6 +7,7 @@ from xml.dom.minidom import parse, parseString
 from django.core import serializers
 from django.conf import settings
 from django.db import models
+from django.template.defaultfilters import slugify
 
 def getText(nodelist):
     rc = ""
@@ -148,11 +149,21 @@ def pmid(uri):
             data['fields']['abstract'] += getText(node.childNodes) + '\n'
 
 
+        tags, tagl = [], []
         for node in dom.getElementsByTagName('DescriptorName'):
-            data['tags'].append( getText(node.childNodes) )
+            tags.append( getText(node.childNodes) )
 
         for node in dom.getElementsByTagName('QualifierName'):
-            data['tags'].append( getText(node.childNodes) )
+            tags.append( getText(node.childNodes) )
+
+        for tag in tags:
+            if ',' in tag:
+                tagl.extend(tag.split(','))
+            else:
+                tagl.append(tag)
+
+        for tag in tagl:
+            data['tags'].append( slugify( tag ) )                 
 
         return data
     else:
