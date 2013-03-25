@@ -64,12 +64,12 @@
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
 {% block forkme %}{% endblock %}
 <div class="top-spacer"></div>
-<div class="contain-to-grid sticky">
+<div class="contain-to-grid sticky top-bar-wrapper">
 <nav class="top-bar">
   <ul class="title-area">
     <!-- Title Area -->
-    <li class="name">
-      <h1><a href="#">{{ site.name }}</a></h1>
+    <li class="name logo">
+      <a href="/" class="logo-image"></a>
     </li>
     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
     <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -114,24 +114,31 @@
 
 </div>
 
-<div class="row logo">
-    <div class="large-12 columns">
-        <a href="/"><img src="{{ MEDIA_URL }}/img/tgols-color-sm.png"></a>
-    </div>
+
+<div class="row showcase">
+
+<ul data-orbit data-options="timer_speed:5000; animation_speed: 1000; prev_class:hide; next_class:hide; bullets_container_class: orbit-bullets;" >
+{% for si in showcase %}
+  <li>
+    <a href="{{ si.content_object.get_absolute_url }}"><img src="{{ MEDIA_URL }}{{ si.image }}" /></a>
+  </li>
+{% endfor %}
+</ul>
+
 </div>
 
-<div class="row"><div class="large-12 columns header-alert-box">
+
+<div class="row header-alert">
 {% block alert %}
-<a href="mailto:writers@golifescience.com" class="header-alert">
-    <div class="header-alert-type header-alert-type-notice"><i class="social foundicon-social"></i><span>Announcement</span></div>
-    <p class="header-alert-text">We are looking for bioinformatics writers, bloggers and PhD students to join our team. Get in touch!</p>
-</a>
+<div class="large-2 columns header-alert-type header-alert-type-notice"><i class="social foundicon-thumb-up"></i>&nbsp;<span>Announcement</span></div>
+<div class="large-10 columns header-alert-text">
+<a href="mailto:writers@golifescience.com" class="header-alert">We are looking for bioinformatics writers, bloggers and PhD students to join our team. Get in touch!</a>
+</div>
 {% endblock %}
-</div></div>
+</div>
 
 <div class="row page"  id="bigc">
 
-{% block author_header %}{% endblock %}
 <div class="large-8 columns content">
     <div class="row header">
         <div class="large-12 columns header-content">
@@ -139,6 +146,7 @@
             <h4>{% block subtitle %}{{ site.slogan }}{% endblock %}</h4>
         </div>
     </div>
+    {% block author_header %}{% endblock %}
     <div class="row header content-about" itemprop="description">
         <div class="large-12 columns">{% block about %}{% endblock %}</div>
     </div>
@@ -168,31 +176,7 @@
 
 <div class="footer">
 
-      <div class="row footer-top">
-        <div class="large-4 columns">
-        <h6>Made by abl.es</h6>
-        <p>An open science project based in the United Kingdom. We're dedicated to promoting open access, open standards and open source in science.
-         <a href="{% url 'about' %}">Find out more &rarr;</a></p>
-        </div>
 
-        <div class="large-4 columns">
-        <h6>Using something you found here?</h6>
-        <p>Let us know and we'll feature you on our site and reference your papers for others to find! <a href="{% url 'contact' %}">Get in touch &rarr;</a></p>
-        </div>
-
-        <div class="large-4 columns">
-        <h6>Want to know more?</h6>
-            <dl>
-                <dd><i class="general foundicon-idea"></i> <a href="{% url 'faq' %}">Read the FAQ &rarr;</a></dd>
-                <dd><i class="social foundicon-twitter"></i> <a href="http://twitter.com/#!/_ables_" target="_blank">Follow us on Twitter &rarr;</a></dd>
-                <!-- <li><i class="social foundicon-facebook"></i> <a href="http://facebook.com/_ables_">Find us on Facebook →</a></li> -->
-            </dl>
-        </div>
-
-      </div>
-
-
-{% block footer_content %}
 <div class="row footer-content">
 
     <div class="large-4 columns">
@@ -224,22 +208,19 @@
 
 </div>
 
-{% endblock %}
-
       <div class="row footer-bottom">
-        <div class="large-4 columns">Site content &copy;2012-{% now "Y" %} <a href="http://abl.es">abl.es</a> Licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a> and <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a></div>
+        <div class="large-4 columns">&copy;2012-{% now "Y" %} <a href="http://golifescience.com">goLS</a> Licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a> and <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a></div>
         
         <div class="large-4 columns" style="text-align:center;">We're on
-        <a href="https://twitter.com/golifescience" rel="publisher">Twitter</a>,
-        <a href="https://facebook.com/research.abl.es" rel="publisher">Facebook</a> and
-        <a href="https://plus.google.com/100813895193053083791" rel="publisher">Google+</a>
+            <a href="https://twitter.com/golifescience" rel="publisher">Twitter</a>,
+            <a href="https://facebook.com/research.abl.es" rel="publisher">Facebook</a> and
+            <a href="https://plus.google.com/100813895193053083791" rel="publisher">Google+</a>
         </div>
         
-        <div class="large-6 columns" style="text-align:right;">
+        <div class="large-4 columns" style="text-align:right;">
             <a href="{% url 'home' %}">Home</a> &bull;
             <a href="{% url 'faq' %}">FAQ</a> &bull;
             <a href="#top">Top &uarr;</a>
-       <!--     <a href="{ % url 'statistics' None % }">Statistics</a> &bull; -->
         </div>
       </div>
 
@@ -247,15 +228,24 @@
 
 {% block modals %}{% endblock %}
 
-    <script src="{{ MEDIA_URL }}foundation/js/vendor/jquery.js"></script>
-    <!-- Custom JS -->
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
-    <script src="{{ MEDIA_URL }}js/core.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}foundation/js/vendor/jquery.js"></script>
 
     <!-- Included JS Files (Minified) -->
     <script src="{{ MEDIA_URL }}foundation/js/foundation.min.js"></script>
     <!-- Initialize JS Plugins -->
     <script src="{{ MEDIA_URL }}foundation/js/foundation/foundation.js"></script>
+    <script src="{{ MEDIA_URL }}foundation/js/foundation/foundation.orbit.js"></script>
+    <script src="{{ MEDIA_URL }}foundation/js/foundation/foundation.topbar.js"></script>
+
+    <script>
+      $(document).foundation();
+    </script>
+
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-plugins.js"></script>
+    <script src="{{ MEDIA_URL }}js/core.js"></script>
+
     <script type="text/javascript">
       $(document).ready(function() {
         // Javascript support enabled, initialise document
@@ -304,7 +294,7 @@
         (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
     }());
     </script>
-
+    
 {% block extrajs %}{% endblock %}
 </body>
 </html>

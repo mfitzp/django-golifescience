@@ -12,6 +12,7 @@ from applications.models import Application
 from blog.models import Article
 from methods.models import Method
 from publications.models import Publication
+from showcase.models import ShowcaseItem
 
 def languages( context ):
 	return { 'LANGUAGES': settings.LANGUAGES, 'LANGUAGE_CODE': context.LANGUAGE_CODE }
@@ -28,6 +29,17 @@ def site( context ):
 #        'site': settings.SUBDOMAIN_SITES[ context.subdomain ],
 #        'all_sites': settings.SUBDOMAIN_SITES,
     }
+
+def showcase( context ):
+
+    showcase = cache.get('showcase', None ) 
+    if showcase is None:
+        showcase = ShowcaseItem.objects.order_by('-created_at')[:5] # Limit 5
+        cache.set('showcase', showcase ) 
+    return {
+        'showcase': showcase
+    }        
+
 
 def top5s( context ):
 

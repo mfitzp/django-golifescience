@@ -184,6 +184,7 @@ INSTALLED_APPS = (
     'publications',
     'profiles',
     'authors',
+    'showcase',
 )
  
 
@@ -216,6 +217,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 	'context_processors.modelglobals',
 	'context_processors.site',
 	'context_processors.top5s',
+	'context_processors.showcase',
 )
 
 

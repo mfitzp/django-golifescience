@@ -6,22 +6,22 @@
 <div class="listing">
 
     <div class="row">
-        <div class="three columns right">
+        <div class="large-3 columns right">
         {% if object.image %}
             <img src="{% thumbnail object.image 100x100 upscale crop %}">
         {% endif %}
         </div>
-        <div class="nine columns"><h5><a href="{% url 'application' application_id=object.id application_slug=object.slug %}">{{ object }}</a></h5>
+        <div class="large-9 columns"><h5><a href="{% url 'application' application_id=object.id application_slug=object.slug %}">{{ object }}</a></h5>
     <p>{{ object.description|markdown }}</p>
     </div>    
     </div>
     <div class="row">
-    <div class="nine columns offset-by-three ">
+    <div class="large-9 columns large-offset-3 ">
         <div class="object-tags tags-horizontal">{% with object.tags.all as tags %}{% include "_tags.html" %}{% endwith %}</div>
     </div>
     </div>
     <div class="row listing-metadata">
-        <div class="nine columns offset-by-three ">
+        <div class="large-9 columns large-offset-3 ">
             <p>
                 <i class="social foundicon-torso"></i> {% author_et_al object.authors.all %} &bull;
 <!--                <i class="social foundicon-torso"></i> Added by {{ object.author.get_full_name }} &bull; -->

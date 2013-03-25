@@ -20,9 +20,6 @@
 {% block extrajs %}
 {{ block.super }}
 <script type='text/javascript'>
-   $(window).load(function() {
-       $('#featuredContent').orbit({ fluid: '8x4', directionalNav: false });
-   });
   $(document).ready(function() {
   {% get_hit_count_javascript for application %}
   });
@@ -43,17 +40,19 @@
 
 {% block feature %}
 {% if application.features.count > 0 %}
+<h5 data-magellan-destination="features">Features</h5>
 <div class="row featured"><div class="large-12 columns">
-<div id="featuredContent">
+<ul data-orbit data-options="timer_speed:0; animation_speed: 0; prev_class:hide; next_class:hide; bullets_container_class: orbit-bullets;" >
 {% for feature in application.features.all %}
-    <div>
+<li>
         <img src="{% thumbnail feature.image 960x480 upscale crop %}">
-        <div class="feature-overlay">    
+        <div class="orbit-caption">    
             <h5>{{ feature.title }}</h5><p>{{ feature.description|markdown }}</p>
         </div>
-    </div>
+    </li>
 {% endfor %}
-</div></div></div>
+
+</ul></div></div>
 {% endif %}
 
 {% endblock %}
