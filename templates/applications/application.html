@@ -137,7 +137,9 @@ contributions of code and other resources can be found <a href="{{ application.s
 
 {% if application.license %}
 <h3 data-magellan-destination="licensing">Licensing</h3>
-<p><strong>{{ application.name }}</strong> is provided under the <a href="{{ application.license.url }}">{{ application.license.name }}</a>. {{ application.license.description }}</p>
+<p><strong>{{ application.name }}</strong>
+{% if application.license.slug == 'proprietary' %} is proprietary software{% else %}is provided under the <a href="{{ application.license.url }}">{{ application.license.name }}</a>{% endif %}.
+{{ application.license.description }}</p>
 {% endif %}
 
 {% endblock %}
