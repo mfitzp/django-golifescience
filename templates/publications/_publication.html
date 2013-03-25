@@ -4,8 +4,8 @@
     <div class="row">
         <div class="large-12 columns">
             <p>
-            {{ publication.author }} <a href="{{ publication.url }}">{{ publication.title }}</a> <i>{{ publication.publisher }}</i> {% if publication.published %}({{ publication.published.year }}){% endif %}
-            <a href="{{ publication.get_absolute_url }}">[+]</a><p/>
+            {{ publication.author }} <a href="{{ publication.get_absolute_url }}">{{ publication.title }}</a> <i>{{ publication.publisher }}</i> {% if publication.published %}({{ publication.published.year }}){% endif %}
+            <a href="{{ publication.url }}">{% if publication.doi %}doi:{{ publication.doi }}{% else %}pmid:{{ publication.pmid }}{% endif %}</a><p/>
         </div>
     </div>
 </div>
