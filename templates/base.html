@@ -85,6 +85,8 @@
         <li><a href="{% url 'method-list' %}">Protocols</a></li>
         <li><a href="{% url 'publication-list' %}">Papers</a></li>
 
+        <li><a href="{% url 'users' %}">People</a></li>
+
 		{% if user.get_profile %}
         {% postman_unread as unread_count %}
             <li class="has-dropdown">
