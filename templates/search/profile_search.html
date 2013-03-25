@@ -25,7 +25,7 @@
             {% endwith %}
             {% endfor %}
         {% else %}
-            {% cache 600 all_profiles site %}
+            {% cache 600 all_profiles %}
                 {% for profile in all_objects %}
 
                     {% include "profiles/_profile.html" %}
