@@ -93,15 +93,18 @@ def application_edit(request, application_id=None):
         application = None
 
     if request.method == 'POST':
-        form = ApplicationForm(request.POST)
+        form = ApplicationForm(request.POST, request.FILES, instance=application)
         # If the form is valid, create a new object and redirect to it.
         if form.is_valid():
             application = form.save(commit=False)
             application.created_by = request.user
             application.save()
             form.save_m2m()
-
-            messages.add_message(request, messages.SUCCESS, _(u"You have successfully added ") + application.name )
+        
+            if application_id:
+                messages.add_message(request, messages.SUCCESS, _(u"You have successfully edited '%s'" % application.name) )
+            else:
+                messages.add_message(request, messages.SUCCESS, _(u"You have successfully added '%s'" % application.name) )
 
             # Create default protocol for this task; skip through to editing it immediately to add steps/etc.
             return HttpResponseRedirect(reverse('application', kwargs={'application_id':application.id, 'application_slug':application.slug} ))

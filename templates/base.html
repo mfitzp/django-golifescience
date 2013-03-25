@@ -101,8 +101,8 @@
 
             </li>
 		{% else %}
-            <li><a href="{% url 'login' %}" onclick="$('#modal-login').modal('show'); return false;">{% trans "Sign in" %}</a></li>
-            <li><a href="{% url 'registration_register' %}">{% trans "Register" %}</a></li>
+            <li><a href="{% url 'login' %}" data-reveal-id="loginModal">{% trans "Sign in" %}</a></li>
+            <li><a href="{% url 'registration_register' %}" data-reveal-id="registerModal">{% trans "Register" %}</a></li>
         {% endif %}
 
         <li><a href="{% url 'contact' %}">Contact</a></li>
@@ -133,20 +133,29 @@
 {% block alert %}
 <div class="large-2 columns header-alert-type header-alert-type-notice"><i class="social foundicon-thumb-up"></i>&nbsp;<span>Announcement</span></div>
 <div class="large-10 columns header-alert-text">
-<a href="mailto:writers@golifescience.com" class="header-alert">We are looking for bioinformatics writers, bloggers and PhD students to join our team. Get in touch!</a>
+<a href="{% url 'application-create' %}" class="header-alert">We've opened our database! <strong>Click here</strong> to add your own bioinformatics Applications to the list</a>
 </div>
-
-<div class="large-2 columns header-alert-type header-alert-type-notice"><i class="social foundicon-thumb-up"></i>&nbsp;<span>Announcement</span></div>
-<div class="large-10 columns header-alert-text">
-<a href="{% url 'application-create' %}" class="header-alert">Add your stuff now!</a>
-</div>
-
+<!-- <a href="mailto:writers@golifescience.com" class="header-alert">We are looking for bioinformatics writers, bloggers and PhD students to join our team. Get in touch!</a> -->
 {% endblock %}
 </div>
+
+
+{% if messages %}
+{% for message in messages %}
+<div class="row header-alert">
+    <div class="large-2 columns header-alert-type header-alert-type-{{ message.tags }} success"><span>{{ message.tags }}</span></div>
+    <div class="large-10 columns header-alert-text success">
+            <span class="header-alert success">{{ message|safe }}</span>
+    </div>
+</div>
+{% endfor %}    
+{% endif %}
+
 
 <div class="row page"  id="bigc">
 
 <div class="large-8 columns content">
+
     <div class="row header">
         <div class="large-12 columns header-content">
             <h1 itemprop="name">{% usemacro title %}</h1>
@@ -213,7 +222,7 @@
         </ul>
     </div>
 
-</div>
+</div>data-reveal-id="socialModal"
 
       <div class="row footer-bottom">
         <div class="large-4 columns">&copy;2012-{% now "Y" %} <a href="http://golifescience.com">goLS</a> Licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY</a> and <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a></div>
@@ -234,6 +243,17 @@
 </div>
 
 {% block modals %}{% endblock %}
+
+{% if not request.user.is_authenticated %}
+<!-- Login/Register modals -->
+<div id="loginModal" class="reveal-modal small">
+    {% include "registration/_login_modal.html" %}
+</div>
+
+<div id="registerModal" class="reveal-modal small">
+    {% include "registration/_registration_modal.html" %}
+</div>
+{% endif %}
 
     <script type="text/javascript" src="{{ MEDIA_URL }}foundation/js/vendor/jquery.js"></script>
 
