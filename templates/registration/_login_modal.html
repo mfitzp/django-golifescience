@@ -1,0 +1,24 @@
+    <h2>Login</h2>
+
+    <form action="/accounts/login/" method="post" class="well">{% csrf_token %}
+
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <label class="control-label" for="id_username">Username</label>
+            <input id="id_username" name="username" maxlength="30" type="text">
+            <label class="control-label" for="id_password">Password</label>
+            <input name="password" id="id_password" type="password">
+
+<!--
+    <p>You can also log in with your favourite social network.</p>
+    <a href="{ % url socialauth_begin 'facebook' %}"><img src="{{ MEDIA_URL }}img/social/facebook-logo.png" alt="Log in using Facebook"></a>
+    <a href="{ % url socialauth_begin 'twitter' %}"><img src="{{ MEDIA_URL }}img/social/twitter-logo.png" alt="Log in using Twitter"></a>
+    <a href="{ % url socialauth_begin 'google-oauth2' %}"><img src="{{ MEDIA_URL }}img/social/google-logo.png" alt="Log in using Google"></a>
+-->
+
+        <a href="#" onclick="$('#loginModal').trigger('reveal:close');" class="button secondary">Close</a>
+        <button type="submit" class="">Sign in</button>
+
+    </form>
+
+
+

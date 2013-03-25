@@ -1,0 +1,25 @@
+    <h2>Register</h2>
+
+    <p><strong><a href="http://{{ site.domain }}/">Game of Life Science</a></strong> is a site follwoing bioinformatics, open access and open source in science.
+Submit your applications to become part of the story. 
+To get started simply fill in the form below!
+
+    <p>
+
+    <form action="{% url 'registration_register' %}" method="post" class="well">
+    {% csrf_token %}
+        <label for="id_username">Username:</label>
+        <input id="id_username" type="text" class="required" name="username" maxlength="30" />
+        <label for="id_email">E-mail:</label>
+        <input id="id_email" type="text" class="required" name="email" maxlength="75" />
+        <label for="id_password1">Password:</label>
+        <input id="id_password1" type="password" class="required" name="password1" />
+        <label for="id_password2">Password (again):</label>
+        <input id="id_password2" type="password" class="required" name="password2" />
+
+        <a href="#" onclick="$('#registerModal').trigger('reveal:close');" class="button secondary">Close</a>
+        <button type="submit" class="button">Register &raquo;</button>
+
+    </form>
+    </p>
+

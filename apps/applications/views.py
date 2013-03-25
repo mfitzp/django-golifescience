@@ -16,6 +16,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 # abl.es
 from core.http import Http403  
 from applications.models import *
+from applications.forms import *
 # External
 from tagmeta.models import TagMeta
 from haystack.query import SearchQuerySet, RelatedSearchQuerySet
@@ -33,7 +34,7 @@ def application_noslug(request, application_id):
 # Wrapper provides sorting via GET request url, handling via generic view
 def applications(request, **kwargs):
     
-    # Do method-specific sorting on fields, ratings, etc.
+    # Do application-specific sorting on fields, ratings, etc.
     #    # Check valid
     #    kwargs['queryset'] = kwargs['queryset'].order_by(order_by)
 
@@ -80,4 +81,45 @@ def application(request, application_id, application_slug = None):
               }
 
     return render_to_response('applications/application.html', context, context_instance=RequestContext(request))
+
+
+# Create the basic outline information for the recipe, then jump through to full edit (steps/etc. above)
+@login_required   
+def application_edit(request, application_id=None):
+
+    if application_id:
+        application = get_object_or_404(Application, pk=application_id)
+    else:
+        application = None
+
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST, request.FILES, instance=application)
+        # If the form is valid, create a new object and redirect to it.
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.created_by = request.user
+            application.save()
+            form.save_m2m()
+        
+            if application_id:
+                messages.add_message(request, messages.SUCCESS, _(u"You have successfully edited '%s'" % application.name) )
+            else:
+                messages.add_message(request, messages.SUCCESS, _(u"You have successfully added '%s'" % application.name) )
+
+            # Create default protocol for this task; skip through to editing it immediately to add steps/etc.
+            return HttpResponseRedirect(reverse('application', kwargs={'application_id':application.id, 'application_slug':application.slug} ))
+
+    else:
+        form = ApplicationForm(instance=application)
+
+    # Render our template
+    return render_to_response('applications/application_form.html',
+        {
+            'form': form,
+            'object': application,
+        },
+        context_instance=RequestContext(request))
+
+
+
 

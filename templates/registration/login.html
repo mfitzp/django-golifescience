@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}Sign in and get involved!{% endblock %}
-{% block subtitle %}Or just sign in, that's fine too{% endblock %}
+{% block subtitle %}Add your applications, protocols and more{% endblock %}
 {% block widebar %}{% endblock %}
 
 {% block content %}
 
-<p><strong><a href="http://{{ site.domain }}/">{{ site.name }}</a></strong> is a community network where you can {{ site.meta.tagline|lower }}.</p>
+<p><strong><a href="http://{{ site.domain }}/">{{ site.name }}</a></strong> is a bioinformatics news site that tracks the latest developments in the field.
+<br />To do that we need <em>you</em> to tell us about them!</p>
 <p><strong>Sign in</strong> below or <strong><a href="{% url 'registration_register' %}">create a new account</a></strong> to get involved.</p>
 </div></div>
 <div class="row">

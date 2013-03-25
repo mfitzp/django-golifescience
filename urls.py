@@ -40,6 +40,7 @@ urlpatterns = patterns('',
     #url(r'^partner/$', 'django.views.generic.simple.direct_to_template', {'template': 'partner.html'}, name='partner'),
 
     (r'^comments/', include('django.contrib.comments.urls')),
+#    url('^markdown/', include( 'django_markdown.urls')),
 
     # Applications
     (r'^profiles/',      include('profiles.urls')),

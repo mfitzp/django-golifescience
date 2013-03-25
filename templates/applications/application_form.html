@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load core_tags %}
+{% load countries_tags %}
+
+{% cycle 'odd' 'even' as zebra %}
+
+{% block title %}{% if object %}Edit '{{ object }}'{% else %}Add new application{% endif %}{% endblock %}
+{% block subtitle %}Show us what you got{% endblock %}
+
+{% block content %}
+
+        <form action="{% if object %}{% url 'application-edit' application_id=object.id %}{% else %}{% url 'application-create' %}{% endif %}" method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+            {{ form }}
+        <div class="form-actions">
+            <a href="javascript:window.back();" class="button secondary">Cancel</a>
+            <button type="submit" class="button">Save</button>
+        </div>
+        </form>
+
+{% endblock %}
+
+
+
+
+

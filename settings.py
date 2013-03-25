@@ -166,7 +166,8 @@ INSTALLED_APPS = (
     'jsonfield',
     'mptt',
     'hitcount',
-    'countries',    
+    'countries',   
+#    'django_markdown', 
 #    'subdomains',
 #   'djangocalais' We're using the API interface provided by this, but not the models so leave inactive
     'registration',

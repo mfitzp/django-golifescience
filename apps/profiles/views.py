@@ -108,7 +108,7 @@ def search(request):
         if form.is_valid():
             query = form.cleaned_data['q']
             results = form.search()
-            results = results.filter(user__is_active = True ).order_by('-user__reputation__reputation')
+            results = results.filter(user__is_active = True )#.order_by('-user__reputation__reputation')
             paginator = Paginator(results, 10)
             try:
                 page = paginator.page(int(request.GET.get('page', 1)))

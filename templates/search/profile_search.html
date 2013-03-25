@@ -6,7 +6,8 @@
 {% load countries_tags %}
 {% load cache %}
 
-{% block content_title%}{% trans "People" %}{% endblock %}
+{% block title %}{% trans "People" %}{% endblock %}
+{% block subtitle %}{% trans "The important ones at least" %}{% endblock %}
 
 {% block content %}
 
@@ -15,25 +16,25 @@
         <button type="submit" class="btn">Search</button>
     </form>
 
-    <div class="stack-horizontal">
+<ul class="small-block-grid-3 large-block-grid-5">
         {% if query %}
             {% for result in page.object_list %}
             {% with result.object as profile %}    
             
-                {% include "profiles/_profile.html" %}
+                <li>{% include "profiles/_profile.html" %}</li>
 
             {% endwith %}
             {% endfor %}
         {% else %}
-            {% cache 600 all_profiles site %}
+            {% cache 600 all_profiles %}
                 {% for profile in all_objects %}
 
-                    {% include "profiles/_profile.html" %}
+                    <li>{% include "profiles/_profile.html" %}</li>
 
                 {% endfor %}    
             {% endcache %}
         {% endif %}
-    </div>
+    </ul>
 
 
 {% endblock %}

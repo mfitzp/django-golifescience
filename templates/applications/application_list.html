@@ -62,6 +62,12 @@
 
 {% block sidebar_right %}
 
+    <div class="panel">
+        <h4>Got an app to share?</h4>
+        <p>You can now <a href="{% url 'application-create' %}">add your own applications</a> to Game of Life Science. Tell us about it and become part of the 
+        conversation.</p>
+    </div>
+
     {% if directory %}
         <h6>Browse</h6>
         {% include "_directory.html" %}
