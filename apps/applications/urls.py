@@ -18,9 +18,13 @@ urlpatterns = patterns('',
             },
             name='application-list'),
 
+    url(r'^create/$', 'applications.views.application_edit', name='application-create' ),
+    url(r'^(?P<application_id>\d+)/edit/$', 'applications.views.application_edit', name='application-edit' ),
 
     url(r'^(?P<application_id>\d+)/$', 'applications.views.application_noslug', name='application' ),
     url(r'^(?P<application_slug>\w+)/$', 'applications.views.application_noid', name='application' ),
+
+
 
     url(r'^tagged/(?P<slug>[^/]+)/$', 'core.views.objects_tagged', {'Model':Application, 'template_name':'applications/application_list.html',}, name='application-tagged',),
 
