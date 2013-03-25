@@ -83,8 +83,8 @@
 
         {% if step.image %}
         <div class="row">
-        <div class="large-12 columns>
-          <a href="{{ MEDIA_URL }}{{ step.image }}" class="imagezoom step-image"><img src="{% thumbnail step.image 660x250 upscale crop %}"></a>
+        <div class="large-12 columns" style="text-align:center;">
+          <a href="{{ MEDIA_URL }}{{ step.image }}" class="imagezoom step-image"><img src="{{ MEDIA_URL }}{{ step.image }}"></a>
         </div></div>
         {% endif %}
 
@@ -162,7 +162,7 @@
 {% endblock %}
 
 {% block modals %}
-<div id="socialModal" class="reveal-modal [expand, xlarge, large, medium, small]">
+<div id="socialModal" class="reveal-modal tiny">
   <h2>Share this protocol.</h2>
   {% with method as object %}{% include "_social.html" %}{% endwith %}
 </div>
