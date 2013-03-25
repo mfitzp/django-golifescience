@@ -84,7 +84,7 @@
         {% if step.image %}
         <div class="row">
         <div class="large-12 columns>
-          <a href="{{ MEDIA_URL }}{{ step.image }}" class="imagezoom step-image"><img src="{% thumbnail step.image 660x250 upscale crop %}"></a>
+          <a href="{{ MEDIA_URL }}{{ step.image }}" class="imagezoom step-image"><img src="{{ MEDIA_URL }}{{ step.image }}"></a>
         </div></div>
         {% endif %}
 
