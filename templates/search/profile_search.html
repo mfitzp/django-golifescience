@@ -15,26 +15,24 @@
         {{ form.as_table }}
         <button type="submit" class="btn">Search</button>
     </form>
-
-    <div class="stack-horizontal">
+    
+   
         {% if query %}
             {% for result in page.object_list %}
             {% with result.object as profile %}    
-            
+                <div class="small-4 columns">
                 {% include "profiles/_profile.html" %}
-
+                </div>
             {% endwith %}
             {% endfor %}
         {% else %}
             {% cache 600 all_profiles %}
                 {% for profile in all_objects %}
-
+                    <div class="small-4 columns">
                     {% include "profiles/_profile.html" %}
-
+                    </div>
                 {% endfor %}    
             {% endcache %}
         {% endif %}
-    </div>
-
 
 {% endblock %}
