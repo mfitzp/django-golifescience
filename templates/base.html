@@ -120,13 +120,15 @@
 
 <div class="row showcase">
 
-<ul data-orbit data-options="timer_speed:{% if showcase.count > 1 %}5000{% else %}0{% endif %}; animation_speed: 1000; prev_class:hide; next_class:hide; bullets_container_class: orbit-bullets;" >
-{% for si in showcase %}
-  <li class="showcase-item">
+<!--<ul data-orbit data-options="timer_speed:{% if showcase.count > 1 %}5000{% else %}0{% endif %}; animation_speed: 1000; prev_class:hide; next_class:hide; bullets_container_class: orbit-bullets;" >
+{ % for si in showcase %} 
+  <li class="showcase-item"> -->
+    {% with showcase|first as si %}
     <a href="{{ si.content_object.get_absolute_url }}"><img src="{{ MEDIA_URL }}{{ si.image }}" /></a>
-  </li>
-{% endfor %}
-</ul>
+    {% endwith %}
+<!--  </li>
+{ % endfor %}
+</ul>-->
 
 </div>
 
