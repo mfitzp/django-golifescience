@@ -40,7 +40,7 @@ ADMIN_MEDIA_URL_ROOT = ''
 DEFAULT_HOST = 'golifescience.com'
 SESSION_COOKIE_DOMAIN = '.golifescience.com'
 
-BLACKLIST_EMAIL_DOMAINS = ['mail.ru']
+BLACKLIST_EMAIL_DOMAINS = []
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that diffeinstallables/static/admin/css/base.cssr between development and production.
