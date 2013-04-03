@@ -101,38 +101,29 @@
 {% endblock %}
 
 {% block sidebar_right %}
-    <div class="row">
-    <div class="large-12 columns">
+
         <h6>Latest updates</h6>
         <ul class="navlist">
         {% for object in top5s.latest %}
             <li><span class="label radius label-{{ object|classname|lower }}">{{ object.created_at|verybrieftimesince }}</span>&nbsp; <a href="{{ object.get_absolute_url }}">{{ object }} <i>{{ object.tagline }}</i></a></li>
         {% endfor %}
         </ul>
-    </div>
-    </div>
 
-    <div class="row">
-    <div class="large-12 columns">
+
         <h6>Trending</h6>
         <ul class="navlist">
         {% for object in top5s.trending %}
             <li><span class="label radius label-{{ object|classname|lower }}">{{ object.hit_count }}</span>&nbsp; <a href="{{ object.get_absolute_url }}">{{ object }} <i>{{ object.tagline }}</i></a></li>
         {% endfor %}
         </ul>
-    </div>
-    </div>
 
-    <div class="row">
-    <div class="large-12 columns">
+
         <h6>Most viewed</h6>
         <ul class="navlist">
         {% for object in top5s.views %}
             <li><span class="label radius label-{{ object|classname|lower }}">{{ object.hit_count }}</span>&nbsp; <a href="{{ object.get_absolute_url }}">{{ object }} <i>{{ object.tagline }}</i></a></li>
         {% endfor %}
         </ul>
-    </div>
-    </div>
 
 
 {% endblock %}
