@@ -167,7 +167,7 @@ INSTALLED_APPS = (
     'mptt',
     'hitcount',
     'countries',   
-#    'django_markdown', 
+    'django_markdown', 
 #    'subdomains',
 #   'djangocalais' We're using the API interface provided by this, but not the models so leave inactive
     'registration',
@@ -225,7 +225,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 AUTH_PROFILE_MODULE = "profiles.userprofile"
-
+MARKDOWN_EDITOR_SKIN = 'simple'
 
 # Haystack configuration
 HAYSTACK_CONNECTIONS = {
