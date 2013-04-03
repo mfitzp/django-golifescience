@@ -58,58 +58,42 @@
 
 {% block content %}
 
-<div class="features">
+<div class="articles">
 
-<div class="row">        
-{% with features|first as feature %}
-<div class="large-8 columns feature-item">
-    <div class="feature-item-image feature-item-image-large content-type-{{ feature|classname|lower }}" style="{% if feature.image %}background:center no-repeat url('{% thumbnail feature.image 360x200 upscale crop %}'){% endif %}">
-        <div class="feature-item-type label-{{ feature|classname|lower }}">{{ feature|classname|capfirst }}</div>
-        <a href="{{ feature.get_absolute_url }}"></a>
+
+{% for feature in features %}
+    
+    <div class="row">        
+        <div class="large-12 columns feature-item">
+
+            {% if feature|classname|lower == 'article' %}
+                <div class="article">
+
+                   <div class="feature-item-image feature-item-image-large content-type-{{ feature|classname|lower }}" style="{% if feature.image %}background:center no-repeat url('{% thumbnail feature.image 360x200 upscale crop %}'){% endif %}">
+                        <div class="feature-item-type label-{{ feature|classname|lower }}">{{ feature|classname|capfirst }}</div>
+                        <a href="{{ feature.get_absolute_url }}"></a>
+                    </div>
+                    <h4 class="feature-item-title"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h4>
+                    <div class="feature-item-snippet">{{feature.tagline }}</div>
+                    <div class="feature-item-content">{{ feature.description|truncatewords:"50" }}</div>
+                    <div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username %}">{{ feature.created_by.get_full_name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
+                  
+                </div> 
+        
+            {% else %}
+                <!-- snippet -->
+                <div class="aside">
+                    <span class="label radius label-{{ feature|classname|lower }}">{{ feature|classname|lower }}</span>                    
+                    <a href="{{ feature.get_absolute_url }}">{{ feature }}
+                    <i>{{ feature.tagline }}</i></a>
+                    <span class="aside-meta">added by <a href="{% url 'user-profile' username=feature.created_by.username %}">{{ feature.created_by.get_full_name }}</a> 
+                    {{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></span>
+                </div>
+
+            {% endif %}            
+
+      </div>
     </div>
-<h4 class="feature-item-title"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h4>
-<div class="feature-item-snippet">{{feature.tagline }}</div>
-<div class="feature-item-content">{{ feature.description|truncatewords:"50" }}</div>
-<div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username %}">{{ feature.created_by.get_full_name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
-</div>
-{% endwith %}
-<div class="large-4 columns"><div class="row">
-{% for feature in features|slice:"1:3" %}
-<div class="large-12 columns feature-item">
-    <div class="feature-item-image feature-item-image-small content-type-{{ feature|classname|lower }}" style="{% if feature.image %}background:center no-repeat url('{% thumbnail feature.image 300x270 upscale crop %}'){% endif %}">
-        <div class="feature-item-type label-{{ feature|classname|lower }}">{{ feature|classname|capfirst }}</div>
-        <a href="{{ feature.get_absolute_url }}"></a>
-    </div>
-<h4 class="feature-item-title feature-item-title-small"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h4>
-<div class="feature-item-snippet feature-item-snippet-smaller">{{ feature.tagline }}</div>
-<div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username %}">{{ feature.created_by.get_full_name }}</a><span class="feature-item-meta-comments">{{ feature.created_at|verybrieftimesince }} ago</span><br /><span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
-</div>
-{% endfor %}
-</div></div>
-
-</div>
-
-
-
-{% for feature in features|slice:"3:" %}
-    {% if forloop.counter|divisibleby:2 %}
-    {% else %}
-        <div class="row">        
-    {% endif %}
-        <div class="large-6 columns feature-item">
-            <div class="feature-item-image content-type-{{ feature|classname|lower }}" style="{% if feature.image %}background:center no-repeat url('{% thumbnail feature.image 360x200 upscale crop %}'){% endif %}">
-                <div class="feature-item-type label-{{ feature|classname|lower }}">{{ feature|classname|capfirst }}</div>
-                <a href="{{ feature.get_absolute_url }}"></a>
-            </div>
-        <h4 class="feature-item-title"><a href="{{ feature.get_absolute_url }}">{{ feature }}</a></h4>
-        <div class="feature-item-snippet feature-item-snippet-small">{{ feature.tagline }}</div>
-        <div class="feature-item-meta">by <a href="{% url 'user-profile' username=feature.created_by.username %}">{{ feature.created_by.get_full_name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;{{ feature.created_at|verybrieftimesince }} ago <span class="feature-item-meta-comments"><a href="{{ feature.get_absolute_url }}#disqus_thread">Comments</a></span></div>
-    </div>
-
-    {% if forloop.counter|divisibleby:2 %}
-        </div>
-    {% else %}
-    {% endif %}
 {% endfor %}
 
 </div>
@@ -117,21 +101,39 @@
 {% endblock %}
 
 {% block sidebar_right %}
+    <div class="row">
+    <div class="large-12 columns">
+        <h6>Latest updates</h6>
+        <ul class="navlist">
+        {% for object in top5s.latest %}
+            <li><span class="label radius label-{{ object|classname|lower }}">{{ object.created_at|verybrieftimesince }}</span>&nbsp; <a href="{{ object.get_absolute_url }}">{{ object }} <i>{{ object.tagline }}</i></a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    </div>
 
-<div class="activityfeed" id="activityfeed">
-   <div class="activity-header"><p>Activity stream</p></div>
-  {% if stream %}
-       {% for action in stream|slice:":25" %}
-            {% if action.target %}
-                {% include "actstream/_action.html" %}
-            {% else %}
-                {% if action.is_summary %}
-                    {% with action as summary %}{% include "actstream/_action_summary.html" %}{% endwith %}
-                {% endif %}
-            {% endif %}
-         {% endfor %}
-{% endif %}
-</div>
+    <div class="row">
+    <div class="large-12 columns">
+        <h6>Trending</h6>
+        <ul class="navlist">
+        {% for object in top5s.trending %}
+            <li><span class="label radius label-{{ object|classname|lower }}">{{ object.hit_count }}</span>&nbsp; <a href="{{ object.get_absolute_url }}">{{ object }} <i>{{ object.tagline }}</i></a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    </div>
+
+    <div class="row">
+    <div class="large-12 columns">
+        <h6>Most viewed</h6>
+        <ul class="navlist">
+        {% for object in top5s.views %}
+            <li><span class="label radius label-{{ object|classname|lower }}">{{ object.hit_count }}</span>&nbsp; <a href="{{ object.get_absolute_url }}">{{ object }} <i>{{ object.tagline }}</i></a></li>
+        {% endfor %}
+        </ul>
+    </div>
+    </div>
+
 
 {% endblock %}
 
