@@ -5,7 +5,7 @@ admin.autodiscover()
 # Sitemaps
 from sitemap import *
 from core.feeds import *
-
+from core.forms import RegistrationFormNoBlacklistEmail
 
 def i18n_javascript(request):
   return admin.site.i18n_javascript(request)
@@ -71,6 +71,7 @@ urlpatterns = patterns('',
 #       {'backend': 'captcha.backends.default.CaptchaDefaultBackend', # Enable captcha
 #        'form_class': RegistrationFormCaptchaNoUserName}, # Allow registration without username
 #       name='registration_register'),
+    (r'^accounts/register/$', 'registration.views.register', {'form_class' : RegistrationFormNoBlacklistEmail, 'backend': 'registration.backends.default.DefaultBackend' }),
     (r'^accounts/', include('django.contrib.auth.urls')),
     (r'^accounts/', include('registration.backends.default.urls')),
 
