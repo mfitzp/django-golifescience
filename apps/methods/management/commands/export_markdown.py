@@ -12,6 +12,8 @@ from django.contrib.sites.models import Site
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from django.template.loader import render_to_string
+from django.core.files.base import ContentFile
+import Image
 # methodmint
 from methods.models import Method
 
@@ -33,9 +35,18 @@ class Command(BaseCommand):
             for step in method.steps.all():
                 # Move the images into a folder
                 if step.image:
-                    f = codecs.open( step.image.url, 'w', 'utf-8')
-                    step.image.save(os.path.join(path,'img', step.image.url),f)
-                    f.close()
-
-
-
+                    print ": %s" % step.image.path
+                    try:
+                        im = Image.open(step.image.path)
+                    except:
+                        pass
+                    else:
+                        try:
+                            imgpathroot = step.image.path.replace(settings.MEDIA_ROOT + '/','')
+                            os.makedirs(os.path.join(path, 'img', *imgpathroot.split('/')[:-1]))
+                            newpath = os.path.join(path,'img', imgpathroot )
+                            print "> %s" % newpath
+                            im.save(newpath)
+                        except:
+                            pass            
+                            
