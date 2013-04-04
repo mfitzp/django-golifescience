@@ -5,10 +5,10 @@ Title: {{ method.name }}
 Slug: {{ method.get_absolute_slug }}
 Tags: {{ method.tags.all|join:"," }}
 
-{{ method.notes|safe }}
+{{ method.description|safe }}
 
 {% if method.notes %}
-<aside>{{ method.notes|safe }}</aside>
+<blockquote>{{ method.notes|safe }}</blockquote>
 {% endif %}
 
 {% if method.materials %}#Requirements
