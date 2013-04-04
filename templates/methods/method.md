@@ -29,3 +29,12 @@ Tags: {{ method.tags.all|join:"," }}
 {% endif %}
 {% endfor %}
 
+{% if method.references %}
+#References
+{% for reference in method.references.all %}
+{% with reference.publication as publication %}
+    {{ publication.author }} [{{ publication.title }}]({{ publication.url }}) _{{ publication.publisher }}_ {% if publication.published %}({{ publication.published.year }}){% endif %}
+    [{% if publication.doi %}{{ publication.doi }}{% else %}pmid:{{ publication.pmid }}{% endif %}]({{ publication.url }})
+{% endwith %}
+{% empty %}
+{% endif %}
