@@ -42,7 +42,10 @@ class Command(BaseCommand):
                         pass
                     else:
                         imgpathroot = step.image.path.replace(settings.MEDIA_ROOT + '/','')
-                        os.makedirs(os.path.join(path, 'images', *imgpathroot.split('/')[:-1]))
+                        try:
+                            os.makedirs(os.path.join(path, 'images', *imgpathroot.split('/')[:-1]))
+                        except:
+                            pass
                         newpath = os.path.join(path,'images', imgpathroot )
                         print "> %s" % newpath
                         im.save(newpath)
