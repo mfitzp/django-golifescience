@@ -55,13 +55,16 @@ urlpatterns = patterns('',
     (r'^messages/',  include('postman.urls')),
 
 
+    #(r'^ckeditor/', include('ckeditor.urls')),
+    url('^markdown/', include( 'django_markdown.urls')),
+
     # Search
 #    url(r'^tags/$', 'core.views.tag_search', {
 #                'template':'search/tag_search.html',
 #                'searchqueryset':SearchQuerySet().models(Tag).load_all(),
 #                'form_class':SearchForm,
 #            }, 
-#            name='tags'
+#            name='tags'(r'^ckeditor/', include('ckeditor.urls')),
 #        ),
 
 

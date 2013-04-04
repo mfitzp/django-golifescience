@@ -35,30 +35,30 @@
 
 {% block content %}
 <a name="about"></a>
-<p>{{ article.content|markdown:"safe,tables"  }}</p>
+<p>{{ article.content|markdown:"safe,tables,"  }}</p>
 
 {% endblock %}
 
 {% block discussion %}{% include "comments/_disqus.html" %}{% endblock %}
 
 {% block sidebar_right %}
-    <h5>Actions</h5>
+    <h6>Actions</h6>
     <ul class="navlist navlist-icon">
         <li class="icon_print"><a href="javascript:window.print()">{% trans "Printer friendly view" %}</a></li>
-        <li class="icon_share">{% with article as object %}{% include "_social.html" %}{% endwith %}</li>
+        <li><i class="social foundicon-thumb-up"></i> <a href="#" data-reveal-id="socialModal">Share this article</a></li></ul>
     </ul>
     <!-- AddThis Button BEGIN -->
     <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e75051d50065d70"></script>
     <!-- AddThis Button END -->
 
-    <h5>{% trans "Tags" %}</h5>
+    <h6>{% trans "Tags" %}</h6>
+    {% with article.tags.all as tags %}
+        <div class="row"><div class="large-12 columns tags-horizontal">
+            {% include "_tags.html" %}
+        </div></div>        
+    {% endwith %}
 
-    {% with article.tags.all as tags %}{% with 1 as show_tag_counts %}
-        <div class="tags-vertical">{% include "_tags.html" %}</div>
-        <br class="clear">
-    {% endwith %}{% endwith %}
-
-    <h5>Related articles</h5>
+    <h6>Related articles</h6>
     <ul class="navlist">
     {% for result in morelikethis %}
     {% with result.object as mlt_article %}
