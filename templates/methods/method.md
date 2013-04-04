@@ -1,5 +1,6 @@
 Date: {{ method.created_at|date:"Y-m-d h:m" }}
 Author: {{ method.created_by.get_full_name }}
+Email: {{ method.created_by.email }}
 Title: {{ method.name }}
 Slug: {{ method.slug }}
 Tags: {{ method.tags.all|join:"," }}
