@@ -29,7 +29,7 @@ Tags: {{ method.tags.all|join:"," }}
 {% endif %}
 {% endfor %}
 
-{% if method.references %}
+{% if method.references.count > 0 %}
 #References
 {% for reference in method.references.all %}
 {% with reference.publication as publication %}
