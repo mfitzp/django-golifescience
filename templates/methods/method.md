@@ -5,8 +5,10 @@ Title: {{ method.name }}
 Slug: {{ method.get_absolute_slug }}
 Tags: {{ method.tags.all|join:"," }}
 
-{% if method.notes %}
 {{ method.notes }}
+
+{% if method.notes %}
+> {{ method.notes }}
 {% endif %}
 
 {% if method.materials %}#Requirements
@@ -19,7 +21,7 @@ Tags: {{ method.tags.all|join:"," }}
 ![step.image]({{step.image}})
 {% endif %}
 {% if step.tip %}
-<aside>{{ step.tip }}</aside>
+> {{ step.tip }}
 {% endif %}
 {% endfor %}
 
