@@ -33,14 +33,14 @@ class Command(BaseCommand):
             f.close()
 
             if method.image:
-                self.moveimage(method.image)
+                self.moveimage(method.image, path)
 
             for step in method.steps.all():
                 # Move the images into a folder
                 if step.image:
-                    self.moveimage(step.image)
+                    self.moveimage(step.image, path)
 
-    def moveimage(self, image):
+    def moveimage(self, image, path):
         print ": %s" % image.path
         try:
             im = Image.open(image.path)
