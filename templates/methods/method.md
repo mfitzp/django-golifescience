@@ -34,7 +34,7 @@ Tags: {{ method.tags.all|join:"," }}
 {% for reference in method.references.all %}
 {% with reference.publication as publication %}
 {{ publication.author }} [{{ publication.title }}]({{ publication.url }}) {% if publication.publisher %}_{{ publication.publisher }}_{% endif %} {% if publication.published %}({{ publication.published.year }}){% endif %}
-[{% if publication.doi %}{{ publication.doi }}{% else %}pmid:{{ publication.pmid }}{% endif %}]({{ publication.url }})
+[{% if publication.doi %}{{ publication.doi }}{% else %}{% if publication.pmid %}pmid:{{ publication.pmid }}{% else %}{{ publication.isbn }}{% endif %}{% endif %}]({{ publication.url }})
 {% endwith %}
 {% endfor %}
 {% endif %}
