@@ -8,7 +8,7 @@ Tags: {{ method.tags.all|join:"," }}
 {{ method.description|safe }}
 
 {% if method.notes %}
-<blockquote>{{ method.notes|safe }}</blockquote>
+>{{ method.notes|safe }}
 {% endif %}
 
 {% if method.materials %}#Requirements
@@ -21,7 +21,7 @@ Tags: {{ method.tags.all|join:"," }}
 ![step.image]({{step.image}})
 {% endif %}
 {% if step.tip %}
-<aside>{{ step.tip|safe }}</aside>
+>{{ step.tip|safe }}
 {% endif %}
 {% endfor %}
 
