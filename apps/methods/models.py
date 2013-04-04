@@ -37,6 +37,8 @@ class Method(models.Model):
         return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
     def get_absolute_path(self):
         return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)})
+    def get_absolute_slug(self):
+        return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)}).strip('/')
 
     # Information
     name = models.CharField('Name', max_length = 50, blank = False)
