@@ -4,6 +4,7 @@ Email: {{ method.created_by.email }}
 Title: {{ method.name }}
 Slug: {{ method.get_absolute_slug }}
 Tags: {{ method.tags.all|join:"," }}
+Category: methods
 
 {{ method.description|safe }}
 
@@ -18,7 +19,7 @@ Tags: {{ method.tags.all|join:"," }}
 {% for step in method.steps.all %}
 {{ step.content|safe }}
 {% if step.image %}
-![step.image]({{step.image}})
+![{{ step.image }}](<|filename|/images/{{step.image}}>)
 {% endif %}
 {% if step.tip %}
 >{{ step.tip|safe }}

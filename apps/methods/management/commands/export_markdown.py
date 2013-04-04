@@ -26,8 +26,16 @@ class Command(BaseCommand):
 
         for method in methods:
             md = render_to_string('methods/method.md', {'method':method})
-            f = codecs.open(os.path.join(path,'%s.md' % method.slug), 'w', 'utf-8')
+            f = codecs.open(os.path.join(path,'methods','%s.md' % method.slug), 'w', 'utf-8')
             f.write(md)
             f.close()
+
+            for step in method.steps.all():
+                # Move the images into a folder
+                if step.image:
+                    f = codecs.open( step.image.url, 'w', 'utf-8')
+                    step.image.save(os.path.join(path,'img', step.image.url),f)
+                    f.close()
+
 
 
