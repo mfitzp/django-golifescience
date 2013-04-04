@@ -29,7 +29,7 @@ class Command(BaseCommand):
         for method in methods:
             # Get a category from the root tagmetas
             # Get tags for this object that have a meta
-            tmt = method.tags.filter(meta__parent=None)
+            tmt = method.tags.exclude(meta=None).filter(meta__parent=None)
             if tmt:
                 category = tmt[0].name
             else:
