@@ -32,21 +32,27 @@ class Command(BaseCommand):
             f.write(md)
             f.close()
 
+            if method.image:
+                self.moveimage(method.image)
+
             for step in method.steps.all():
                 # Move the images into a folder
                 if step.image:
-                    print ": %s" % step.image.path
-                    try:
-                        im = Image.open(step.image.path)
-                    except:
-                        pass
-                    else:
-                        imgpathroot = step.image.path.replace(settings.MEDIA_ROOT + '/','')
-                        try:
-                            os.makedirs(os.path.join(path, 'images', *imgpathroot.split('/')[:-1]))
-                        except:
-                            pass
-                        newpath = os.path.join(path,'images', imgpathroot )
-                        print "> %s" % newpath
-                        im.save(newpath)
+                    self.moveimage(step.image)
+
+    def moveimage(self, image):
+        print ": %s" % image.path
+        try:
+            im = Image.open(image.path)
+        except:
+            pass
+        else:
+            imgpathroot = image.path.replace(settings.MEDIA_ROOT + '/','')
+            try:
+                os.makedirs(os.path.join(path, 'images', *imgpathroot.split('/')[:-1]))
+            except:
+                pass
+            newpath = os.path.join(path,'images', imgpathroot )
+            print "> %s" % newpath
+            im.save(newpath)
                             
