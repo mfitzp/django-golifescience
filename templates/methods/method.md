@@ -5,14 +5,13 @@ Slug: {{ method.slug }}
 Tags: {{ method.tags.all|join:"," }}
 
 {% if method.notes %}
-# Notes
 {{ method.notes }}
 {% endif %}
 
 {% if method.materials %}#Requirements
 {{ method.materials }}{% endif %}
 
-#Method
+{% if method.notes or method.materials %}#Method{% endif %}
 {% for step in method.steps.all %}
 {{ step.content }}
 {% if step.image %}
