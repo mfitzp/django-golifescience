@@ -27,8 +27,20 @@ class Command(BaseCommand):
         methods = Method.objects.all()
 
         for method in methods:
+            # Get a category from the root tagmetas
+            # Get tags for this object that have a meta
+            tmt = method.tags.exclude(meta__parent=None)
+            if tmt:
+                category = tmt[0].name
+            else:
+                category = 'misc'
+
             md = render_to_string('methods/method.md', {'method':method})
-            f = codecs.open(os.path.join(path,'methods','%s.md' % method.slug), 'w', 'utf-8')
+            try:
+                os.makedirs(os.path.join( path,category ))
+            except:
+                pass
+            f = codecs.open(os.path.join(path,category,'%s.md' % method.slug), 'w', 'utf-8')
             f.write(md)
             f.close()
 
@@ -51,8 +63,11 @@ class Command(BaseCommand):
             try:
                 os.makedirs(os.path.join(path, 'images', *imgpathroot.split('/')[:-1]))
             except:
-                pass
+                pass            
+
+
             newpath = os.path.join(path,'images', imgpathroot )
             print "> %s" % newpath
             im.save(newpath)
-                            
+
+
