@@ -5,6 +5,10 @@ Title: {{ method.name }}
 Slug: {{ method.get_absolute_slug }}
 Tags: {{ method.tags.all|join:"," }}
 
+{% if method.image %}
+![{{ method.image }}](/static/images/{{method.image|urlencode}})
+{% endif %}
+
 {{ method.description|safe }}
 
 {% if method.notes %}
