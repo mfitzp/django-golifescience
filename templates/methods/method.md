@@ -36,5 +36,5 @@ Tags: {{ method.tags.all|join:"," }}
     {{ publication.author }} [{{ publication.title }}]({{ publication.url }}) _{{ publication.publisher }}_ {% if publication.published %}({{ publication.published.year }}){% endif %}
     [{% if publication.doi %}{{ publication.doi }}{% else %}pmid:{{ publication.pmid }}{% endif %}]({{ publication.url }})
 {% endwith %}
-{% empty %}
+{% endfor %}
 {% endif %}
