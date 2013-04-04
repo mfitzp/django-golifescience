@@ -18,7 +18,7 @@ Tags: {{ method.tags.all|join:"," }}
 {% for step in method.steps.all %}
 {{ step.content|safe }}
 {% if step.image %}
-![{{ step.image }}](/static/images/{{step.image}})
+![{{ step.image }}](</static/images/{{step.image}}>)
 {% endif %}
 {% if step.tip %}
 >{{ step.tip|safe }}
