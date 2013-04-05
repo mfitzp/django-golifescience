@@ -12,7 +12,7 @@ Tags: {{ method.tags.all|join:"," }}
 {% endif %}
 
 {% if method.notes %}
->{{ method.notes|safe }}
+>{{ method.notes_indent|safe }}
 {% endif %}
 
 {% if method.materials %}#Requirements
@@ -25,7 +25,7 @@ Tags: {{ method.tags.all|join:"," }}
 ![{{ step.image }}](/static/images/{{step.image|urlencode}})
 {% endif %}
 {% if step.tip %}
->{{ step.tip|safe }}
+>{{ step.tip_indent|safe }}
 {% endif %}
 {% endfor %}
 

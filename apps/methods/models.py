@@ -40,6 +40,9 @@ class Method(models.Model):
     def get_absolute_slug(self):
         return reverse('method',kwargs={'method_id':str(self.id), 'method_slug':str(self.slug)}).strip('/')
 
+    def notes_indent(self):
+        return self.notes.replace('\n','\n>')
+
     # Information
     name = models.CharField('Name', max_length = 50, blank = False)
     slug = AutoSlugField(populate_from='name')
@@ -89,6 +92,10 @@ class Step(models.Model):
             return self.method.steps.get(order__gt=self.order+1)
         except: 
             return None
+
+    def tip_indent(self):
+        return self.tip.replace('\n','\n>')
+
         
     method = models.ForeignKey(Method, related_name='steps')
 

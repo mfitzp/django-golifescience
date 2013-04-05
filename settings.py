@@ -33,6 +33,8 @@ CACHES = {
     }
 }
 
+DJANGO_SETTINGS_MODULE = 'settings'
+
 MEDIA_URL_ROOT = ''
 STATIC_URL_ROOT = ''
 ADMIN_MEDIA_URL_ROOT = ''
@@ -116,6 +118,8 @@ TEMPLATE_LOADERS = (
 
 if 'DJANGO_SETTINGS_MODULE' in os.environ: # We're in a live web session (via wsgi)
     add_to_builtins('django.templatetags.future')
+
+#add_to_builtins('core.templatetags.core_tags')
 
 MIDDLEWARE_CLASSES = (
 
