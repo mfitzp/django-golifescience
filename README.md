@@ -1,7 +1,7 @@
 django-golifescience
 ====================
 
-Before the current I discovered Pelican the golifescience site was built on top of Django,
+Before I discovered Pelican the golifescience site was built on top of Django,
 and went through a number of iterations as part of previous now-defunct projects. As a
 result there is a stash of reasonably useful Django code sitting in a repo.
 
